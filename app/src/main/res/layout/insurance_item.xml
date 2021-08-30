@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="clickListener"
+            type="my.edu.tarc.rewardreferralapp.data.RecyclerViewAdapter.ClaimListener" />
+        <variable
+            name="insurance"
+            type="my.edu.tarc.rewardreferralapp.data.Insurance" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imgInsuranceIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvInsuranceComp_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:padding="2dp"
+                android:text="Insurance Comp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvInsuranceID_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:padding="2dp"
+                android:text="Insurance ID"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvInsuranceComp_cardview" />
+
+            <TextView
+                android:id="@+id/tvInsuranceName_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:padding="2dp"
+                android:text="Insurance Name"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvInsuranceID_cardview" />
+
+            <TextView
+                android:id="@+id/tvInsurancePlan_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:padding="2dp"
+                android:text="Insurance Plan"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvInsuranceName_cardview" />
+
+            <TextView
+                android:id="@+id/tvInsuranceExpiryDate_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:padding="2dp"
+                android:text="Insurance expiry date"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@id/tvInsurancePlan_cardview" />
+
+            <Button
+                android:id="@+id/btnRenew_cardview"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Renew"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceExpiryDate_cardview" />
+
+            <Button
+                android:id="@+id/btnClaim_cardview"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:text="Claim"
+                android:textSize="12sp"
+                android:onClick="@{() -> clickListener.onClick(insurance)}"
+                app:layout_constraintBottom_toBottomOf="@+id/btnRenew_cardview"
+                app:layout_constraintStart_toEndOf="@+id/btnRenew_cardview"
+                app:layout_constraintTop_toTopOf="@+id/btnRenew_cardview" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Reward &amp; Referral App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insurance_claim_form">Insurance Claim Form</string>
+    <string name="insurance_claim_details">Insurance Claim Details</string>
+    <string name="renew_details">Renew Details</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="payment_method">Payment method</string>
+    <string name="bank_details">Bank details</string>
+    <string name="card_details">Card details</string>
+    <string name="fill_in_info">Please fill in the correct information</string>
+    <string name="upload_image">Upload image</string>
+    <string name="claim_success_msg">Your claim is successfully created and waiting to be approved. Please check for the updates at the claim listing page</string>
+    <string name="claim_accepted_msg">The claim is accepted. An email will be sent to the referral. </string>
+    <string name="claim_rejected_msg">The claim is rejected. An email will be sent to the referral. </string>
+    <string name="renew_success_msg">You have successfully renewed your insurance.</string>
+    <string name="payment_method_details">Please choose your payment method</string>
+    <string name="bank_payment_details">Please choose the bank to pay</string>
+    <string name="card_payment_details">Please enter your card details</string>
+    <string name="referral_details">Referral details</string>
+    <string name="approve_claim_amount">Approve claim amount</string>
+    <string name="claim_desc_hint">Type in claim description here</string>
+    <string name="claim_amount_hint">Type in claim amount here</string>
+    <string-array name="payment_method_array">
+        <item>Online banking</item>
+        <item>Credit / debit card</item>
+    </string-array>
+    <string-array name="bank_selection_array">
+        <item>Public Bank</item>
+        <item>Hong Leong Bank</item>
+    </string-array>
+
+</resources>
