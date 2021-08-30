@@ -30,6 +30,11 @@
         <item>Public Bank</item>
         <item>Hong Leong Bank</item>
     </string-array>
+    <string name="get_started">Get Started</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="description_text">Description Text</string>
+    <string name="title">Title</string>
+    <string name="image">image</string>
 
     <!-- Reward (Jiho) -->
     <string name="RewardRedeemSuccessful">Your reward is pending to delivery.

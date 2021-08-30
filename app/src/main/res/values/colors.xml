@@ -10,5 +10,16 @@
     <color name="green_accepted">#31B12C</color>
     <color name="orange_pending">#EC512B</color>
     <color name="red_rejected">#F30E15</color>
-
+    <color name="light_blue">#3F51B5</color>
+    <color name="dark_blue">#303F98</color>
+    <color name="orange">#FF5252</color>
+    <color name="blue">#2266FF</color>
+    <color name="grey">#F0F0F0</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="btnColorPrimary">#008AE6</color>
+    <color name="btnColorSecondary">#CCCCCC</color>
+    <color name="backgroundPrimary">#33AAFF</color>
+    <color name="light_blue_second">#99EEFF</color>
+    <color name="light_blue_third">#99EEFF</color>
 </resources>

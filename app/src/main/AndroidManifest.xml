@@ -25,13 +25,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="my.edu.tarc.rewardreferralapp.MainActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".GetStarted">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HomepageActivity" />
+        <activity android:name=".StaffDashboard" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
