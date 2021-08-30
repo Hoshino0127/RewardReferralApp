@@ -31,4 +31,9 @@
         <item>Hong Leong Bank</item>
     </string-array>
 
+    <!-- Reward (Jiho) -->
+    <string name="RewardRedeemSuccessful">Your reward is pending to delivery.
+        You may receive the reward
+        between 2 week after the apply date.</string>
+
 </resources>
