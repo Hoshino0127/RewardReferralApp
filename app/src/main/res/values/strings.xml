@@ -40,5 +40,6 @@
     <string name="RewardRedeemSuccessful">Your reward is pending to delivery.
         You may receive the reward
         between 2 week after the apply date.</string>
+    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/homepage">
+    app:startDestination="@id/viewInsurance">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -89,8 +89,7 @@
             app:destination="@id/referralInsuranceListingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/homepage"
-        android:name="my.edu.tarc.rewardreferralapp.Homepage"
-        android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" />
+        android:id="@+id/viewInsurance"
+        android:name="my.edu.tarc.rewardreferralapp.ViewInsuranceFragment"
+        android:label="ViewInsurance" />
 </navigation>

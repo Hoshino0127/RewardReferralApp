@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class Homepage : Fragment() {
+
+class StaffViewInsuranceListApplicationFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -14,7 +15,12 @@ class Homepage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_homepage, container, false)
+        return inflater.inflate(
+            R.layout.fragment_staff_view_insurance_list_application,
+            container,
+            false
+        )
     }
+
 
 }
