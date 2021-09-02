@@ -59,13 +59,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnRLSearch" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RewardListRV"
                 android:layout_width="391dp"
                 android:layout_height="503dp"
                 android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.567"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/view" />
+                app:layout_constraintTop_toTopOf="@+id/view"
+                tools:listitem="@layout/rewardcenter_list_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

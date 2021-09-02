@@ -84,6 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnRCSearch" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RewardCenterRV"
             android:layout_width="377dp"
             android:layout_height="441dp"
             android:layout_marginStart="10dp"
@@ -92,7 +93,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view" />
+            app:layout_constraintTop_toTopOf="@+id/view"
+            tools:listitem="@layout/rewardcenter_list_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
