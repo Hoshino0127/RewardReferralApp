@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="claimListener"
+            type="my.edu.tarc.rewardreferralapp.data.RewardCenterAdapter.ClaimListener" />
+        <variable
+            name="Reward"
+            type="my.edu.tarc.rewardreferralapp.data.Reward" />
+        <variable
+            name="viewListener"
+            type="my.edu.tarc.rewardreferralapp.data.RewardListAdapter.ViewListener" />
+        <variable
+            name="proceedListener"
+            type="my.edu.tarc.rewardreferralapp.data.RewardMyAdapter.ProceedListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/RewardRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imgRewardIcon"
+                android:layout_width="97dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvRewardName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Reward Name" />
+
+            <TextView
+                android:id="@+id/tvRewardDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Reward Desc"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvRewardName" />
+
+            <TextView
+                android:id="@+id/tvAvailableDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Available Date"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvRewardDesc" />
+
+            <TextView
+                android:id="@+id/tvPointNeeded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Point"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvAvailableDate" />
+
+            <Button
+                android:id="@+id/btnClaim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{() -> claimListener.onClick(Reward)}"
+                android:text="Claim"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStock" />
+
+            <TextView
+                android:id="@+id/tvStock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Stock"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvPointNeeded" />
+
+            <Button
+                android:id="@+id/btnView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="View"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvStock"
+                tools:visibility="gone"
+                android:onClick="@{() -> viewListener.onClick(Reward)}"/>
+
+            <Button
+                android:id="@+id/btnProceed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:text="Proceed"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvAvailableDate"
+                android:onClick="@{() -> proceedListener.onClick(Reward)}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
+</layout>
