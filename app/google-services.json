@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "966242842758",
+    "project_id": "rewardreferralapp-9174e",
+    "storage_bucket": "rewardreferralapp-9174e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966242842758:android:22debb979432d3f2d33907",
+        "android_client_info": {
+          "package_name": "my.edu.tarc.rewardreferralapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966242842758-4hqgjuv3o3amobnj7q29l4o14v6av5ge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk3Y_uyTHC4tRKIAC6JwnVM_Y_olYxko4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966242842758-4hqgjuv3o3amobnj7q29l4o14v6av5ge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
