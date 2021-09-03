@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
 
 class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedListener) :
@@ -45,7 +46,7 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
             R.layout.rewardcenter_list_item, parent, false
         )
 
-        return RewardMyAdapter.ViewHolder.from(parent)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

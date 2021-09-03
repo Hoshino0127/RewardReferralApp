@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Insurance
 
 class InsuranceListRecyclerViewAdapter(private var InsuranceList: List<Insurance>) : RecyclerView.Adapter<InsuranceListRecyclerViewAdapter.myViewHolder>() {
 
@@ -23,7 +24,7 @@ class InsuranceListRecyclerViewAdapter(private var InsuranceList: List<Insurance
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentProduct = InsuranceList[position]
-        holder.insuranceName?.text = currentProduct.InsuranceName
+        holder.insuranceName?.text = currentProduct.insuranceName
     }
 
     override fun getItemCount(): Int {
