@@ -7,16 +7,16 @@
     <data>
         <variable
             name="claimListener"
-            type="my.edu.tarc.rewardreferralapp.adapter.RewardCenterAdapter" />
+            type="my.edu.tarc.rewardreferralapp.adapter.RewardCenterAdapter.ClaimListener" />
         <variable
             name="Reward"
             type="my.edu.tarc.rewardreferralapp.data.Reward" />
         <variable
             name="viewListener"
-            type="my.edu.tarc.rewardreferralapp.adapter.RewardListAdapter" />
+            type="my.edu.tarc.rewardreferralapp.adapter.RewardListAdapter.ViewListener" />
         <variable
             name="proceedListener"
-            type="my.edu.tarc.rewardreferralapp.adapter.RewardMyAdapter" />
+            type="my.edu.tarc.rewardreferralapp.adapter.RewardMyAdapter.ProceedListener" />
     </data>
 
     <androidx.cardview.widget.CardView
