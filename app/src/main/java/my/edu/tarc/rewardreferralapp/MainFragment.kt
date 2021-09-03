@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import my.edu.tarc.rewardreferralapp.databinding.FragmentMainBinding
-
 
 class MainFragment : Fragment() {
 

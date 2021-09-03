@@ -8,7 +8,6 @@ import androidx.core.app.NavUtils
 import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.databinding.ActivityReferralInsuranceListingBinding
 
-
 class ReferralInsuranceListingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReferralInsuranceListingBinding
     override fun onCreate(savedInstanceState: Bundle?) {

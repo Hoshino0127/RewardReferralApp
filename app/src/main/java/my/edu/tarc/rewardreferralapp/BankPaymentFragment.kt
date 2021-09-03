@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.databinding.FragmentBankPaymentBinding
-import my.edu.tarc.rewardreferralapp.databinding.FragmentRenewPaymentBinding
-
 
 class BankPaymentFragment : Fragment() {
 
