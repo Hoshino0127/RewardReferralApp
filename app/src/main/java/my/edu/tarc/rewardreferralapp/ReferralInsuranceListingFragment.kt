@@ -37,7 +37,21 @@ class ReferralInsuranceListingFragment : Fragment() {
         val insuranceIDList = ArrayList<String>()
         val insuranceList = ArrayList<Insurance>()
 
-        ReferralInsuranceRef
+        ReferralInsuranceRef.orderByChild("insuranceReferral").equalTo("IR001").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(referralInsSnapshot in snapshot.children){
+                        insuranceIDList.add(referralInsSnapshot.child("insuranceID").getValue().toString())
+                    }
+                    println(insuranceIDList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         insuranceRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
