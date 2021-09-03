@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil.*
 import androidx.viewpager2.widget.ViewPager2
 import my.edu.tarc.rewardreferralapp.data.IntroSlide

@@ -10,7 +10,7 @@ import my.edu.tarc.rewardreferralapp.databinding.InsuranceItemBinding
 import java.text.SimpleDateFormat
 
 
-class RecyclerViewAdapter(val insuranceList: List<Insurance>, val clickListener: ClaimListener): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: ClaimListener): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder private constructor(val binding: InsuranceItemBinding) : RecyclerView.ViewHolder(binding.root){
 
