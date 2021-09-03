@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
 
 class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewListener) :
@@ -16,17 +17,17 @@ class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewLis
     class ViewHolder private constructor(val binding: RewardcenterListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Reward, clickListener: RewardListAdapter.ViewListener) {
+        fun bind(item: Reward, clickListener: ViewListener) {
             binding.reward = item
             binding.executePendingBindings()
             binding.viewListener = clickListener
         }
 
         companion object {
-            fun from(parent: ViewGroup): RewardListAdapter.ViewHolder {
+            fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = RewardcenterListItemBinding.inflate(layoutInflater, parent, false)
-                return RewardListAdapter.ViewHolder(binding)
+                return ViewHolder(binding)
             }
         }
 
@@ -46,7 +47,7 @@ class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewLis
             R.layout.rewardcenter_list_item, parent, false
         )
 
-        return RewardListAdapter.ViewHolder.from(parent)
+        return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

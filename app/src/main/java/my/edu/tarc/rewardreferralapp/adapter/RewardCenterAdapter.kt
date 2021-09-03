@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
-import java.text.SimpleDateFormat
 
 class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: ClaimListener) :
     RecyclerView.Adapter<RewardCenterAdapter.ViewHolder>() {

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralInsuranceListingBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRenewInsuranceBinding
 
 class RenewInsuranceFragment : Fragment() {

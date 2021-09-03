@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import my.edu.tarc.rewardreferralapp.databinding.FragmentBankPaymentBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentCardPaymentBinding
 
 class CardPaymentFragment : Fragment() {

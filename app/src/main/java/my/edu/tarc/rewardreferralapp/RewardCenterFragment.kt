@@ -14,9 +14,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Reward
-import my.edu.tarc.rewardreferralapp.data.RewardCenterAdapter
+import my.edu.tarc.rewardreferralapp.adapter.RewardCenterAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardCenterBinding
-
 
 class RewardCenterFragment : Fragment() {
 
@@ -63,7 +62,7 @@ class RewardCenterFragment : Fragment() {
             }
         })
 
-        val RewardAdapter = RewardCenterAdapter(rewardList,RewardCenterAdapter.ClaimListener{
+        val RewardAdapter = RewardCenterAdapter(rewardList, RewardCenterAdapter.ClaimListener{
             rewardID,rewardName,PointNeeded,Stock -> val it = view
             if (it != null) {
                 val builder = AlertDialog.Builder(activity)

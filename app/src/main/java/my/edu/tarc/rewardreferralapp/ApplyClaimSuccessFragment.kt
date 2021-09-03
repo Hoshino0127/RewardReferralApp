@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import my.edu.tarc.rewardreferralapp.databinding.FragmentApplyClaimBinding
+import com.google.firebase.database.FirebaseDatabase
+import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApplyClaimSuccessBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ApplyClaimSuccessFragment : Fragment() {
-
+    private val database = FirebaseDatabase.getInstance()
+    private val myRef = database.getReference("Insurance")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,10 +26,13 @@ class ApplyClaimSuccessFragment : Fragment() {
         val binding: FragmentApplyClaimSuccessBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_apply_claim_success, container, false)
 
+
+
         binding.btnToClaimListing.setOnClickListener(){
             val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToClaimListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
 
         return binding.root
     }

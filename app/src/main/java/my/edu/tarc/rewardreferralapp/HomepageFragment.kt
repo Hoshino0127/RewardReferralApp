@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import my.edu.tarc.rewardreferralapp.databinding.FragmentMainBinding
+import my.edu.tarc.rewardreferralapp.databinding.FragmentHomepageBinding
 
-class MainFragment : Fragment() {
+class HomepageFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -17,12 +17,11 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val binding: FragmentHomepageBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false)
 
-        val binding: FragmentMainBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
-
-        binding.btnToReferralInsuranceListing.setOnClickListener(){
-            val action = MainFragmentDirections.actionMainFragmentToReferralInsuranceListingFragment()
+        binding.button.setOnClickListener(){
+            val action = HomepageDirections.actionHomepageToReferralInsuranceListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "966242842758",
-    "project_id": "rewardreferralapp-9174e",
-    "storage_bucket": "rewardreferralapp-9174e.appspot.com"
+    "project_number": "346756317785",
+    "firebase_url": "https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "rewardreferralapp-bccdc",
+    "storage_bucket": "rewardreferralapp-bccdc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:966242842758:android:22debb979432d3f2d33907",
+        "mobilesdk_app_id": "1:346756317785:android:99f8449e7c094e82682748",
         "android_client_info": {
           "package_name": "my.edu.tarc.rewardreferralapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "966242842758-4hqgjuv3o3amobnj7q29l4o14v6av5ge.apps.googleusercontent.com",
+          "client_id": "346756317785-i4qsl8k8mnujissp97t2nloq9p286t0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "my.edu.tarc.rewardreferralapp",
+            "certificate_hash": "4d8fcfd97619c7f0ce05ea5371697a000e79d963"
+          }
+        },
+        {
+          "client_id": "346756317785-7e5qvs26d9bo894nu50b8p6bmk4c9fh0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDk3Y_uyTHC4tRKIAC6JwnVM_Y_olYxko4"
+          "current_key": "AIzaSyA_KHFXoX2lbNM4oe4mXmNhGGxV-WIRJmI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "966242842758-4hqgjuv3o3amobnj7q29l4o14v6av5ge.apps.googleusercontent.com",
+              "client_id": "346756317785-7e5qvs26d9bo894nu50b8p6bmk4c9fh0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,17 +1,16 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.InsuranceItemBinding
 import java.text.SimpleDateFormat
 
 
-class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: ClaimListener): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+class RecyclerViewAdapter(val insuranceList: List<Insurance>, val clickListener: ClaimListener): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder private constructor(val binding: InsuranceItemBinding) : RecyclerView.ViewHolder(binding.root){
 
@@ -47,11 +46,11 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentInsurance = insuranceList[position]
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        holder.insuranceName.text = currentInsurance.InsuranceName
-        holder.insuranceComp.text = currentInsurance.InsuranceComp
-        holder.insuranceID.text = currentInsurance.InsuranceID
-        holder.insurancePlan.text = currentInsurance.InsurancePlan
-        holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.InsuranceExpiryDate)
+        holder.insuranceName.text = currentInsurance.insuranceName
+        holder.insuranceComp.text = currentInsurance.insuranceComp
+        holder.insuranceID.text = currentInsurance.insuranceID
+        holder.insurancePlan.text = currentInsurance.insurancePlan
+        holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.insuranceExpiryDate)
         holder.bind(currentInsurance!!, clickListener)
         // bind image into the image view
         //holder.imgInsuranceIcon.setImageResource(currentInsurance.img)
@@ -62,7 +61,7 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
     }
 
     class ClaimListener(val clickListener: (insuranceID: String) -> Unit) {
-        fun onClick(insurance: Insurance) = clickListener(insurance.InsuranceID)
+        fun onClick(insurance: Insurance) = clickListener(insurance.insuranceID!!)
     }
 
 
