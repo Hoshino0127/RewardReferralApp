@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.IntroSlide
 
 class IntroSliderAdapter (private val introSlides: List<IntroSlide>)
     : RecyclerView.Adapter<IntroSliderAdapter.IntroSlideViewHolder>() {

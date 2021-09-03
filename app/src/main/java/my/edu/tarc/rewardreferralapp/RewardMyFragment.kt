@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.data.Reward
-import my.edu.tarc.rewardreferralapp.data.RewardMyAdapter
+import my.edu.tarc.rewardreferralapp.adapter.RewardMyAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardMyBinding
 
 class RewardMyFragment : Fragment() {
@@ -31,7 +31,7 @@ class RewardMyFragment : Fragment() {
 
         val binding:FragmentRewardMyBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
-        val rewardApter = RewardMyAdapter(rewardList,RewardMyAdapter.ProceedListener{
+        val rewardApter = RewardMyAdapter(rewardList, RewardMyAdapter.ProceedListener{
             rewardID,rewardName ->val it = view
             if (it != null) {
                 Toast.makeText(context, "$rewardID My", Toast.LENGTH_LONG).show()

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="clickListener"
-            type="my.edu.tarc.rewardreferralapp.data.RecyclerViewAdapter.ClaimListener" />
+            type="my.edu.tarc.rewardreferralapp.adapter.RecyclerViewAdapter" />
         <variable
             name="insurance"
             type="my.edu.tarc.rewardreferralapp.data.Insurance" />

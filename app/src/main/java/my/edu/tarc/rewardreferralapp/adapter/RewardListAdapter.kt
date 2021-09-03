@@ -1,4 +1,4 @@
-package my.edu.tarc.rewardreferralapp.data
+package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,19 +7,20 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
-import java.text.SimpleDateFormat
 
-class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: ClaimListener) :
-    RecyclerView.Adapter<RewardCenterAdapter.ViewHolder>() {
+class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewListener) :
+    RecyclerView.Adapter<RewardListAdapter.ViewHolder>() {
+
 
     class ViewHolder private constructor(val binding: RewardcenterListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Reward, clickListener: ClaimListener) {
+        fun bind(item: Reward, clickListener: ViewListener) {
             binding.reward = item
             binding.executePendingBindings()
-            binding.claimListener = clickListener
+            binding.viewListener = clickListener
         }
 
         companion object {
@@ -35,16 +36,13 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         val AvailableDate: TextView = binding.tvAvailableDate
         val pointNeeded: TextView = binding.tvPointNeeded
         val Stock: TextView = binding.tvStock
-        val btnView: Button = binding.btnView
-        val btnProceed:Button = binding.btnProceed
-
+        val ClaimButton: Button = binding.btnClaim
+        val ViewButton: Button = binding.btnView
+        val proceedButton: Button = binding.btnProceed
 
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.rewardcenter_list_item, parent, false
         )
@@ -59,18 +57,18 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         holder.AvailableDate.text = "Available Before: " + currentReward.EndDate
         holder.pointNeeded.text = "Point Needed: " + currentReward.PointNeeded.toString()
         holder.Stock.text = "Stock: " + currentReward.Stock.toString()
-        holder.btnView.visibility = View.GONE
-        holder.btnProceed.visibility = View.GONE
+        holder.ClaimButton.visibility = View.GONE
+        holder.proceedButton.visibility = View.GONE
+        holder.ViewButton.visibility = View.VISIBLE
         holder.bind(currentReward!!, clickListener)
-
     }
 
     override fun getItemCount(): Int {
         return rewardList.size
     }
 
-    class ClaimListener(val clickListener: (RewardID: String, RewardName: String, PointNeeded: Int,Stock:Int) -> Unit) {
+    class ViewListener(val clickListener: (RewardID: String) -> Unit) {
         fun onClick(reward: Reward) =
-            clickListener(reward.RewardID, reward.RewardName, reward.PointNeeded,reward.Stock)
+            clickListener(reward.RewardID)
     }
 }

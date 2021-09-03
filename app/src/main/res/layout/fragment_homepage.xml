@@ -102,7 +102,7 @@
                     android:layout_marginTop="25dp"
                     android:layout_marginEnd="25dp"
                     android:layout_marginBottom="25dp"
-                    android:background="@drawable/rounded_corner__blue_button">
+                    android:background="@drawable/rounded_corner_solid_blue">
 
                     <ImageView
                         android:id="@+id/imageView5"

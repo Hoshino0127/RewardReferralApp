@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Insurance
-import my.edu.tarc.rewardreferralapp.data.RecyclerViewAdapter
+import my.edu.tarc.rewardreferralapp.adapter.RecyclerViewAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralInsuranceListingBinding
 import java.util.*
 import kotlin.collections.ArrayList
