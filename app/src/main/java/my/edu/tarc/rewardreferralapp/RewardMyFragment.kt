@@ -11,7 +11,6 @@ import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardMyAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardMyBinding
 
-
 class RewardMyFragment : Fragment() {
 
 

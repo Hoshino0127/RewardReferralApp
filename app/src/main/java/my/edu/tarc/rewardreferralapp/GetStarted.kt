@@ -14,7 +14,6 @@ import my.edu.tarc.rewardreferralapp.data.IntroSlide
 import my.edu.tarc.rewardreferralapp.data.IntroSliderAdapter
 import my.edu.tarc.rewardreferralapp.databinding.ActivityGetStartedBinding
 
-
 class GetStarted : AppCompatActivity() {
 
     private lateinit var binding: ActivityGetStartedBinding

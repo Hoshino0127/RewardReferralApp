@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApproveClaimAmountBinding
-import my.edu.tarc.rewardreferralapp.databinding.FragmentApproveClaimBinding
-
 
 class ApproveClaimAmountFragment : Fragment() {
 

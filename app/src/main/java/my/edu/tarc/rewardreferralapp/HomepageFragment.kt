@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import my.edu.tarc.rewardreferralapp.databinding.FragmentApplyClaimBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentHomepageBinding
 
-class Homepage : Fragment() {
+class HomepageFragment : Fragment() {
 
 
     override fun onCreateView(

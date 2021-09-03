@@ -12,7 +12,6 @@ import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardCenterAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardCenterBinding
 
-
 class RewardCenterFragment : Fragment() {
 
     override fun onCreateView(
