@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/homepage"
-        android:name="my.edu.tarc.rewardreferralapp.Homepage"
+        android:name="my.edu.tarc.rewardreferralapp.HomepageFragment"
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" >
         <action
