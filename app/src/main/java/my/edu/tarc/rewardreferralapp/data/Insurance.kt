@@ -1,12 +1,15 @@
 package my.edu.tarc.rewardreferralapp.data
 
+import java.text.DateFormat
+import java.time.LocalDate
 import java.util.*
 
 data class Insurance(
-    val InsuranceID: String,
-    val InsuranceName: String,
-    val InsuranceComp: String,
-    val InsurancePlan: String,
-    val InsuranceExpiryDate: Date,
-    val InsuranceReferral: String
+    val insuranceID: String? = null,
+    val insuranceName: String? = null,
+    val insuranceComp: String? = null,
+    val insurancePlan: String? = null,
+    val insuranceExpiryDate: Date? = null,
+    val insuranceReferral: String? = null,
+    val insuranceCoverage: List<String>? = null
 )

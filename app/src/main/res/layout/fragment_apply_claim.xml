@@ -18,14 +18,12 @@
                 android:layout_width="0dp"
                 android:layout_height="1050dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/btnApplyClaim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"
                 app:srcCompat="@drawable/rect_bg" />
 
             <EditText
@@ -42,18 +40,6 @@
                 app:layout_constraintStart_toStartOf="@+id/imageView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="0dp"
-                android:layout_height="190dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/rect_bg" />
-
 
             <View
                 android:id="@+id/view"
@@ -62,8 +48,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/rlInsuranceDetails"
+                app:layout_constraintStart_toStartOf="@+id/rlInsuranceDetails"
                 app:layout_constraintTop_toBottomOf="@+id/tvExpiryDate" />
 
             <TextView
@@ -73,17 +60,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
-                android:text="Company Title"
-                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                android:text="Click to show more details"
+                app:layout_constraintEnd_toEndOf="@+id/rlInsuranceDetails"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                app:layout_constraintStart_toStartOf="@+id/rlInsuranceDetails"
+                app:layout_constraintTop_toTopOf="@+id/rlInsuranceDetails" />
 
             <TextView
                 android:id="@+id/tvInsuranceID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Insurance ID"
+                android:text=""
                 app:layout_constraintStart_toStartOf="@+id/tvCompTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvCompTitle" />
 
@@ -91,7 +78,7 @@
                 android:id="@+id/tvInsuranceName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Insurance Name"
+                android:text=""
                 app:layout_constraintStart_toStartOf="@+id/tvInsuranceID"
                 app:layout_constraintTop_toBottomOf="@+id/tvInsuranceID" />
 
@@ -99,7 +86,7 @@
                 android:id="@+id/tvInsurancePlanName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Insurance Plan Name"
+                android:text=""
                 app:layout_constraintStart_toStartOf="@+id/tvInsuranceName"
                 app:layout_constraintTop_toBottomOf="@+id/tvInsuranceName" />
 
@@ -107,7 +94,7 @@
                 android:id="@+id/tvExpiryDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expiry Date"
+                android:text=""
                 app:layout_constraintStart_toStartOf="@+id/tvInsurancePlanName"
                 app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlanName" />
 
@@ -115,13 +102,10 @@
                 android:id="@+id/tvInsuranceCoverage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:autoSizeTextType="uniform"
-                android:text="Insurance Coverage"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                android:text=""
+                app:layout_constraintStart_toStartOf="@+id/view"
                 app:layout_constraintTop_toBottomOf="@+id/view" />
 
             <TextView
@@ -394,6 +378,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.983"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/rlInsuranceDetails"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_corner_grey_border_1dp"
+                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
