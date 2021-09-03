@@ -50,8 +50,8 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentReward = rewardList[position]
-        holder.RewardName.text = currentReward.RewardName
-        holder.RewardDesc.text = currentReward.RewardDesc
+        holder.RewardName.text = currentReward.rewardName
+        holder.RewardDesc.text = currentReward.rewardDesc
         holder.AvailableDate.visibility = View.GONE
         holder.pointNeeded.visibility = View.GONE
         holder.Stock.visibility = View.GONE
@@ -67,6 +67,6 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
 
     class ProceedListener(val clickListener: (RewardID: String, RewardName: String) -> Unit) {
         fun onClick(reward: Reward) =
-            clickListener(reward.RewardID, reward.RewardName)
+            clickListener(reward.rewardID!!, reward.rewardName!!)
     }
 }

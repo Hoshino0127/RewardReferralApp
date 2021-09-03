@@ -54,11 +54,11 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentReward = rewardList[position]
-        holder.RewardName.text = currentReward.RewardName
-        holder.RewardDesc.text = currentReward.RewardDesc
-        holder.AvailableDate.text = "Available Before: " + currentReward.EndDate
-        holder.pointNeeded.text = "Point Needed: " + currentReward.PointNeeded.toString()
-        holder.Stock.text = "Stock: " + currentReward.Stock.toString()
+        holder.RewardName.text = currentReward.rewardName
+        holder.RewardDesc.text = currentReward.rewardDesc
+        holder.AvailableDate.text = "Available Before: " + currentReward.endDate
+        holder.pointNeeded.text = "Point Needed: " + currentReward.pointNeeded.toString()
+        holder.Stock.text = "Stock: " + currentReward.stock.toString()
         holder.btnView.visibility = View.GONE
         holder.btnProceed.visibility = View.GONE
         holder.bind(currentReward!!, clickListener)
@@ -71,6 +71,8 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
 
     class ClaimListener(val clickListener: (RewardID: String, RewardName: String, PointNeeded: Int,Stock:Int) -> Unit) {
         fun onClick(reward: Reward) =
-            clickListener(reward.RewardID, reward.RewardName, reward.PointNeeded,reward.Stock)
+            clickListener(reward.rewardID!!, reward.rewardName!!, reward.pointNeeded!!,
+                reward.stock!!
+            )
     }
 }
