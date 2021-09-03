@@ -92,5 +92,9 @@
         android:id="@+id/homepage"
         android:name="my.edu.tarc.rewardreferralapp.Homepage"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" />
+        tools:layout="@layout/fragment_homepage" >
+        <action
+            android:id="@+id/action_homepage_to_referralInsuranceListingFragment"
+            app:destination="@id/referralInsuranceListingFragment" />
+    </fragment>
 </navigation>

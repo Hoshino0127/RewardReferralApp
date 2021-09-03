@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -18,7 +14,6 @@ import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.RecyclerViewAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralInsuranceListingBinding
-import java.sql.Timestamp
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,6 +22,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val insuranceRef = database.getReference("Insurance")
+    private val ReferralInsuranceRef = database.getReference("ReferralInsurance")
 
 
     override fun onCreateView(
@@ -37,7 +33,11 @@ class ReferralInsuranceListingFragment : Fragment() {
         val binding: FragmentReferralInsuranceListingBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_referral_insurance_listing, container, false)
 
+
+        val insuranceIDList = ArrayList<String>()
         val insuranceList = ArrayList<Insurance>()
+
+        ReferralInsuranceRef
 
         insuranceRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
