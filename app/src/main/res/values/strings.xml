@@ -42,4 +42,37 @@
         between 2 week after the apply date.</string>
     <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
+
+    <!-- krysty -->
+    <string name="type_referral_name_here">type referral name here</string>
+    <string name="search">Search</string>
+    <string name="enter_referral_name">Enter Referral Name ：</string>
+    <string name="referral_status">Referral Status :</string>
+    <string name="referral_listings">Referral Listings</string>
+    <string name="inviter_s_name">Inviter Name :</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="who_invited_you">Who Invited You ?</string>
+    <string name="full_name">Full Name</string>
+    <string name="gender">Gender</string>
+    <string name="nric">NRIC</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="contact_no">Contact No.</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
+    <string name="login_details">Login Details</string>
+    <string name="total_points_earned">Total Points Earned</string>
+    <string name="redeem_rewards">Redeem Rewards</string>
+    <string name="share_your_referral_code_to_you_friends_to_obtain_additional_rewards_points">Share your referral code to you friends to obtain additional rewards points</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="box_invite">box_invite</string>
+    <string name="diamond">diamond</string>
+    <string name="star">star</string>
+    <string name="user_profile">user_profile</string>
+    <string name="login">Login</string>
+    <string name="copy_link">Copy link</string>
+    <string name="share_via">Share via</string>
+    <string name="share">Share</string>
 </resources>

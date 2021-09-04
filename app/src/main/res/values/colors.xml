@@ -22,4 +22,5 @@
     <color name="backgroundPrimary">#33AAFF</color>
     <color name="light_blue_second">#99EEFF</color>
     <color name="light_blue_third">#99EEFF</color>
+    <color name="btnColor">#0099FF</color>
 </resources>
