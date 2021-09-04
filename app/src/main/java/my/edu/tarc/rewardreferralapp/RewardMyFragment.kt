@@ -10,24 +10,22 @@ import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.adapter.RewardMyAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardMyBinding
+import com.google.firebase.database.*
 
 class RewardMyFragment : Fragment() {
 
+    val database =
+        FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    val rewardRef = database.getReference("Reward")
+    val refRewRef = database.getReference("RefferalReward")
+    val rewardIDList = ArrayList<String>()
+    var rewardList = ArrayList<Reward>()
+    val referralID = "R0001"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rewardList : List <Reward> = listOf(
-            Reward("RW0001","MyBee Umbrella","Umbrella from MyBee Company",500,
-                "22/08/2021","22/08/2022",50),
-
-            Reward("RW0002","MyBee Bottle","Bottle from MyBee Company",200,
-                "22/08/2021","26/08/2022",10),
-
-            Reward("RW0003","MyBee Wallet","Wallet from MyBee Company",300,
-                "22/08/2021","29/08/2022",0)
-        )
 
         val binding:FragmentRewardMyBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
@@ -41,7 +39,27 @@ class RewardMyFragment : Fragment() {
         binding.MyRewardRV.adapter = rewardApter
         binding.MyRewardRV.setHasFixedSize(true)
 
+        var qryRefRew:Query = refRewRef.orderByChild("refferalID").equalTo(referralID)
+        qryRefRew.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(refrewsnap in snapshot.children){
+                    rewardIDList.add(refrewsnap.child("rewardID").getValue().toString())
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+
+
+
+
         return binding.root
+
+
 
     }
 
