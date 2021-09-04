@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="13dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@android:color/holo_blue_bright">
+
+                <ImageView
+                    android:id="@+id/imgvInsurance"
+                    android:layout_width="3dp"
+                    android:layout_height="252dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginBottom="30dp"
+                    android:contentDescription=""
+                    app:srcCompat="@drawable/etiqa" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvAcceptorReject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="255dp"
+                android:layout_marginTop="20dp"
+                android:text="Accepted"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:layout_marginBottom="5dp"
+                android:text="Prudential"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginBottom="12dp"
+                android:text="Car Accident Insurance"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
