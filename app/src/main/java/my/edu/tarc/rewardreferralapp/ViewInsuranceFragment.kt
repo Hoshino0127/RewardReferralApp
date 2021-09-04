@@ -18,12 +18,15 @@ class ViewInsuranceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val insuranceList: List<Insurance> = listOf(
-            Insurance("IN001","Car insurance","Etiqa","Plan A", SimpleDateFormat("dd/MM/yyyy").parse("22/08/2022"),"IR001"),
-            Insurance("IN002","Motor insurance","Prudential","Plan C", SimpleDateFormat("dd/MM/yyyy").parse("25/04/2022"),"IR001"),
-            Insurance("IN003","Truck insurance","Etiqa","Plan D", SimpleDateFormat("dd/MM/yyyy").parse("15/06/2022"),"IR001"),
-            Insurance("IN004","Van insurance","Prudential","Plan B", SimpleDateFormat("dd/MM/yyyy").parse("07/04/2023"),"IR001")
+            Insurance("IN001","Car insurance","Etiqa","Plan A", listOf("Coverage 1")),
+            Insurance("IN002","Motor insurance","Prudential","Plan C", listOf("Coverage 1")),
+            Insurance("IN003","Truck insurance","Etiqa","Plan D", listOf("Coverage 1")),
+            Insurance("IN004","Van insurance","Prudential","Plan B",listOf("Coverage 1") )
         )
+
+
 
         // Inflate the layout for this fragment
         val binding: FragmentViewInsuranceBinding =

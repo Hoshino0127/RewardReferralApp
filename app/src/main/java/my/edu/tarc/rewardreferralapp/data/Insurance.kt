@@ -9,7 +9,5 @@ data class Insurance(
     val insuranceName: String? = null,
     val insuranceComp: String? = null,
     val insurancePlan: String? = null,
-    val insuranceExpiryDate: Date? = null,
-    val insuranceReferral: String? = null,
     val insuranceCoverage: List<String>? = null
 )
