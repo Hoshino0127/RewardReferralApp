@@ -23,7 +23,7 @@ class myAdapter(internal var context: Context, internal var insuranceList:Mutabl
         val currentitem = insuranceList[position]
 
         holder.insuranceName.text = currentitem.insuranceName
-        holder.insuranceExpiryDate.text = currentitem.insuranceExpiryDate.toString()
+        //holder.insuranceExpiryDate.text = currentitem.insuranceExpiryDate.toString()
         holder.insuranceComp.text = currentitem.insuranceComp
         holder.insurancePlan.text = currentitem.insurancePlan
 
@@ -35,7 +35,7 @@ class myAdapter(internal var context: Context, internal var insuranceList:Mutabl
 
     class myViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val insuranceName: TextView = itemView.findViewById(R.id.tvInsuranceName_cardview)
-        val insuranceExpiryDate: TextView = itemView.findViewById(R.id.tvInsuranceExpiryDate_cardview)
+        //val insuranceExpiryDate: TextView = itemView.findViewById(R.id.tvInsuranceExpiryDate_cardview)
         val insuranceComp: TextView = itemView.findViewById(R.id.tvInsuranceComp_cardview)
         val insurancePlan: TextView = itemView.findViewById(R.id.tvInsurancePlan_cardview)
 

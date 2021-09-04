@@ -25,6 +25,11 @@ class HomepageFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.relativeLayout8.setOnClickListener(){
+            val action = HomepageFragmentDirections.actionHomepageToClaimListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         return binding.root
     }
 

@@ -32,7 +32,7 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
         val insuranceComp: TextView = binding.tvInsuranceCompCardview
         val insuranceName: TextView = binding.tvInsuranceNameCardview
         val insurancePlan: TextView = binding.tvInsurancePlanCardview
-        val insuranceExpiryDate: TextView = binding.tvInsuranceExpiryDateCardview
+        //val insuranceExpiryDate: TextView = binding.tvInsuranceExpiryDateCardview
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +50,7 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
         holder.insuranceComp.text = currentInsurance.insuranceComp
         holder.insuranceID.text = currentInsurance.insuranceID
         holder.insurancePlan.text = currentInsurance.insurancePlan
-        holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.insuranceExpiryDate)
+        //holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.insuranceExpiryDate)
         holder.bind(currentInsurance!!, clickListener)
         // bind image into the image view
         //holder.imgInsuranceIcon.setImageResource(currentInsurance.img)

@@ -1,4 +1,4 @@
-package my.edu.tarc.referral
+package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

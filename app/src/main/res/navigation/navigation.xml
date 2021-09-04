@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/rewardCenterFragment">
+    app:startDestination="@id/userLoginFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -24,6 +24,9 @@
             app:destination="@id/applyClaimSuccessFragment" />
         <argument
             android:name="insuranceID"
+            app:argType="string" />
+        <argument
+            android:name="referralID"
             app:argType="string" />
     </fragment>
     <fragment
@@ -60,7 +63,11 @@
         android:id="@+id/claimDetailsFragment"
         android:name="my.edu.tarc.rewardreferralapp.ClaimDetailsFragment"
         android:label="fragment_claim_details"
-        tools:layout="@layout/fragment_claim_details" />
+        tools:layout="@layout/fragment_claim_details" >
+        <argument
+            android:name="claimID"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/renewInsuranceFragment"
         android:name="my.edu.tarc.rewardreferralapp.RenewInsuranceFragment"
@@ -96,9 +103,38 @@
         <action
             android:id="@+id/action_homepage_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <action
+            android:id="@+id/action_homepage_to_claimListingFragment"
+            app:destination="@id/claimListingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/rewardCenterFragment"
-        android:name="my.edu.tarc.rewardreferralapp.RewardCenterFragment"
-        android:label="RewardCenterFragment" />
+        android:id="@+id/userLoginFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserLoginFragment"
+        android:label="UserLoginFragment"
+        tools:layout="@layout/fragment_user_login">
+        <action
+            android:id="@+id/action_userLoginFragment_to_homepage"
+            app:destination="@id/homepage" />
+        <action
+            android:id="@+id/action_userLoginFragment_to_userRegisterFragment"
+            app:destination="@id/userRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserRegisterFragment"
+        android:label="UserRegisterFragment"
+        tools:layout="@layout/fragment_user_register">
+        <action
+            android:id="@+id/action_userRegisterFragment_to_userRegisterSuccessful"
+            app:destination="@id/userRegisterSuccessful" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterSuccessful"
+        android:name="my.edu.tarc.rewardreferralapp.UserRegisterSuccessful"
+        android:label="UserRegisterSuccessful"
+        tools:layout="@layout/fragment_user_register_successful">
+        <action
+            android:id="@+id/action_userRegisterSuccessful_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
+    </fragment>
 </navigation>

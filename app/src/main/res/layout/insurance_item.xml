@@ -81,15 +81,6 @@
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
                 app:layout_constraintTop_toBottomOf="@id/tvInsuranceName_cardview" />
 
-            <TextView
-                android:id="@+id/tvInsuranceExpiryDate_cardview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:padding="2dp"
-                android:text="Insurance expiry date"
-                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@id/tvInsurancePlan_cardview" />
 
             <Button
                 android:id="@+id/btnRenew_cardview"
@@ -102,7 +93,7 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceExpiryDate_cardview" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview" />
 
             <Button
                 android:id="@+id/btnClaim_cardview"

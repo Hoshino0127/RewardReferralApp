@@ -20,7 +20,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.Insurance
+import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApplyClaimBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,14 +32,18 @@ class ApplyClaimFragment : Fragment() {
     //val db = Firebase.firestore
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val insuranceRef = database.getReference("Insurance")
+    private val referralInsuranceRef = database.getReference("ReferralInsurance")
+    private val claimRef = database.getReference("Claim")
+
     private lateinit var insurance: Insurance
+    private lateinit var referralInsurance: ReferralInsurance
     private lateinit var binding: FragmentApplyClaimBinding
+    private lateinit var insuranceID: String
+    private lateinit var referralID: String
+
     private val myCalendar: Calendar = Calendar.getInstance()
-
     private var imgUriMileage: Uri? = null
-
     private var imgUriDamage: Uri? = null
-
     private var fromAction: String = ""
 
 
@@ -49,43 +55,72 @@ class ApplyClaimFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_apply_claim, container, false)
 
         val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())
+        insuranceID = args.insuranceID
+        referralID = args.referralID
 
-        insuranceRef.orderByKey().equalTo(args.insuranceID)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    if (snapshot.exists()) {
+        referralInsuranceRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
 
 
-                        for (insuranceSnapshot in snapshot.children) {
-                            if (insuranceSnapshot.child("insuranceID").getValue().toString()
-                                    .equals(args.insuranceID)
-                            ) {
-                                val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
-                                val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
-                                val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
-                                val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
-                                val insuranceReferral: String = insuranceSnapshot.child("insuranceReferral").getValue().toString()
-                                val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
-                                println(insuranceSnapshot.child("insuranceCoverage").getValue().toString())
-                                var insuranceCoverage: ArrayList<String> = ArrayList<String>()
-                                for(child in insuranceSnapshot.child("insuranceCoverage").children){
-                                    insuranceCoverage.add(child.getValue().toString())
-                                    println(child.getValue().toString())
-                                }
-                                insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceExpiryDate,insuranceReferral,insuranceCoverage)
+                    for (insuranceSnapshot in snapshot.children) {
+                        if (insuranceSnapshot.child("insuranceReferral").getValue().toString()
+                                .equals(referralID)
+                        ) {
+                            val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
+                            val insuranceReferral: String = insuranceSnapshot.child("insuranceReferral").getValue().toString()
+                            val insuranceReferralID: String = insuranceSnapshot.child("insuranceReferralID").getValue().toString()
+                            val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
 
-                            }
+                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,insuranceReferral,insuranceExpiryDate)
+
                         }
-
                     }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
 
                 }
+            }
 
-            })
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+        insuranceRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()) {
+
+
+                    for (insuranceSnapshot in snapshot.children) {
+                        if (insuranceSnapshot.child("insuranceID").getValue().toString()
+                                .equals(insuranceID)
+                        ) {
+                            val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
+                            val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
+                            val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
+                            val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
+                            //val insuranceReferral: String = insuranceSnapshot.child("insuranceReferral").getValue().toString()
+                            //val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
+                            println(insuranceSnapshot.child("insuranceCoverage").getValue().toString())
+                            var insuranceCoverage: ArrayList<String> = ArrayList<String>()
+                            for(child in insuranceSnapshot.child("insuranceCoverage").children){
+                                insuranceCoverage.add(child.getValue().toString())
+                                println(child.getValue().toString())
+                            }
+                            insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage)
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
 
 
 
@@ -161,7 +196,7 @@ class ApplyClaimFragment : Fragment() {
                 binding.tvInsuranceName.text = insurance.insuranceName
                 binding.tvCompTitle.text = insurance.insuranceComp
                 binding.tvInsurancePlanName.text = insurance.insurancePlan
-                binding.tvExpiryDate.text = format.format(insurance.insuranceExpiryDate!!)
+                binding.tvExpiryDate.text = format.format(referralInsurance.insuranceExpiryDate!!)
                 if(!(insurance.insuranceCoverage.isNullOrEmpty())){
                     for(str:String in insurance.insuranceCoverage!!){
                         strCoverage += str + "\n"
@@ -186,40 +221,45 @@ class ApplyClaimFragment : Fragment() {
     }
 
     private fun ApplyClaim(): Boolean{
-        // Create a new user with a first and last name
-        //val user = hashMapOf(
-        //    "first" to "Lee",
-        //    "last" to "Ken",
-        //    "born" to 2000
-        //)
+        var newID: String = ""
 
-        val coverageList: List<String> = listOf(
-            "Coverage 1","Coverage 2"
-        )
-
-        val insurance: Insurance = Insurance("IN005","Cat insurance","Cat","Plan B", Date("07/04/2023"),"IR001",coverageList)
-
-        /*
-        // Add a new document with a generated ID
-        db.collection("insurance").document(insurance.InsuranceID.toString())
-            .set(insurance, SetOptions.merge())
-            .addOnSuccessListener { document ->
-                Log.d(TAG, "DocumentSnapshot added successful")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
-        */
-
-
-
-        insuranceRef.child(insurance.insuranceID!!).setValue(insurance).addOnSuccessListener {
-            println(insurance)
-            Toast.makeText(requireContext(),"Added successful",Toast.LENGTH_LONG).show()
-        }.addOnFailureListener{
-            Toast.makeText(requireContext(),"Added failed",Toast.LENGTH_LONG).show()
+        var accidentType: String = ""
+        if (binding.rgAccidentType.checkedRadioButtonId == binding.rbOwnDamage.id){
+            accidentType = "OwnDamage"
+        }else if(binding.rgAccidentType.checkedRadioButtonId == binding.rbTheft.id){
+            accidentType = "Theft"
+        }else{
+            accidentType = "ThirdParty"
         }
 
+        claimRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+
+                    newID = "CL" + "%03d".format(snapshot.childrenCount + 1)
+
+                } else {
+
+                    newID = "CL001"
+
+                }
+
+                val claim: Claim = Claim(newID,Date(),"KKB",accidentType,"Hit a car at the back",20000,"","",null,"Pending",insuranceID,referralID)
+
+                claimRef.child(claim.claimID!!).setValue(claim).addOnSuccessListener {
+                    println(claim)
+                    Toast.makeText(requireContext(),"Claim successful",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    Toast.makeText(requireContext(),"Claim failed",Toast.LENGTH_LONG).show()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
+
+        })
 
         return true
     }
