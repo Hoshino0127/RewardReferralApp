@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".UserLoginFragment">
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="126dp"
+            android:fontFamily="@font/abeezee"
+            android:text="@string/login"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="100dp"
+            android:text="Please enter the following to contiune."
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLogin" />
+
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/username"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/txtLoginUsername"
+            app:layout_constraintStart_toEndOf="@+id/imgUser" />
+
+        <EditText
+            android:id="@+id/txtLoginUsername"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="44dp"
+            android:text="@string/password"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/imgPassword"
+            app:layout_constraintTop_toBottomOf="@+id/txtLoginUsername" />
+
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/user"
+            app:layout_constraintBottom_toTopOf="@+id/txtLoginUsername"
+            app:layout_constraintEnd_toStartOf="@+id/textView26"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+        <ImageView
+            android:id="@+id/imgPassword"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/password"
+            app:layout_constraintEnd_toStartOf="@+id/textView27"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLoginUsername" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="114dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="249dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/btnColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chkboxShowPass"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btnForgotPass"
+            android:layout_width="164dp"
+            android:layout_height="41dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="4dp"
+            android:text="Forgot Password"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:backgroundTint="@color/btnColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+        <EditText
+            android:id="@+id/txtLoginPass"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+        <CheckBox
+            android:id="@+id/chkboxShowPass"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_marginStart="72dp"
+            android:layout_marginTop="3dp"
+            android:text="Show Password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtLoginPass" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

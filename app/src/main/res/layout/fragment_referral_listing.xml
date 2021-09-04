@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ReferralListingFragment">
+
+            <TextView
+                android:id="@+id/tvRefListing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="37dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/referral_listings"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tvRefStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="37dp"
+                android:layout_marginTop="26dp"
+                android:text="@string/referral_status"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRefListing" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="37dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/enter_referral_name"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRefStatus" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="210dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rectangle"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRefStatus"
+                app:layout_constraintStart_toEndOf="@+id/tvRefStatus"
+                app:layout_constraintTop_toTopOf="@+id/tvRefStatus" />
+
+            <EditText
+                android:id="@+id/txtReferralName"
+                android:layout_width="335dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="38dp"
+                android:background="@drawable/rectangle"
+                android:ems="10"
+                android:hint="@string/type_referral_name_here"
+                android:inputType="textPersonName"
+                android:paddingStart="10dp"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                tools:ignore="RtlSymmetry" />
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="105dp"
+                android:layout_height="39dp"
+                android:text="@string/search"
+                android:textSize="14sp"
+                app:backgroundTint="@color/btnColor"
+                tools:layout_editor_absoluteX="268dp"
+                tools:layout_editor_absoluteY="208dp"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerReferral"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginBottom="65dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSearch" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

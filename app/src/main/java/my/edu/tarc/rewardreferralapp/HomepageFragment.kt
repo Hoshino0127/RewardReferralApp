@@ -21,7 +21,7 @@ class HomepageFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false)
 
         binding.button.setOnClickListener(){
-            val action = HomepageDirections.actionHomepageToReferralInsuranceListingFragment()
+            val action = HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
