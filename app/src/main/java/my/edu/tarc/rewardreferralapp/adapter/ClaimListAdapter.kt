@@ -1,8 +1,11 @@
 package my.edu.tarc.rewardreferralapp.adapter
 
+import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Claim
@@ -54,6 +57,17 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
         holder.insuranceName.text = currentInsurance.insuranceName
         holder.insuranceApplyDate.text = dateFormat.format(currentClaim.accidentDateTime)
         holder.claimStatus.text = currentClaim.claimStatus
+        if(currentClaim.claimStatus.equals("Pending")){
+           holder.claimStatus.setTextColor(Color.parseColor("#EC512B"))
+        }else if(currentClaim.claimStatus.equals("Accepted")){
+            holder.claimStatus.setTextColor(Color.parseColor("#31B12C"))
+        }else if(currentClaim.claimStatus.equals("Rejected")){
+            holder.claimStatus.setTextColor(Color.parseColor("#F30E15"))
+        }else{
+            holder.claimStatus.setTextColor(Color.parseColor("#000000"))
+        }
+        println(currentClaim.claimID.toString())
+        println(currentClaim.claimStatus.toString())
     }
 
     override fun getItemCount(): Int {

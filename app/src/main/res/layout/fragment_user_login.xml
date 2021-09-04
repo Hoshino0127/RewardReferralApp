@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="2dp"
-            android:text="@string/username"
+            android:text="@string/email"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/txtLoginUsername"
@@ -109,6 +109,17 @@
             app:backgroundTint="@color/btnColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chkboxShowPass"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btnToRegister"
+            android:layout_width="114dp"
+            android:layout_height="40dp"
+            android:text="Register"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/btnColor"
+            app:layout_constraintEnd_toEndOf="@+id/btnForgotPass"
+            app:layout_constraintTop_toBottomOf="@+id/btnForgotPass"
             tools:ignore="MissingConstraints" />
 
         <Button
