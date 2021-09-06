@@ -1,13 +1,15 @@
 package my.edu.tarc.rewardreferralapp.adapter
 
-import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import my.edu.tarc.rewardreferralapp.ClaimListingFragmentDirections
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.ReferralInsuranceListingFragmentDirections
 import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.ClaimItemBinding
@@ -30,10 +32,11 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
         }
 
         val insuranceComp: TextView = binding.tvInsuranceCompCardview
-        val insuranceID: TextView = binding.tvInsuranceIDCardview
+        val claimID: TextView = binding.tvClaimIDCardview
         val insuranceName: TextView = binding.tvInsuranceNameCardview
         val insuranceApplyDate: TextView = binding.tvApplyDateCardview
         val claimStatus: TextView = binding.tvClaimStatusCardview
+        val btnView: Button = binding.btnViewCardview
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
@@ -52,11 +55,12 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
             }
         }
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        holder.insuranceID.text = currentInsurance.insuranceID
+        holder.claimID.text = currentClaim.claimID
         holder.insuranceComp.text = currentInsurance.insuranceComp
         holder.insuranceName.text = currentInsurance.insuranceName
-        holder.insuranceApplyDate.text = dateFormat.format(currentClaim.accidentDateTime)
+        holder.insuranceApplyDate.text = dateFormat.format(currentClaim.applyDateTime)
         holder.claimStatus.text = currentClaim.claimStatus
+        holder.bind(currentClaim!!,clickListener)
         if(currentClaim.claimStatus.equals("Pending")){
            holder.claimStatus.setTextColor(Color.parseColor("#EC512B"))
         }else if(currentClaim.claimStatus.equals("Accepted")){
@@ -66,15 +70,14 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
         }else{
             holder.claimStatus.setTextColor(Color.parseColor("#000000"))
         }
-        println(currentClaim.claimID.toString())
-        println(currentClaim.claimStatus.toString())
+        println("From adapter: successfully bind claimID ${currentClaim.claimID}")
     }
 
     override fun getItemCount(): Int {
         return claimList.size
     }
 
-    class ViewListener(val clickListener: (claimID: String) -> Unit){
+    class ViewListener(val clickListener:(claimID: String) -> Unit){
         fun onClick(claim: Claim) = clickListener(claim.claimID!!)
     }
 

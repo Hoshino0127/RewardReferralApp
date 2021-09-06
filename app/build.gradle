@@ -78,4 +78,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
 
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    //local date time
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
 }

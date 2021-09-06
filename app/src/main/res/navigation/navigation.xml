@@ -67,6 +67,12 @@
         <argument
             android:name="claimID"
             app:argType="string" />
+        <argument
+            android:name="referralID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_claimDetailsFragment_to_claimListingFragment"
+            app:destination="@id/claimListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/renewInsuranceFragment"
@@ -106,6 +112,9 @@
         <action
             android:id="@+id/action_homepage_to_claimListingFragment"
             app:destination="@id/claimListingFragment" />
+        <action
+            android:id="@+id/action_homepage_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/userLoginFragment"

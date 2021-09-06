@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvInsuranceID_cardview"
+                android:id="@+id/tvClaimID_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -55,7 +55,7 @@
                 android:padding="2dp"
                 android:text="Insurance Name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvInsuranceID_cardview" />
+                app:layout_constraintTop_toBottomOf="@id/tvClaimID_cardview" />
 
             <TextView
                 android:id="@+id/tvApplyDate_cardview"

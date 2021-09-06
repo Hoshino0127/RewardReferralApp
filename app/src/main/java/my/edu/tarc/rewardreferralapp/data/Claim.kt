@@ -12,7 +12,8 @@ data class Claim(
     val mileage: Int? = 0,
     val imgMileage: String? = null,
     val imgDamage: String? = null,
-    val claimDateTime: Date? = null,
+    val applyDateTime: Date? = null,
+    val approveDateTime: Date? = null,
     val claimStatus: String? = null,
     val insuranceID: String? = null,
     val insuranceReferral: String? = null

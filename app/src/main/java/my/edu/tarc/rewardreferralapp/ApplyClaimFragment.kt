@@ -29,7 +29,7 @@ import java.util.*
 
 
 class ApplyClaimFragment : Fragment() {
-    //val db = Firebase.firestore
+
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val insuranceRef = database.getReference("Insurance")
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
@@ -167,8 +167,8 @@ class ApplyClaimFragment : Fragment() {
         }
 
         binding.btnApplyClaim.setOnClickListener() {
-            if (CheckError()) {
-                if (ApplyClaim()) {
+            if (errorFree()) {
+                if (applyClaim()) {
                     val action =
                         ApplyClaimFragmentDirections.actionApplyClaimFragmentToApplyClaimSuccessFragment()
                     Navigation.findNavController(it).navigate(action)
@@ -216,35 +216,96 @@ class ApplyClaimFragment : Fragment() {
         return binding.root
     }
 
-    private fun CheckError(): Boolean{
+    private fun errorFree(): Boolean{
+
+        if(binding.dtAccidentDate.text.toString().isEmpty() || binding.dtAccidentTime.text.toString().isEmpty()) {
+            Toast.makeText(requireContext(),"Please select the accident date and time",Toast.LENGTH_LONG).show()
+            binding.dtAccidentDate.requestFocus()
+            return false
+        }else{
+            val dtString = binding.dtAccidentDate.text.toString() + " " + binding.dtAccidentTime.text.toString()
+            if(Date(dtString) > Date()){
+                Toast.makeText(requireContext(),"The accident date not be in the future",Toast.LENGTH_LONG).show()
+                binding.dtAccidentDate.requestFocus()
+                return false
+            }
+        }
+
+        if(binding.txtAccidentPlace.text.toString().isEmpty()){
+            Toast.makeText(requireContext(),"The enter the accident place",Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(!(binding.rbOwnDamage.isChecked) && !(binding.rbTheft.isChecked) && !(binding.rbThirdParty.isChecked)){
+            Toast.makeText(requireContext(),"The select the accident type",Toast.LENGTH_LONG).show()
+            binding.rgAccidentType.requestFocus()
+            return false
+        }
+
+        if(binding.txtAccidentDesc.text.toString().isEmpty()){
+            Toast.makeText(requireContext(),"The enter the accident description",Toast.LENGTH_LONG).show()
+            binding.txtAccidentDesc.requestFocus()
+            return false
+        }
+
+        if(binding.txtMileage.text.toString().isEmpty()){
+            Toast.makeText(requireContext(),"Please enter the current mileage",Toast.LENGTH_LONG).show()
+            binding.txtMileage.requestFocus()
+            return false
+        }else{
+            if(!(isNumber(binding.txtMileage.text.toString()))){
+                Toast.makeText(requireContext(),"The mileage should be numeric",Toast.LENGTH_LONG).show()
+                binding.txtMileage.requestFocus()
+                return false
+            }
+        }
+
+        //check if mileage image is uploaded
+        //check if damage image is uploaded
         return true
     }
 
-    private fun ApplyClaim(): Boolean{
+    private fun applyClaim(): Boolean{
         var newID: String = ""
 
+        val dtString = binding.dtAccidentDate.text.toString() + " " + binding.dtAccidentTime.text.toString()
+
         var accidentType: String = ""
-        if (binding.rgAccidentType.checkedRadioButtonId == binding.rbOwnDamage.id){
-            accidentType = "OwnDamage"
+        accidentType = if (binding.rgAccidentType.checkedRadioButtonId == binding.rbOwnDamage.id){
+            "OwnDamage"
         }else if(binding.rgAccidentType.checkedRadioButtonId == binding.rbTheft.id){
-            accidentType = "Theft"
+            "Theft"
         }else{
-            accidentType = "ThirdParty"
+            "ThirdParty"
         }
 
         claimRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
+                newID = if (snapshot.exists()) {
 
-                    newID = "CL" + "%03d".format(snapshot.childrenCount + 1)
+                    "CL" + "%03d".format(snapshot.childrenCount + 1)
 
                 } else {
 
-                    newID = "CL001"
+                    "CL001"
 
                 }
 
-                val claim: Claim = Claim(newID,Date(),"KKB",accidentType,"Hit a car at the back",20000,"","",null,"Pending",insuranceID,referralID)
+                val claim: Claim = Claim(
+                    newID,
+                    Date(dtString),
+                    binding.txtAccidentPlace.text.toString(),
+                    accidentType,
+                    binding.txtAccidentDesc.text.toString(),
+                    binding.txtMileage.text.toString().toInt(),
+                    "",
+                    "",
+                    Date(),
+                    null,
+                    "Pending",
+                    insuranceID,
+                    referralID
+                )
 
                 claimRef.child(claim.claimID!!).setValue(claim).addOnSuccessListener {
                     println(claim)
@@ -276,6 +337,14 @@ class ApplyClaimFragment : Fragment() {
                 binding.imgDamage.setImageURI(data?.data)
             }
 
+        }
+    }
+
+    fun isNumber(s: String): Boolean {
+        return when(s.toIntOrNull())
+        {
+            null -> false
+            else -> true
         }
     }
 
