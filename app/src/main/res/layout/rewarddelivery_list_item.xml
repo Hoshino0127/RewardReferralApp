@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="RewardDelivery"
+            type="my.edu.tarc.rewardreferralapp.data.RewardDelivery" />
+
+        <variable
+            name="checkListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.RewardDeliveryAdapter.CheckListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/RewardRelativeLayout"
+            android:layout_width="394dp"
+            android:layout_height="238dp"
+            android:layout_margin="10dp">
+
+
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="366dp"
+                android:layout_height="226dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/RewardRelativeLayout"
+                app:layout_constraintHorizontal_bias="0.058"
+                app:layout_constraintStart_toStartOf="@+id/RewardRelativeLayout"
+                app:layout_constraintTop_toTopOf="@+id/RewardRelativeLayout"
+                app:srcCompat="@drawable/rectangle" />
+
+            <TextView
+                android:id="@+id/tvDeliveryID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:text="Delivery ID"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView20"
+                app:layout_constraintTop_toTopOf="@+id/imageView20" />
+
+            <TextView
+                android:id="@+id/tvDeliveryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:text="Apply date"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView20"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeliveryID" />
+
+            <TextView
+                android:id="@+id/tvDeliveryStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:text="Delivery Status"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/imageView20"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeliveryDate" />
+
+            <Button
+                android:id="@+id/btnDeliveryCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{() -> checkListener.onClick(RewardDelivery)}"
+                android:text="Check"
+                app:layout_constraintEnd_toEndOf="@+id/imageView20"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeliveryStatus" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

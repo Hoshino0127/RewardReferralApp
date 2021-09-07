@@ -4,6 +4,7 @@ data class RefferalReward(
     val rewardClaimID:String? = null,
     val refferalID :String? = null,
     val rewardID :String? = null,
-    val status:String?=null
+    val status:String?=null,
+    val deliveryID:String?=null
 
 )

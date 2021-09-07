@@ -4,23 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
 
-class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedListener) :
+
+class RewardMyAdapter(val rewardList: List<Reward>,val refrewList:List<RefferalReward>) :
     RecyclerView.Adapter<RewardMyAdapter.ViewHolder>() {
+
+
+
+    private var chekedList: ArrayList<RefferalReward> = ArrayList<RefferalReward>()
 
     class ViewHolder private constructor(val binding: RewardcenterListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: Reward, clickListener: ProceedListener) {
-            binding.reward = item
-            binding.executePendingBindings()
-            binding.proceedListener = clickListener
-        }
 
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
@@ -37,7 +38,7 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
         val Stock: TextView = binding.tvStock
         val btnClaim: Button = binding.btnClaim
         val btnView: Button = binding.btnView
-        val btnProceed: Button = binding.btnProceed
+        val chkReward:CheckBox = binding.chkReward
 
     }
 
@@ -51,6 +52,7 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentReward = rewardList[position]
+        val currRefRew = refrewList[position]
         holder.RewardName.text = currentReward.rewardName
         holder.RewardDesc.text = currentReward.rewardDesc
         holder.AvailableDate.visibility = View.GONE
@@ -58,16 +60,24 @@ class RewardMyAdapter(val rewardList: List<Reward>, val clickListener: ProceedLi
         holder.Stock.visibility = View.GONE
         holder.btnClaim.visibility = View.GONE
         holder.btnView.visibility = View.GONE
-        holder.btnProceed.visibility = View.VISIBLE
-        holder.bind(currentReward!!, clickListener)
+        holder.chkReward.visibility = View.VISIBLE
+
+        holder.chkReward.tag = position
+
+        holder.chkReward.setOnClickListener{
+            val chkpostition = holder.chkReward.tag as Int
+
+            if(holder.chkReward.isChecked){
+                chekedList.add(refrewList[chkpostition])
+            }else{
+                chekedList.remove(refrewList[chkpostition])
+            }
+        }
     }
+
+    fun getchekList() = chekedList
 
     override fun getItemCount(): Int {
         return rewardList.size
-    }
-
-    class ProceedListener(val clickListener: (RewardID: String, RewardName: String) -> Unit) {
-        fun onClick(reward: Reward) =
-            clickListener(reward.rewardID!!, reward.rewardName!!)
     }
 }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
@@ -36,7 +37,7 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         val pointNeeded: TextView = binding.tvPointNeeded
         val Stock: TextView = binding.tvStock
         val btnView: Button = binding.btnView
-        val btnProceed:Button = binding.btnProceed
+        val chkReward:CheckBox = binding.chkReward
 
 
     }
@@ -60,7 +61,7 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         holder.pointNeeded.text = "Point Needed: " + currentReward.pointNeeded.toString()
         holder.Stock.text = "Stock: " + currentReward.stock.toString()
         holder.btnView.visibility = View.GONE
-        holder.btnProceed.visibility = View.GONE
+        holder.chkReward.visibility = View.GONE
         holder.bind(currentReward!!, clickListener)
 
     }
