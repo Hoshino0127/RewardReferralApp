@@ -25,6 +25,7 @@ class ReferralInsuranceListingFragment : Fragment() {
     private val insuranceRef = database.getReference("Insurance")
     private val ReferralInsuranceRef = database.getReference("ReferralInsurance")
     private val referralID = "IR001"
+    private lateinit var insuranceListener: ValueEventListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +46,7 @@ class ReferralInsuranceListingFragment : Fragment() {
                     for(referralInsSnapshot in snapshot.children){
                         referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
                     }
-                    println(referralInsuranceList)
+                    println("Referral Insurance Listing : insurancereferral ${referralInsuranceList.size}")
                 }
             }
 
@@ -55,7 +56,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         })
 
-        insuranceRef.addValueEventListener(object : ValueEventListener {
+        insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
@@ -77,7 +78,7 @@ class ReferralInsuranceListingFragment : Fragment() {
                                 }
                                 val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage)
                                 insuranceList.add(insurance)
-                                println(insuranceList)
+                                println(insurance)
                             }
 
                         }
@@ -94,8 +95,9 @@ class ReferralInsuranceListingFragment : Fragment() {
 
             }
 
-        })
+        }
 
+        insuranceRef.addValueEventListener(insuranceListener)
 
 
         val insuranceAdapter = RecyclerViewAdapter(insuranceList,
@@ -127,7 +129,10 @@ class ReferralInsuranceListingFragment : Fragment() {
     }
 
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        insuranceRef.removeEventListener(insuranceListener)
+    }
 
 
 

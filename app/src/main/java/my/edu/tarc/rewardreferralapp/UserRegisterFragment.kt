@@ -34,10 +34,18 @@ class UserRegisterFragment : Fragment() {
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success")
-                            val action =
-                                UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
-                            Navigation.findNavController(it).navigate(action)
+                            val user = auth.currentUser
+
+                            user!!.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "createUserWithEmail:success")
+                                        val action =
+                                            UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
+                                        Navigation.findNavController(it).navigate(action)
+                                    }
+                                }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
