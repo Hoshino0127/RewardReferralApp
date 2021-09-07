@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.ClaimFigure
+import my.edu.tarc.rewardreferralapp.databinding.ClaimItemBinding
 
 
 class ClaimFigureAdapter(private val context: Context, private val cfList: java.util.ArrayList<ClaimFigure>) : BaseAdapter() {
@@ -33,4 +37,5 @@ class ClaimFigureAdapter(private val context: Context, private val cfList: java.
         tvClaimFigureAmount.text = String.format("%.2f",cfList[position].claimFigureAmount)
         return convertView
     }
+
 }

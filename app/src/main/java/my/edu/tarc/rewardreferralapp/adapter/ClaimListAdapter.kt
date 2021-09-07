@@ -81,4 +81,5 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
         fun onClick(claim: Claim) = clickListener(claim.claimID!!)
     }
 
+
 }

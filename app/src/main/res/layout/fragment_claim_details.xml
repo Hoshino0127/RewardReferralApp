@@ -290,19 +290,25 @@
 
             <ImageView
                 android:id="@+id/imgMileage"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/textView23"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
                 app:layout_constraintTop_toBottomOf="@+id/textView23"
                 tools:src="@tools:sample/avatars" />
 
             <ImageView
                 android:id="@+id/imgDamage"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="@+id/textView23"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
                 app:layout_constraintTop_toBottomOf="@+id/imgMileage"
                 tools:src="@tools:sample/avatars" />
 
