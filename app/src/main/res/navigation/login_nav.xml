@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav"
+    app:startDestination="@id/userLoginFragment">
+
+    <fragment
+        android:id="@+id/userLoginFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserLoginFragment"
+        android:label="UserLoginFragment"
+        tools:layout="@layout/fragment_user_login">
+        <action
+            android:id="@+id/action_userLoginFragment_to_userRegisterFragment"
+            app:destination="@id/userRegisterFragment" />
+        <action
+            android:id="@+id/action_userLoginFragment_to_loggingInFragment"
+            app:destination="@id/loggingInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserRegisterFragment"
+        android:label="UserRegisterFragment"
+        tools:layout="@layout/fragment_user_register">
+        <action
+            android:id="@+id/action_userRegisterFragment_to_userRegisterSuccessful"
+            app:destination="@id/userRegisterSuccessful" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterSuccessful"
+        android:name="my.edu.tarc.rewardreferralapp.UserRegisterSuccessful"
+        android:label="UserRegisterSuccessful"
+        tools:layout="@layout/fragment_user_register_successful">
+        <action
+            android:id="@+id/action_userRegisterSuccessful_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loggingInFragment"
+        android:name="my.edu.tarc.rewardreferralapp.LoggingInFragment"
+        android:label="LoggingInFragment"
+        tools:layout="@layout/fragment_logging_in">
+        <action
+            android:id="@+id/action_loggingInFragment_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
+    </fragment>
+</navigation>
