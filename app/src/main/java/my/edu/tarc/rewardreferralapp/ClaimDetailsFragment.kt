@@ -27,6 +27,7 @@ import my.edu.tarc.rewardreferralapp.adapter.ClaimFigureAdapter
 import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.ClaimFigure
 import my.edu.tarc.rewardreferralapp.data.Insurance
+import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentClaimDetailsBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import java.text.SimpleDateFormat
@@ -38,6 +39,7 @@ class ClaimDetailsFragment : Fragment() {
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val insuranceRef = database.getReference("Insurance")
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
+    private val referralRef = database.getReference("Referral")
     private val claimRef = database.getReference("Claim")
     private val claimFigureRef = database.getReference("ClaimFigure")
 
@@ -47,6 +49,7 @@ class ClaimDetailsFragment : Fragment() {
     private lateinit var claimID: String
     private lateinit var referralID: String
     private var deductible: Double = 0.0
+    private var referral: Referral = Referral()
     private var claim: Claim = Claim()
     private var insurance: Insurance = Insurance()
     private var cfList: ArrayList<ClaimFigure> = ArrayList<ClaimFigure>()
@@ -63,7 +66,26 @@ class ClaimDetailsFragment : Fragment() {
         referralID = args.referralID
 
         //get deductible from referral
-        deductible = 0.1
+        referralRef.orderByChild("referralID").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(referralSS in snapshot.children){
+                        if(referralSS.child("referralID").getValue().toString().equals(referralID)){
+                            val referralID: String = referralSS.child("referralID").getValue().toString()
+                            val referralUID: String = referralSS.child("referralUID").getValue().toString()
+                            val deductible: Double = referralSS.child("deductible").getValue().toString().toDouble()
+                            referral = Referral(referralID = referralID, referralUID = referralUID, deductible = deductible)
+                            println(referral)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
 
         /*val cf: ClaimFigure = ClaimFigure(claimID,"Figure 1",100.00)
         val cf2: ClaimFigure = ClaimFigure(claimID,"Figure 2",300.00)
@@ -226,9 +248,15 @@ class ClaimDetailsFragment : Fragment() {
         }
 
         when (claim.claimStatus){
-            "Pending" -> binding.tvStatus.setTextColor(Color.parseColor("#EC512B"))
+            "Pending" -> {
+                binding.tvStatus.setTextColor(Color.parseColor("#EC512B"))
+                hideClaimFigure()
+            }
             "Accepted" -> binding.tvStatus.setTextColor(Color.parseColor("#31B12C"))
-            "Rejected" -> binding.tvStatus.setTextColor(Color.parseColor("#F30E15"))
+            "Rejected" -> {
+                binding.tvStatus.setTextColor(Color.parseColor("#F30E15"))
+                hideClaimFigure()
+            }
             else -> binding.tvStatus.setTextColor(Color.parseColor("#000000"))
         }
 
@@ -243,7 +271,25 @@ class ClaimDetailsFragment : Fragment() {
             }
         }
 
+        if(!(claim.imgDamage.isNullOrEmpty())){
+            srref = FirebaseStorage.getInstance().getReference("User_"+ CheckUser().getCurrentUserUID()).child(claim.imgDamage.toString())
+            srref.downloadUrl.addOnSuccessListener {
+                Glide
+                    .with(binding.imgDamage.context)
+                    .load(it.toString())
+                    .into(binding.imgDamage)
+                println("Get image from ${it.toString()}")
+            }
+        }
 
+
+    }
+
+    fun hideClaimFigure(){
+        binding.view6.visibility = View.INVISIBLE
+        binding.lvAmountDetails.visibility = View.INVISIBLE
+        binding.textView25.visibility = View.INVISIBLE
+        binding.tbAmount.visibility = View.INVISIBLE
     }
 
     fun updateClaimFigure(){
@@ -253,11 +299,6 @@ class ClaimDetailsFragment : Fragment() {
 
         val adapter = ClaimFigureAdapter(requireContext(),cfList)
         binding.lvAmountDetails.adapter = adapter
-
-        binding.lvAmountDetails.setOnItemClickListener { parent, view, position, id ->
-            cfList.removeAt(position)
-            adapter.notifyDataSetChanged()
-        }
 
         //set height
         var totalHeight: Int = 0;
@@ -273,7 +314,7 @@ class ClaimDetailsFragment : Fragment() {
         binding.lvAmountDetails.setLayoutParams(params)
         binding.lvAmountDetails.requestLayout()
 
-        deductibleAmt = subtotal * this.deductible
+        deductibleAmt = subtotal * referral.deductible!!
         total = subtotal - deductibleAmt
         binding.tvSubtotal.text = String.format("%.2f",subtotal)
         binding.tvDeductible.text = String.format("%.2f",deductibleAmt)

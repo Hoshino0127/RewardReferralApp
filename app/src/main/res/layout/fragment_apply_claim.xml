@@ -13,18 +13,6 @@
             android:fillViewport="true"
             tools:context=".ApplyClaimFragment">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="0dp"
-                android:layout_height="1050dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnApplyClaim"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/rect_bg" />
 
             <EditText
                 android:id="@+id/txtMileage"
@@ -36,8 +24,8 @@
                 android:hint="Current mileage of your car"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 
@@ -116,8 +104,8 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/insurance_claim_form"
                 style="@style/TitleStyle"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintTop_toTopOf="@+id/clClaimDetails_ApplyClaim" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -136,7 +124,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Date and time of accident"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <TextView
@@ -148,7 +136,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Place of accident"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/dtAccidentDate" />
 
             <TextView
@@ -160,7 +148,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Type of accident"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/txtAccidentPlace" />
 
             <TextView
@@ -172,7 +160,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Short description of the accident"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/rgAccidentType" />
 
             <TextView
@@ -184,7 +172,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Car mileage"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/txtAccidentDesc" />
 
             <TextView
@@ -196,7 +184,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Car damage"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/btnUploadMileage" />
 
             <EditText
@@ -212,7 +200,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
 
@@ -231,7 +219,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 app:layout_constraintBottom_toBottomOf="@+id/dtAccidentDate"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintStart_toEndOf="@+id/dtAccidentDate"
                 app:layout_constraintTop_toTopOf="@+id/dtAccidentDate" />
 
@@ -244,7 +232,7 @@
                 android:hint="Place of accident"
                 android:inputType="textPersonName"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <ImageButton
@@ -253,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 app:layout_constraintBottom_toBottomOf="@+id/txtAccidentPlace"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintStart_toEndOf="@+id/txtAccidentPlace"
                 app:layout_constraintTop_toTopOf="@+id/txtAccidentPlace"
                 app:srcCompat="@android:drawable/ic_menu_mylocation" />
@@ -264,8 +252,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
 
                 <RadioButton
@@ -297,11 +285,11 @@
                 android:layout_marginEnd="15dp"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Shrt description of accident"
+                android:hint="Short description of accident"
                 android:inputType="textMultiLine"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <TextView
@@ -311,7 +299,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:text="Please take a picture of the odometer as evidence"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/txtMileage" />
 
             <TextView
@@ -320,33 +308,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:text="Please take a picture of the odometer as evidence"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-            <ImageView
-                android:id="@+id/imgMileage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <ImageView
-                android:id="@+id/imgDamage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView11"
-                tools:srcCompat="@tools:sample/avatars" />
 
             <Button
                 android:id="@+id/btnUploadMileage"
@@ -355,8 +318,8 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/upload_image"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/imgMileage" />
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintTop_toBottomOf="@+id/clImgMileage" />
 
             <Button
                 android:id="@+id/btnUploadDamage"
@@ -364,9 +327,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/upload_image"
-                app:layout_constraintStart_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@+id/imgDamage" />
+                app:layout_constraintBottom_toBottomOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintTop_toBottomOf="@+id/clImgDamage"
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/btnApplyClaim"
@@ -387,12 +353,91 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_corner_grey_border_1dp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView2"
+                app:layout_constraintBottom_toTopOf="@+id/clClaimDetails_ApplyClaim"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clImgMileage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                <ImageView
+                    android:id="@+id/imgMileage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/imgCross_mileage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:clickable="false"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/btn_dialog" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clImgDamage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintStart_toStartOf="@+id/clClaimDetails_ApplyClaim"
+                app:layout_constraintTop_toBottomOf="@+id/textView11">
+
+                <ImageView
+                    android:id="@+id/imgCross_damage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:clickable="false"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/btn_dialog" />
+
+                <ImageView
+                    android:id="@+id/imgDamage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/avatars" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                android:id="@+id/clClaimDetails_ApplyClaim"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_corner_grey_border_1dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnApplyClaim"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rlInsuranceDetails">
 
             </RelativeLayout>
 

@@ -12,12 +12,21 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Claim
+import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserRegisterBinding
+import java.util.*
 
 class UserRegisterFragment : Fragment() {
+    private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var binding: FragmentUserRegisterBinding
     private lateinit var auth: FirebaseAuth
+    private val referralRef = database.getReference("Referral")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +49,8 @@ class UserRegisterFragment : Fragment() {
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Log.d(TAG, "createUserWithEmail:success")
-                                        val action =
-                                            UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
-                                        Navigation.findNavController(it).navigate(action)
+                                        addReferral(user.uid)
+
                                     }
                                 }
 
@@ -90,5 +98,40 @@ class UserRegisterFragment : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun addReferral(userUID: String){
+        var newID: String = ""
+        referralRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                newID = if (snapshot.exists()) {
+
+                    "IR" + "%03d".format(snapshot.childrenCount + 1)
+
+                } else {
+
+                    "IR001"
+
+                }
+
+
+                val referral = Referral(newID,userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1)
+                referralRef.child(referral.referralID!!).setValue(referral).addOnSuccessListener {
+                    val action =
+                        UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
+                    Navigation.findNavController(requireView()).navigate(action)
+                }.addOnFailureListener{
+                    Toast.makeText(requireContext(),"Register failed",Toast.LENGTH_LONG).show()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+
     }
 }

@@ -26,6 +26,18 @@
                 app:srcCompat="@drawable/rect_bg" />
 
             <TextView
+                android:id="@+id/textView30"
+                style="@style/InputHeaderStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Evidence"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/tvMileage" />
+
+            <TextView
                 android:id="@+id/tvCompTitle"
                 style="@style/TitleStyle"
                 android:layout_width="wrap_content"
@@ -212,11 +224,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:text="Evidence"
-                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="Mileage"
                 app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/tvMileage" />
+                app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+            <TextView
+                android:id="@+id/textView34"
+                style="@style/InputHeaderStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:text="Accident damage"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/imgMileage" />
 
             <TextView
                 android:id="@+id/textView25"
@@ -309,7 +331,7 @@
                 android:layout_marginEnd="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/imageView5"
                 app:layout_constraintStart_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toBottomOf="@+id/imgMileage"
+                app:layout_constraintTop_toBottomOf="@+id/textView34"
                 tools:src="@tools:sample/avatars" />
 
             <ListView

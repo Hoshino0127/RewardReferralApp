@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -43,6 +45,10 @@ class ApplyClaimFragment : Fragment() {
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
     private val claimRef = database.getReference("Claim")
 
+    private lateinit var insuranceListener: ValueEventListener
+    private lateinit var referralInsuranceListener: ValueEventListener
+    private lateinit var claimListener: ValueEventListener
+
     private lateinit var srref : StorageReference
 
     private lateinit var insurance: Insurance
@@ -52,8 +58,8 @@ class ApplyClaimFragment : Fragment() {
     private var referralID: String = ""
 
     private val myCalendar: Calendar = Calendar.getInstance()
-    private lateinit var imgUriMileage: Uri
-    private lateinit var imgUriDamage: Uri
+    private var imgUriMileage: Uri = Uri.EMPTY
+    private var imgUriDamage: Uri = Uri.EMPTY
     private var fromAction: String = ""
 
     override fun onCreateView(
@@ -67,7 +73,7 @@ class ApplyClaimFragment : Fragment() {
         insuranceID = args.insuranceID
         referralID = args.referralID
 
-        referralInsuranceRef.addValueEventListener(object: ValueEventListener{
+        referralInsuranceListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
 
@@ -93,9 +99,10 @@ class ApplyClaimFragment : Fragment() {
 
             }
 
-        })
+        }
+        referralInsuranceRef.addListenerForSingleValueEvent(referralInsuranceListener)
 
-        insuranceRef.addValueEventListener(object : ValueEventListener {
+        insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if (snapshot.exists()) {
@@ -129,8 +136,8 @@ class ApplyClaimFragment : Fragment() {
 
             }
 
-        })
-
+        }
+        insuranceRef.addValueEventListener(insuranceListener)
 
 
         val datePicker: DatePickerDialog.OnDateSetListener =
@@ -194,6 +201,28 @@ class ApplyClaimFragment : Fragment() {
 
             fromAction = "Mileage"
             addImage.launch(intent)
+        }
+
+        binding.btnUploadDamage.setOnClickListener(){
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+
+            fromAction = "Damage"
+            addImage.launch(intent)
+        }
+
+        binding.imgCrossMileage.setOnClickListener(){
+            imgUriMileage = Uri.EMPTY
+            binding.imgMileage.setImageURI(Uri.EMPTY)
+            binding.imgCrossMileage.visibility = View.INVISIBLE
+            binding.imgCrossMileage.isClickable = false
+        }
+
+        binding.imgCrossDamage.setOnClickListener(){
+            imgUriDamage = Uri.EMPTY
+            binding.imgDamage.setImageURI(Uri.EMPTY)
+            binding.imgCrossDamage.visibility = View.INVISIBLE
+            binding.imgCrossDamage.isClickable = false
         }
 
         binding.rlInsuranceDetails.setOnClickListener{
@@ -281,6 +310,7 @@ class ApplyClaimFragment : Fragment() {
     private fun applyClaim(): Boolean{
         var newID: String = ""
         var imgMileageName: String = ""
+        var imgDamageName: String = ""
 
         val dtString = binding.dtAccidentDate.text.toString() + " " + binding.dtAccidentTime.text.toString()
 
@@ -293,26 +323,23 @@ class ApplyClaimFragment : Fragment() {
             "ThirdParty"
         }
 
-
-
-        claimRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        claimListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 newID = if (snapshot.exists()) {
-
                     "CL" + "%03d".format(snapshot.childrenCount + 1)
-
                 } else {
-
                     "CL001"
-
                 }
 
-                if(!(imgUriMileage.equals(""))){
+                if(imgUriMileage != Uri.EMPTY){
                     uploadMileageImg(newID)
                     imgMileageName = "mileage_$newID"
                 }
 
-
+                if(imgUriDamage != Uri.EMPTY){
+                    uploadDamageImg(newID)
+                    imgDamageName = "damage_$newID"
+                }
 
                 val claim: Claim = Claim(
                     newID,
@@ -322,7 +349,7 @@ class ApplyClaimFragment : Fragment() {
                     binding.txtAccidentDesc.text.toString(),
                     binding.txtMileage.text.toString().toInt(),
                     imgMileageName,
-                    "",
+                    imgDamageName,
                     Date(),
                     null,
                     "Pending",
@@ -343,7 +370,9 @@ class ApplyClaimFragment : Fragment() {
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
             }
 
-        })
+        }
+
+        claimRef.addListenerForSingleValueEvent(claimListener)
 
         return true
     }
@@ -351,31 +380,39 @@ class ApplyClaimFragment : Fragment() {
     var addImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
+            var height: Int = 0
 
             if(fromAction.equals("Mileage")){
                 imgUriMileage  = data?.data!!
                 binding.imgMileage.setImageURI(data?.data)
+                binding.imgCrossMileage.visibility = View.VISIBLE
+                binding.imgCrossMileage.isClickable = true
             }else if(fromAction.equals("Damage")){
                 imgUriDamage = data?.data!!
                 binding.imgDamage.setImageURI(data?.data)
+                binding.imgCrossDamage.visibility = View.VISIBLE
+                binding.imgCrossDamage.isClickable = true
             }
+
 
         }
     }
 
     private fun uploadMileageImg(claimID: String) {
-        //imgUriMileage = Uri.parse("android.resource://my.edu.tarc.rewardreferralapp/drawable/ic_base_profile_pic")
-        //println("Image uploaded is $imgUriMileage")
-        val strMileageImgName: String = ""
         srref = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("mileage_$claimID")
         srref.putFile(imgUriMileage).addOnSuccessListener {
-            /*OnSuccessListener<UploadTask.TaskSnapshot> { p0 ->
-                if (p0 != null) {
-                    p0.metadata?.reference?.downloadUrl?.addOnSuccessListener {
-                        
-                    }
-                }
-            }*/
+            Toast.makeText(context, "Upload pic successful",
+                Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener{
+            Toast.makeText(context, "Error fails to upload pic",
+                Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    private fun uploadDamageImg(claimID: String) {
+        srref = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("damage_$claimID")
+        srref.putFile(imgUriMileage).addOnSuccessListener {
             Toast.makeText(context, "Upload pic successful",
                 Toast.LENGTH_SHORT).show()
         }.addOnFailureListener{

@@ -54,11 +54,12 @@ class ClaimListAdapter(val claimList: List<Claim>, val insuranceList: List<Insur
                 currentInsurance = insurance
             }
         }
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         holder.claimID.text = currentClaim.claimID
         holder.insuranceComp.text = currentInsurance.insuranceComp
         holder.insuranceName.text = currentInsurance.insuranceName
-        holder.insuranceApplyDate.text = dateFormat.format(currentClaim.applyDateTime)
+        val dateStr: String = "Apply at : ${dateFormat.format(currentClaim.applyDateTime!!)}"
+        holder.insuranceApplyDate.text = dateStr
         holder.claimStatus.text = currentClaim.claimStatus
         holder.bind(currentClaim!!,clickListener)
         if(currentClaim.claimStatus.equals("Pending")){

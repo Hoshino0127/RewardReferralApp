@@ -1,6 +1,8 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +12,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.skydoves.balloon.createBalloon
+import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentHomepageBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
-class HomepageFragment : Fragment() {
 
+class HomepageFragment : Fragment() {
     private val auth = FirebaseAuth.getInstance()
+
+    private var doubleBackToExitPressedOnce = false
+    private val mHandler: Handler = Handler()
+    private val mRunnable =
+        Runnable { doubleBackToExitPressedOnce = false }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +43,14 @@ class HomepageFragment : Fragment() {
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
                     if(auth.currentUser != null){
-                        Firebase.auth.signOut()
-                        logout()
+                        if(!doubleBackToExitPressedOnce){
+                            doubleBackToExitPressedOnce = true
+                            Toast.makeText(requireContext(),"Click back one more time to exit",Toast.LENGTH_SHORT).show()
+                            mHandler.postDelayed(mRunnable, 2000);
+                        }else{
+                            activity?.finishAffinity()
+                        }
+
                     }
                 }
             }
@@ -60,6 +80,7 @@ class HomepageFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onStart() {
         super.onStart()
         if(!CheckUser().ifCurrentUserExists()){
@@ -69,8 +90,10 @@ class HomepageFragment : Fragment() {
 
     fun logout(){
         Toast.makeText(requireContext(),"Successfully logged out",Toast.LENGTH_LONG)
-        val action = HomepageFragmentDirections.actionHomepageToUserLoginFragment()
-        Navigation.findNavController(requireView()).navigate(action)
+        val intent: Intent = Intent(requireContext(),LoginActivity::class.java)
+        startActivity(intent)
     }
+
+
 
 }

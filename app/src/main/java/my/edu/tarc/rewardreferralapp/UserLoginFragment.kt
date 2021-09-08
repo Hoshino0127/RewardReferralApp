@@ -2,6 +2,8 @@ package my.edu.tarc.rewardreferralapp
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -13,26 +15,57 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserLoginBinding
+import my.edu.tarc.rewardreferralapp.databinding.FragmentUserRegisterBinding
 
 
 class UserLoginFragment : Fragment() {
+
     private lateinit var binding: FragmentUserLoginBinding
     private lateinit var auth: FirebaseAuth
+
+    private var doubleBackToExitPressedOnce = false
+    private val mHandler: Handler = Handler()
+    private val mRunnable =
+        Runnable { doubleBackToExitPressedOnce = false }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default*/ ) {
+                override fun handleOnBackPressed() {
+                    if(auth.currentUser != null){
+                        if(!doubleBackToExitPressedOnce){
+                            doubleBackToExitPressedOnce = true
+                            Toast.makeText(requireContext(),"Click back one more time to exit",Toast.LENGTH_SHORT).show()
+                            mHandler.postDelayed(mRunnable, 2000);
+                        }else{
+                            activity?.finishAffinity()
+                        }
+
+                    }
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+
 
         auth = FirebaseAuth.getInstance()
         binding =
@@ -67,11 +100,11 @@ class UserLoginFragment : Fragment() {
                             val user = auth.currentUser
                             updateUI(user)
 
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(requireContext(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
                             updateUI(null)
                         }
                     }
@@ -92,10 +125,11 @@ class UserLoginFragment : Fragment() {
     private fun updateUI(currentUser:FirebaseUser?){
         if(currentUser != null){
             if(currentUser.isEmailVerified){
-                val action = UserLoginFragmentDirections.actionUserLoginFragmentToHomepage()
+
+                val action = UserLoginFragmentDirections.actionUserLoginFragmentToLoggingInFragment()
                 Navigation.findNavController(requireView()).navigate(action)
             }else{
-                Toast.makeText(requireContext(), "Please verify your email.",
+                Toast.makeText(requireContext(), "Login failed",
                     Toast.LENGTH_SHORT).show()
             }
 

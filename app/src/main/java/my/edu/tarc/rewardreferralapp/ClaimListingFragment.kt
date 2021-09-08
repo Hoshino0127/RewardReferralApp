@@ -28,6 +28,7 @@ class ClaimListingFragment : Fragment() {
     private val referralID = "IR001"
 
     private lateinit var insuranceListener: ValueEventListener
+    private lateinit var claimListener: ValueEventListener
 
     private lateinit var binding: FragmentClaimListingBinding
 
@@ -48,7 +49,7 @@ class ClaimListingFragment : Fragment() {
 
         val claimList = ArrayList<Claim>()
 
-        claimRef.orderByChild("insuranceReferral").equalTo(referralID).addValueEventListener(object: ValueEventListener{
+        claimListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     for(claimSnapshot in snapshot.children){
@@ -61,7 +62,8 @@ class ClaimListingFragment : Fragment() {
 
             }
 
-        })
+        }
+        claimRef.orderByChild("insuranceReferral").equalTo(referralID).addValueEventListener(claimListener)
 
         insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -135,6 +137,11 @@ class ClaimListingFragment : Fragment() {
 
         })
 
+        binding.btnToViewClaim.setOnClickListener(){
+            val action = ClaimListingFragmentDirections.actionClaimListingFragmentToAdminClaimListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         return binding.root
     }
 
@@ -155,6 +162,7 @@ class ClaimListingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         insuranceRef.removeEventListener(insuranceListener)
+        claimRef.removeEventListener(claimListener)
     }
 
 }
