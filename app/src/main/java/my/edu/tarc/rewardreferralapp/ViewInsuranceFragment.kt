@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import my.edu.tarc.rewardreferralapp.data.Insurance
-import my.edu.tarc.rewardreferralapp.adapter.InsuranceListRecyclerViewAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentViewInsuranceBinding
-import java.text.SimpleDateFormat
 
 class ViewInsuranceFragment : Fragment() {
 

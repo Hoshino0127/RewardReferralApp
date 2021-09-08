@@ -74,7 +74,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
-        tools:listitem="@layout/insurance_list_item"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -93,8 +92,8 @@
 
     <ImageView
         android:id="@+id/btnAdd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="44dp"
+        android:layout_height="46dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_background_primary"
         android:paddingLeft="5dp"
