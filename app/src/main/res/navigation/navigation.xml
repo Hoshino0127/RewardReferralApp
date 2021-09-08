@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/userLoginFragment">
+    app:startDestination="@id/rewardListingFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -146,4 +146,59 @@
             android:id="@+id/action_userRegisterSuccessful_to_userLoginFragment"
             app:destination="@id/userLoginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/rewardMyFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardMyFragment"
+        android:label="RewardMyFragment" >
+        <action
+            android:id="@+id/action_rewardMyFragment_to_rewardDeliveryDetailsFragment"
+            app:destination="@id/rewardDeliveryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardCenterFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardCenterFragment"
+        android:label="RewardCenterFragment" />
+    <fragment
+        android:id="@+id/rewardDeliveryDetailsFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardDeliveryDetailsFragment"
+        android:label="RewardDeliveryDetailsFragment">
+        <action
+            android:id="@+id/action_rewardDeliveryDetailsFragment_to_rewardRedeemSuccessFragment"
+            app:destination="@id/rewardRedeemSuccessFragment" />
+        <argument
+            android:name="RewardClaimList"
+            app:argType="string[]" />
+        <argument
+            android:name="RewardClaimID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardRedeemSuccessFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardRedeemSuccessFragment"
+        android:label="RewardRedeemSuccessFragment" >
+        <argument
+            android:name="deliveryID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardDeliveryListFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardDeliveryListFragment"
+        android:label="RewardDeliveryListFragment" >
+        <action
+            android:id="@+id/action_rewardDeliveryListFragment_to_rewardRedeemSuccessFragment"
+            app:destination="@id/rewardRedeemSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardListingFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardListingFragment"
+        android:label="RewardListingFragment" >
+        <action
+            android:id="@+id/action_rewardListingFragment_to_rewardEntryFragment"
+            app:destination="@id/rewardEntryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardEntryFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardEntryFragment"
+        android:label="RewardEntryFragment" />
 </navigation>

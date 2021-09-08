@@ -13,9 +13,12 @@ import android.widget.RelativeLayout
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,6 +27,11 @@ import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApplyClaimBinding
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
+
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,17 +43,18 @@ class ApplyClaimFragment : Fragment() {
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
     private val claimRef = database.getReference("Claim")
 
+    private lateinit var srref : StorageReference
+
     private lateinit var insurance: Insurance
     private lateinit var referralInsurance: ReferralInsurance
     private lateinit var binding: FragmentApplyClaimBinding
-    private lateinit var insuranceID: String
-    private lateinit var referralID: String
+    private var insuranceID: String = ""
+    private var referralID: String = ""
 
     private val myCalendar: Calendar = Calendar.getInstance()
-    private var imgUriMileage: Uri? = null
-    private var imgUriDamage: Uri? = null
+    private lateinit var imgUriMileage: Uri
+    private lateinit var imgUriDamage: Uri
     private var fromAction: String = ""
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -169,6 +178,8 @@ class ApplyClaimFragment : Fragment() {
         binding.btnApplyClaim.setOnClickListener() {
             if (errorFree()) {
                 if (applyClaim()) {
+                    binding.imgDamage.setImageResource(0)
+                    binding.imgMileage.setImageResource(0)
                     val action =
                         ApplyClaimFragmentDirections.actionApplyClaimFragmentToApplyClaimSuccessFragment()
                     Navigation.findNavController(it).navigate(action)
@@ -215,6 +226,8 @@ class ApplyClaimFragment : Fragment() {
         }
         return binding.root
     }
+
+
 
     private fun errorFree(): Boolean{
 
@@ -267,6 +280,7 @@ class ApplyClaimFragment : Fragment() {
 
     private fun applyClaim(): Boolean{
         var newID: String = ""
+        var imgMileageName: String = ""
 
         val dtString = binding.dtAccidentDate.text.toString() + " " + binding.dtAccidentTime.text.toString()
 
@@ -278,6 +292,8 @@ class ApplyClaimFragment : Fragment() {
         }else{
             "ThirdParty"
         }
+
+
 
         claimRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -291,6 +307,13 @@ class ApplyClaimFragment : Fragment() {
 
                 }
 
+                if(!(imgUriMileage.equals(""))){
+                    uploadMileageImg(newID)
+                    imgMileageName = "mileage_$newID"
+                }
+
+
+
                 val claim: Claim = Claim(
                     newID,
                     Date(dtString),
@@ -298,7 +321,7 @@ class ApplyClaimFragment : Fragment() {
                     accidentType,
                     binding.txtAccidentDesc.text.toString(),
                     binding.txtMileage.text.toString().toInt(),
-                    "",
+                    imgMileageName,
                     "",
                     Date(),
                     null,
@@ -330,14 +353,36 @@ class ApplyClaimFragment : Fragment() {
             val data: Intent? = result.data
 
             if(fromAction.equals("Mileage")){
-                imgUriMileage  = data?.data
+                imgUriMileage  = data?.data!!
                 binding.imgMileage.setImageURI(data?.data)
             }else if(fromAction.equals("Damage")){
-                imgUriDamage = data?.data
+                imgUriDamage = data?.data!!
                 binding.imgDamage.setImageURI(data?.data)
             }
 
         }
+    }
+
+    private fun uploadMileageImg(claimID: String) {
+        //imgUriMileage = Uri.parse("android.resource://my.edu.tarc.rewardreferralapp/drawable/ic_base_profile_pic")
+        //println("Image uploaded is $imgUriMileage")
+        val strMileageImgName: String = ""
+        srref = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("mileage_$claimID")
+        srref.putFile(imgUriMileage).addOnSuccessListener {
+            /*OnSuccessListener<UploadTask.TaskSnapshot> { p0 ->
+                if (p0 != null) {
+                    p0.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                        
+                    }
+                }
+            }*/
+            Toast.makeText(context, "Upload pic successful",
+                Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener{
+            Toast.makeText(context, "Error fails to upload pic",
+                Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     fun isNumber(s: String): Boolean {
@@ -347,6 +392,5 @@ class ApplyClaimFragment : Fragment() {
             else -> true
         }
     }
-
 
 }

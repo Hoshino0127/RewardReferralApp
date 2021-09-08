@@ -14,52 +14,20 @@
             tools:context=".RewardDeliveryDetailsFragment">
 
             <TextView
-                android:id="@+id/tvRDDItemShow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="30dp"
-                android:text="Item :"
-                android:textSize="30sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvRDDItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRDDItemShow"
-                app:layout_constraintStart_toEndOf="@+id/tvRDDItemShow"
-                app:layout_constraintTop_toTopOf="@+id/tvRDDItemShow"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="176dp"
-                android:layout_height="145dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRDDItemShow"
-                app:srcCompat="@drawable/rect_bg" />
-
-            <TextView
                 android:id="@+id/tvRRDAddress1Show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:text="Address 1 :"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRRDDeliveryDetail" />
 
             <EditText
                 android:id="@+id/ptRRDAddress1"
-                android:layout_width="353dp"
-                android:layout_height="44dp"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
@@ -73,16 +41,17 @@
                 android:id="@+id/tvRRDAddress2Show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Address 2 :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptRRDAddress1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ptRRDAddress1" />
 
             <EditText
                 android:id="@+id/ptRDDAddress2"
-                android:layout_width="357dp"
-                android:layout_height="51dp"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
@@ -95,16 +64,17 @@
                 android:id="@+id/tvRRDAddress3Show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Address 3 :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptRDDAddress2"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ptRDDAddress2" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
-                android:layout_width="356dp"
-                android:layout_height="46dp"
+                android:id="@+id/ptRRDAddress3"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
@@ -118,16 +88,17 @@
                 android:id="@+id/tvRRDCityShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="City :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName3"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ptRRDAddress3" />
 
             <EditText
                 android:id="@+id/ptRDDCity"
-                android:layout_width="359dp"
-                android:layout_height="37dp"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
@@ -141,10 +112,11 @@
                 android:id="@+id/tvRDDStateShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="State :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptRDDCity"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ptRDDCity" />
 
             <Spinner
@@ -153,6 +125,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
+                android:entries="@array/State_Selection"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvRDDStateShow"
                 app:layout_constraintTop_toBottomOf="@+id/tvRDDStateShow" />
@@ -161,20 +134,22 @@
                 android:id="@+id/tvRDDPostCodeShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="29dp"
                 android:layout_marginTop="20dp"
                 android:text="Post Code :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/spRDDState"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spRDDState" />
 
             <EditText
                 android:id="@+id/ptRDDPostCode"
-                android:layout_width="362dp"
-                android:layout_height="58dp"
+                android:layout_width="355dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
+                android:maxLength="5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvRDDPostCodeShow"
                 app:layout_constraintTop_toBottomOf="@+id/tvRDDPostCodeShow" />
@@ -183,13 +158,72 @@
                 android:id="@+id/btnRDDSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginBottom="50dp"
                 android:text="Submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/ptRDDPostCode"
                 app:layout_constraintStart_toStartOf="@+id/ptRDDPostCode"
                 app:layout_constraintTop_toBottomOf="@+id/ptRDDPostCode" />
+
+            <TextView
+                android:id="@+id/tvRequire1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="*"
+                android:textColor="@color/red_rejected"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRRDAddress1Show"
+                app:layout_constraintStart_toEndOf="@+id/tvRRDAddress1Show"
+                app:layout_constraintTop_toTopOf="@+id/tvRRDAddress1Show" />
+
+            <TextView
+                android:id="@+id/tvRequire2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="*"
+                android:textColor="@color/red_rejected"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRRDCityShow"
+                app:layout_constraintStart_toEndOf="@+id/tvRRDCityShow"
+                app:layout_constraintTop_toTopOf="@+id/tvRRDCityShow" />
+
+            <TextView
+                android:id="@+id/tvRequire3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="*"
+                android:textColor="@color/red_rejected"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRDDStateShow"
+                app:layout_constraintStart_toEndOf="@+id/tvRDDStateShow"
+                app:layout_constraintTop_toTopOf="@+id/tvRDDStateShow" />
+
+            <TextView
+                android:id="@+id/tvRequire4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="*"
+                android:textColor="@color/red_rejected"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRDDPostCodeShow"
+                app:layout_constraintStart_toEndOf="@+id/tvRDDPostCodeShow"
+                app:layout_constraintTop_toTopOf="@+id/tvRDDPostCodeShow" />
+
+            <TextView
+                android:id="@+id/tvRRDDeliveryDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Delivery Details"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

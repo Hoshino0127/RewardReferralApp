@@ -12,4 +12,8 @@ class CheckUser() {
         }
         return true
     }
+
+    fun getCurrentUserUID():String? {
+        return auth.currentUser?.uid
+    }
 }

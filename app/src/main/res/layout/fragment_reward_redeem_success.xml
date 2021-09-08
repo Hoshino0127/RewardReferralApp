@@ -37,19 +37,6 @@
                 app:srcCompat="@drawable/green_tick" />
 
             <TextView
-                android:id="@+id/tvRRSRedeemDetails"
-                android:layout_width="365dp"
-                android:layout_height="79dp"
-                android:layout_marginTop="36dp"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView8"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="@+id/imageView8"
-                app:layout_constraintTop_toBottomOf="@+id/imageView8"
-                tools:text="@string/RewardRedeemSuccessful" />
-
-            <TextView
                 android:id="@+id/tvDeliveryAddressShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,12 +45,11 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSRedeemDetails" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRRSRewardText" />
 
             <TextView
-                android:id="@+id/tvRRSAddress1"
+                android:id="@+id/tvRRSAddressDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -73,64 +59,52 @@
                 app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
                 app:layout_constraintTop_toBottomOf="@+id/tvDeliveryAddressShow" />
 
-            <TextView
-                android:id="@+id/tvRRSAddress2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSAddress1" />
-
-            <TextView
-                android:id="@+id/tvRRSAddress3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintHorizontal_bias="0.488"
-                app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSAddress2" />
-
-            <TextView
-                android:id="@+id/tvRRSCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintHorizontal_bias="0.481"
-                app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSAddress3" />
-
-            <TextView
-                android:id="@+id/tvRRSState"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSCity" />
-
             <Button
                 android:id="@+id/btnRRSReturnHomepage"
                 android:layout_width="243dp"
                 android:layout_height="49dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:text="Return to Homepage"
                 android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRRSState" />
+                app:layout_constraintTop_toBottomOf="@+id/tvRRSAddressDetails" />
+
+            <TextView
+                android:id="@+id/tvRRSRewardTitleShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Reward"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRRSShowDetail" />
+
+            <TextView
+                android:id="@+id/tvRRSRewardText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="TextView"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRRSRewardTitleShow" />
+
+            <TextView
+                android:id="@+id/tvRRSShowDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintStart_toStartOf="@+id/imageView8"
+                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

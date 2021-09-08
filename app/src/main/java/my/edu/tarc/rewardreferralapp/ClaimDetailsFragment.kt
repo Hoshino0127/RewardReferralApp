@@ -10,20 +10,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.adapter.ClaimFigureAdapter
 import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.ClaimFigure
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentClaimDetailsBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,6 +40,8 @@ class ClaimDetailsFragment : Fragment() {
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
     private val claimRef = database.getReference("Claim")
     private val claimFigureRef = database.getReference("ClaimFigure")
+
+    private lateinit var srref : StorageReference
 
     private lateinit var binding: FragmentClaimDetailsBinding
     private lateinit var claimID: String
@@ -225,6 +232,16 @@ class ClaimDetailsFragment : Fragment() {
             else -> binding.tvStatus.setTextColor(Color.parseColor("#000000"))
         }
 
+        if(!(claim.imgMileage.isNullOrEmpty())){
+            srref = FirebaseStorage.getInstance().getReference("User_"+ CheckUser().getCurrentUserUID()).child(claim.imgMileage.toString())
+            srref.downloadUrl.addOnSuccessListener {
+                Glide
+                    .with(binding.imgMileage.context)
+                    .load(it.toString())
+                    .into(binding.imgMileage)
+                println("Get image from ${it.toString()}")
+            }
+        }
 
 
     }
@@ -236,6 +253,11 @@ class ClaimDetailsFragment : Fragment() {
 
         val adapter = ClaimFigureAdapter(requireContext(),cfList)
         binding.lvAmountDetails.adapter = adapter
+
+        binding.lvAmountDetails.setOnItemClickListener { parent, view, position, id ->
+            cfList.removeAt(position)
+            adapter.notifyDataSetChanged()
+        }
 
         //set height
         var totalHeight: Int = 0;

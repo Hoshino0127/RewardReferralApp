@@ -211,7 +211,7 @@ class RewardCenterFragment : Fragment() {
 
                 }
 
-                val rr = RefferalReward(newID,refferalID,rewardID,status)
+                val rr = RefferalReward(newID,refferalID,rewardID,status,"")
 
                 refRewRef.child(newID).setValue(rr).addOnSuccessListener(){
                     Toast.makeText(context, "Redeemed successful", Toast.LENGTH_LONG).show()
