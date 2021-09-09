@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/rewardListingFragment">
+    app:startDestination="@id/userLoginFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -115,6 +115,21 @@
         <action
             android:id="@+id/action_homepage_to_userLoginFragment"
             app:destination="@id/userLoginFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardListingFragment"
+            app:destination="@id/rewardListingFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardCenterFragment"
+            app:destination="@id/rewardCenterFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardMyFragment"
+            app:destination="@id/rewardMyFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardDeliveryListFragment"
+            app:destination="@id/rewardDeliveryListFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardStaffDeliveryListFragment"
+            app:destination="@id/rewardStaffDeliveryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/userLoginFragment"
@@ -157,7 +172,11 @@
     <fragment
         android:id="@+id/rewardCenterFragment"
         android:name="my.edu.tarc.rewardreferralapp.RewardCenterFragment"
-        android:label="RewardCenterFragment" />
+        android:label="RewardCenterFragment" >
+        <action
+            android:id="@+id/action_rewardCenterFragment_to_rewardMyFragment"
+            app:destination="@id/rewardMyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/rewardDeliveryDetailsFragment"
         android:name="my.edu.tarc.rewardreferralapp.RewardDeliveryDetailsFragment"
@@ -180,6 +199,9 @@
         <argument
             android:name="deliveryID"
             app:argType="string" />
+        <action
+            android:id="@+id/action_rewardRedeemSuccessFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/rewardDeliveryListFragment"
@@ -200,5 +222,32 @@
     <fragment
         android:id="@+id/rewardEntryFragment"
         android:name="my.edu.tarc.rewardreferralapp.RewardEntryFragment"
-        android:label="RewardEntryFragment" />
+        android:label="RewardEntryFragment" >
+        <argument
+            android:name="RewardID"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_rewardEntryFragment_to_rewardListingFragment"
+            app:destination="@id/rewardListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardStaffDeliveryListFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RewardStaffDeliveryListFragment"
+        android:label="RewardStaffDeliveryListFragment" >
+        <action
+            android:id="@+id/action_rewardStaffDeliveryListFragment_to_rewardStaffDeliveryDetails"
+            app:destination="@id/rewardStaffDeliveryDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/rewardStaffDeliveryDetails"
+        android:name="my.edu.tarc.rewardreferralapp.RewardStaffDeliveryDetails"
+        android:label="RewardStaffDeliveryDetails" >
+        <argument
+            android:name="deliveryID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_rewardStaffDeliveryDetails_to_rewardStaffDeliveryListFragment"
+            app:destination="@id/rewardStaffDeliveryListFragment" />
+    </fragment>
 </navigation>

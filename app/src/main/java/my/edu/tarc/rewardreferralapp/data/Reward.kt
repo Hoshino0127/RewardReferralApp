@@ -7,5 +7,7 @@ data class Reward(
     val pointNeeded :Int? = null,
     val startDate :String? = null,
     val endDate :String? = null,
-    val stock : Int? = null
+    val stock : Int? = null,
+    val status :String? = null,
+    val rewardImg:String? = null
 )

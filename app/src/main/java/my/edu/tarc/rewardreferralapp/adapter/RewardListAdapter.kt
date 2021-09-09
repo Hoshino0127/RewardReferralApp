@@ -5,11 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewListener) :
     RecyclerView.Adapter<RewardListAdapter.ViewHolder>() {
@@ -39,7 +44,8 @@ class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewLis
         val Stock: TextView = binding.tvStock
         val ClaimButton: Button = binding.btnClaim
         val ViewButton: Button = binding.btnView
-        val rewardcheck:CheckBox = binding.chkReward
+        val rewardcheck: CheckBox = binding.chkReward
+        val rewardImg: ImageView = binding.imgRewardIcon
 
     }
 
@@ -62,6 +68,18 @@ class RewardListAdapter(val rewardList: List<Reward>, val clickListener: ViewLis
         holder.ViewButton.visibility = View.VISIBLE
         holder.rewardcheck.visibility = View.GONE
         holder.bind(currentReward!!, clickListener)
+
+        var Imgref: StorageReference =
+            FirebaseStorage.getInstance().getReference("RewardStorage")
+                .child(currentReward.rewardImg.toString())
+
+        Imgref.downloadUrl.addOnSuccessListener() {
+            Glide
+                .with(holder.rewardImg.context)
+                .load(it.toString())
+                .into(holder.rewardImg)
+        }
+
     }
 
     override fun getItemCount(): Int {

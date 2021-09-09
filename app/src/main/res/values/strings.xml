@@ -40,6 +40,8 @@
     <string name="DeliveryPending">The staff is preparing to ship your reward</string>
     <string name="DeliveryOTW">Your reward is on the way to delivery.\n
     You may receive the reward in the following week</string>
+    <string name="StaffDeliveryPending">Pending to ship</string>
+    <string name="StaffDeliveryCompleted">Shipped</string>
     <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
     <string-array name="State_Selection">
@@ -60,6 +62,12 @@
         <item>Kuala Lumpur</item>
         <item>Labuan</item>
         <item>Putrajaya</item>
+    </string-array>
+
+    <string-array name="Status_Selection">
+        <item></item>
+        <item>Active</item>
+        <item>Inactive</item>
     </string-array>
 
 
