@@ -33,6 +33,9 @@ class RewardListingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        rewardSearchList.clear()
+        rewardList.clear()
+
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_reward_listing, container, false)
 

@@ -109,7 +109,8 @@ class RewardDeliveryListFragment : Fragment() {
                 if (it != null) {
                     val action =
                         RewardDeliveryListFragmentDirections.actionRewardDeliveryListFragmentToRewardRedeemSuccessFragment(
-                            deliveryID
+                            deliveryID,
+                            "List"
                         )
                     Navigation.findNavController(requireView()).navigate(action)
                 }

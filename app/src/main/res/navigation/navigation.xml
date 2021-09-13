@@ -130,6 +130,15 @@
         <action
             android:id="@+id/action_homepage_to_rewardStaffDeliveryListFragment"
             app:destination="@id/rewardStaffDeliveryListFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralMyQRCodeFragment"
+            app:destination="@id/referralMyQRCodeFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralScanQRCodeFragment"
+            app:destination="@id/referralScanQRCodeFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralTransferListingFragment"
+            app:destination="@id/referralTransferListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/userLoginFragment"
@@ -202,6 +211,12 @@
         <action
             android:id="@+id/action_rewardRedeemSuccessFragment_to_homepage"
             app:destination="@id/homepage" />
+        <argument
+            android:name="From"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_rewardRedeemSuccessFragment_to_rewardDeliveryListFragment"
+            app:destination="@id/rewardDeliveryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/rewardDeliveryListFragment"
@@ -250,4 +265,20 @@
             android:id="@+id/action_rewardStaffDeliveryDetails_to_rewardStaffDeliveryListFragment"
             app:destination="@id/rewardStaffDeliveryListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/referralMyQRCodeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferralMyQRCodeFragment"
+        android:label="ReferralMyQRCodeFragment" />
+    <fragment
+        android:id="@+id/referralScanQRCodeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferralScanQRCodeFragment"
+        android:label="ReferralScanQRCodeFragment" >
+        <action
+            android:id="@+id/action_referralScanQRCodeFragment_to_referralTransferListingFragment"
+            app:destination="@id/referralTransferListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/referralTransferListingFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferralTransferListingFragment"
+        android:label="ReferralTransferListingFragment" />
 </navigation>

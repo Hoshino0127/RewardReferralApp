@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/tvDeliveryAddressShow"
                 app:layout_constraintStart_toStartOf="@+id/tvDeliveryAddressShow"
@@ -61,12 +62,13 @@
 
             <Button
                 android:id="@+id/btnRRSReturnHomepage"
-                android:layout_width="243dp"
-                android:layout_height="49dp"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
                 android:text="Return to Homepage"
                 android:textSize="16sp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,12 +102,40 @@
                 android:id="@+id/tvRRSShowDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/imageView8"
-                app:layout_constraintStart_toStartOf="@+id/imageView8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+            <Button
+                android:id="@+id/btnRRSBack"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:text="Back"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRRSReceived"
+                app:layout_constraintVertical_bias="0.019" />
+
+            <Button
+                android:id="@+id/btnRRSReceived"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:text="Received Reward"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRRSAddressDetails"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

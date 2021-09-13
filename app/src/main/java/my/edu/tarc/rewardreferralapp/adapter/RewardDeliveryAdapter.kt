@@ -58,11 +58,12 @@ class RewardDeliveryAdapter(val deliveryList: List<RewardDelivery>,val clickList
 
         if(currentDelivery.status == "Pending"){
             holder.deliveryStatus.text = "Status: Pending to ship"
-        }else{
+        }else if(currentDelivery.status == "Shipped"){
             holder.deliveryStatus.text = "Status: Shipped"
+        }else{
+            holder.deliveryStatus.text = "Status: Completed"
         }
         holder.bind(currentDelivery!!,clickListener)
-
     }
 
 

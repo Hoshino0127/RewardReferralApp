@@ -35,8 +35,8 @@ class RewardEntryFragment : Fragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
     private lateinit var imgUriReward: Uri
     private var rewardID: String = ""
-    private var checkImgChange:Int = 0
-    private var upImgName:String = ""
+    private var checkImgChange: Int = 0
+    private var upImgName: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +69,7 @@ class RewardEntryFragment : Fragment() {
         }
 
         binding.btnREUpdate.setOnClickListener {
-            if(checkError()){
+            if (checkError()) {
                 updateReward()
             }
         }
@@ -130,7 +130,7 @@ class RewardEntryFragment : Fragment() {
 
         binding.btnREUploadPhoto.setOnClickListener() {
 
-            if(checkImgChange == 1){
+            if (checkImgChange == 1) {
                 checkImgChange = 2
             }
 
@@ -222,51 +222,32 @@ class RewardEntryFragment : Fragment() {
 
     private fun InsertReward() {
 
-        var newID: String = ""
+        var newID: String = UUID.randomUUID().toString()
 
-        rewardRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
+        var imageName = "Reward_$newID"
 
-                    newID = "R" + "%04d".format(snapshot.childrenCount + 1)
+        insertRewardImg(imageName)
 
-                } else {
+        val reward = Reward(
+            newID,
+            binding.ptRERewardName.text.toString(),
+            binding.ptRERewardDescription.text.toString(),
+            Integer.valueOf(binding.ptREPointNeeded.text.toString()),
+            binding.tdREStartDate.text.toString(),
+            binding.tdREDateBefore.text.toString(),
+            Integer.valueOf(binding.ptREStock.text.toString()),
+            binding.spREStatus.selectedItem.toString(),
+            imageName
+        )
 
-                    newID = "R0001"
+        rewardRef.child(newID).setValue(reward).addOnSuccessListener() {
+            Toast.makeText(context, "Reward added successful", Toast.LENGTH_LONG)
+                .show()
+            val action =
+                RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
-                }
-
-                var imageName = "Reward_$newID"
-
-                insertRewardImg(imageName)
-
-                val reward = Reward(
-                    newID,
-                    binding.ptRERewardName.text.toString(),
-                    binding.ptRERewardDescription.text.toString(),
-                    Integer.valueOf(binding.ptREPointNeeded.text.toString()),
-                    binding.tdREStartDate.text.toString(),
-                    binding.tdREDateBefore.text.toString(),
-                    Integer.valueOf(binding.ptREStock.text.toString()),
-                    binding.spREStatus.selectedItem.toString(),
-                    imageName
-                )
-
-                rewardRef.child(newID).setValue(reward).addOnSuccessListener() {
-                    Toast.makeText(context, "Reward added successful", Toast.LENGTH_LONG)
-                        .show()
-                    val action =
-                        RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
-                    Navigation.findNavController(requireView()).navigate(action)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG)
-                    .show()
-            }
-
-        })
     }
 
     private fun insertRewardImg(imageName: String) {
@@ -329,7 +310,7 @@ class RewardEntryFragment : Fragment() {
         })
     }
 
-    private fun updateReward(){
+    private fun updateReward() {
 
         val upReward = mapOf<String, Any?>(
             "rewardName" to binding.ptRERewardName.text.toString(),
@@ -341,14 +322,15 @@ class RewardEntryFragment : Fragment() {
             "stock" to Integer.valueOf(binding.ptREStock.text.toString())
         )
 
-        rewardRef.child(rewardID).updateChildren(upReward).addOnSuccessListener(){
+        rewardRef.child(rewardID).updateChildren(upReward).addOnSuccessListener() {
 
-            if(checkImgChange == 2){
+            if (checkImgChange == 2) {
                 insertRewardImg(upImgName)
             }
             Toast.makeText(context, "Update reward successful", Toast.LENGTH_LONG)
                 .show()
-            val action = RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
+            val action =
+                RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
     }

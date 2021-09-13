@@ -36,6 +36,8 @@ class RewardMyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        refferalRewardList.clear()
+        rewardList.clear()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
@@ -93,11 +95,14 @@ class RewardMyFragment : Fragment() {
 
             })
 
-        }, 1500)
+        }, 1000)
     }
 
 
     private fun showView() {
+
+        rewardList.sortByDescending { r -> r.rewardID }
+        refferalRewardList.sortByDescending { r -> r.rewardID }
 
         val rewardApter = RewardMyAdapter(
             rewardList,

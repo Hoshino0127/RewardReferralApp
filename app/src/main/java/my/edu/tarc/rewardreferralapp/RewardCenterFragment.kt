@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.adapter.RewardCenterAdapter
+import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardCenterBinding
@@ -25,14 +26,16 @@ import kotlin.collections.ArrayList
 
 class RewardCenterFragment : Fragment() {
 
-    val database =
+    private val database =
         FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    val rewardRef = database.getReference("Reward")
-    val refRewRef = database.getReference("RefferalReward")
-    var rewardList = ArrayList<Reward>()
-    var rewardSearchList = ArrayList<Reward>()
+    private val rewardRef = database.getReference("Reward")
+    private val refRewRef = database.getReference("RefferalReward")
+    private val refRef = database.getReference("Referral")
+    private var rewardList = ArrayList<Reward>()
+    private var rewardSearchList = ArrayList<Reward>()
+    private var refferal: Referral = Referral()
     private lateinit var binding: FragmentRewardCenterBinding
-    val referralID = CheckUser().getCurrentUserUID()
+    private val referralID = CheckUser().getCurrentUserUID()
 
 
     override fun onCreateView(
@@ -40,20 +43,16 @@ class RewardCenterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding  =
+        rewardSearchList.clear()
+        rewardList.clear()
+
+        getDetails()
+
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_reward_center, container, false)
 
 
-        //set point
-        binding.tvRCMypoint.text = "1000"
 
-        var todayDate: Date
-        var startDate: Date
-        var endDate: Date
-        val format = SimpleDateFormat("dd/MM/yyyy")
-
-
-        //Search button function
         binding.btnRCSearch.setOnClickListener() {
 
             //press button clear keyboard and input
@@ -63,13 +62,44 @@ class RewardCenterFragment : Fragment() {
 
             //search reward
             rewardSearchList =
-                rewardList.filter { r -> r.rewardName!!.uppercase().contains(binding.ptRCRewardName.text.toString().uppercase()) } as ArrayList<Reward>
+                rewardList.filter { r ->
+                    r.rewardName!!.uppercase()
+                        .contains(binding.ptRCRewardName.text.toString().uppercase())
+                } as ArrayList<Reward>
 
             setAdapter(rewardSearchList)
 
         }
 
 
+        return binding.root
+    }
+
+    private fun getDetails() {
+
+        var qryRef: Query = refRef.orderByChild("referralUID").equalTo(referralID)
+
+        qryRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (refSnap in snapshot.children) {
+                        refferal = refSnap.getValue(Referral::class.java)!!
+                    }
+                    binding.tvRCMypoint.text = refferal.points.toString()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+
+        var todayDate: Date
+        var startDate: Date
+        var endDate: Date
+        val format = SimpleDateFormat("dd/MM/yyyy")
 
         todayDate = format.parse(format.format(Date()))
 
@@ -103,45 +133,24 @@ class RewardCenterFragment : Fragment() {
             }
         })
 
-
-        return binding.root
     }
 
     private fun InsertRefferalReward(refferalID: String, rewardID: String, status: String) {
 
-        var newID: String = ""
+        var newID: String = UUID.randomUUID().toString()
 
-        refRewRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
+        val rr = RefferalReward(newID, refferalID, rewardID, status, "")
 
-                    newID = "RR" + "%04d".format(snapshot.childrenCount + 1)
+        refRewRef.child(newID).setValue(rr).addOnSuccessListener() {
+            Toast.makeText(context, "Redeemed successful", Toast.LENGTH_LONG).show()
+        }.addOnFailureListener {
+            Toast.makeText(context, "Redeemed unsuccessful", Toast.LENGTH_LONG).show()
+        }
 
-                } else {
-
-                    newID = "RR0001"
-
-                }
-
-                val rr = RefferalReward(newID, refferalID, rewardID, status, "")
-
-                refRewRef.child(newID).setValue(rr).addOnSuccessListener() {
-                    Toast.makeText(context, "Redeemed successful", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener {
-                    Toast.makeText(context, "Redeemed unsuccessful", Toast.LENGTH_LONG).show()
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
-
-        })
 
     }
 
-    private fun setAdapter(rewardAdapterList:ArrayList<Reward>){
+    private fun setAdapter(rewardAdapterList: ArrayList<Reward>) {
         val RewardAdapter = RewardCenterAdapter(
             rewardAdapterList,
             RewardCenterAdapter.ClaimListener { rewardID, rewardName, PointNeeded, Stock ->
@@ -165,36 +174,33 @@ class RewardCenterFragment : Fragment() {
 
                                 InsertRefferalReward(referralID!!, rewardID, "Pending")
 
+                                val upRefPoint = mapOf<String, Any?>(
+                                    "points" to currentPoint - PointNeeded
+                                )
+
+
                                 val upReward = mapOf<String, Any?>(
                                     "stock" to Stock - 1
                                 )
 
-                                //update member point
-
                                 rewardRef.child(rewardID).updateChildren(upReward)
                                     .addOnSuccessListener {
+                                        refRef.child(refferal.referralID.toString())
+                                            .updateChildren(upRefPoint)
+                                            .addOnSuccessListener() {
 
-                                        Toast.makeText(
-                                            context,
-                                            "Redeemed Successful",
-                                            Toast.LENGTH_LONG
-                                        ).show()
+                                                Toast.makeText(
+                                                    context,
+                                                    "Redeemed Successful",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
 
-                                        val action = RewardCenterFragmentDirections.actionRewardCenterFragmentToRewardMyFragment()
-                                        Navigation.findNavController(requireView()).navigate(action)
+                                                val action =
+                                                    RewardCenterFragmentDirections.actionRewardCenterFragmentToRewardMyFragment()
+                                                Navigation.findNavController(requireView())
+                                                    .navigate(action)
 
-
-//                                        var frg: Fragment? =
-//                                            fragmentManager?.findFragmentByTag("RewardCenterFragment")
-//                                        val ft: FragmentTransaction? =
-//                                            fragmentManager?.beginTransaction()
-//                                        if (ft != null) {
-//                                            ft.detach(frg!!)
-//                                            ft.attach(frg!!)
-//                                            ft.commit()
-//                                        }
-
-
+                                            }
                                     }.addOnFailureListener {
                                         Toast.makeText(
                                             context,
@@ -239,6 +245,8 @@ class RewardCenterFragment : Fragment() {
                     alertDialog.show()
                 }
             })
+
+
 
         binding.RewardCenterRV.adapter = RewardAdapter
         binding.RewardCenterRV.setHasFixedSize(true)

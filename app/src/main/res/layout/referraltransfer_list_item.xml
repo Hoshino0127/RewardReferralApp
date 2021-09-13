@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TransferRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imgTransfer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/TransferRelativeLayout"
+                app:layout_constraintEnd_toEndOf="@+id/TransferRelativeLayout"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/TransferRelativeLayout"
+                app:layout_constraintTop_toTopOf="@+id/TransferRelativeLayout"
+                app:srcCompat="@drawable/rectangle" />
+
+            <TextView
+                android:id="@+id/tvTransferDetails"
+                android:layout_width="230sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="transfer desc"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imgTransfer"
+                app:layout_constraintTop_toTopOf="@+id/imgTransfer" />
+
+            <TextView
+                android:id="@+id/tvPointTransfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:text="point"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/imgTransfer"
+                app:layout_constraintTop_toTopOf="@+id/imgTransfer" />
+
+            <TextView
+                android:id="@+id/tvTransferDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:text="date"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgTransfer"
+                app:layout_constraintEnd_toEndOf="@+id/imgTransfer"
+                app:layout_constraintTop_toBottomOf="@+id/tvPointTransfer" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

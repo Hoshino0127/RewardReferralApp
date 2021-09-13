@@ -35,14 +35,17 @@
     <string name="description_text">Description Text</string>
     <string name="title">Title</string>
     <string name="image">image</string>
+    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
     <!-- Reward (Jiho) -->
     <string name="DeliveryPending">The staff is preparing to ship your reward</string>
     <string name="DeliveryOTW">Your reward is on the way to delivery.\n
-    You may receive the reward in the following week</string>
+    You may receive the reward in the \nfollowing week</string>
+    <string name="DeliveryCompleted">You have received the rewards</string>
     <string name="StaffDeliveryPending">Pending to ship</string>
-    <string name="StaffDeliveryCompleted">Shipped</string>
-    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
+    <string name="StaffDeliveryShipped">Shipped</string>
+    <string name="StaffDeliveryCompleted">The referral had received the reward</string>
+
 
     <string-array name="State_Selection">
         <item></item>
@@ -69,6 +72,10 @@
         <item>Active</item>
         <item>Inactive</item>
     </string-array>
+
+    <string name="QRDesc">Scan with your MyBee app to send point over</string>
+
+    <string name="QRScanDesc">You can only transfer maximum 100 point to an user per week</string>
 
 
     <!-- krysty -->

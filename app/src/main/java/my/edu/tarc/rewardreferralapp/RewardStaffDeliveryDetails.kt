@@ -45,6 +45,9 @@ class RewardStaffDeliveryDetails : Fragment() {
         val args = RewardStaffDeliveryDetailsArgs.fromBundle(requireArguments())
         deliveryID = args.deliveryID
 
+        rewardList.clear()
+        refferalRewardList.clear()
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_reward_staff_delivery_details,
@@ -197,8 +200,12 @@ class RewardStaffDeliveryDetails : Fragment() {
 
         if (rewardDelivery.status == "Pending") {
             binding.tvRSDShowStatus.text = getString(R.string.StaffDeliveryPending)
-        } else {
+        } else if(rewardDelivery.status == "Shipped"){
+            binding.tvRSDShowStatus.text = getString(R.string.StaffDeliveryShipped)
+            binding.btnRSDComplete.visibility = View.GONE
+        }else{
             binding.tvRSDShowStatus.text = getString(R.string.StaffDeliveryCompleted)
+            binding.btnRSDComplete.visibility = View.GONE
         }
 
 
@@ -211,7 +218,7 @@ class RewardStaffDeliveryDetails : Fragment() {
     private fun updateDelivery(){
 
         val upDelivery = mapOf<String, Any?>(
-            "status" to "Completed"
+            "status" to "Shipped"
         )
 
         deliveryRef.child(deliveryID).updateChildren(upDelivery).addOnSuccessListener(){

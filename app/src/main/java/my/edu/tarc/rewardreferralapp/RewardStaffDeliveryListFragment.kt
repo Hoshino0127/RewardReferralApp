@@ -34,6 +34,9 @@ class RewardStaffDeliveryListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        selectedDeliveryList.clear()
+        rewardDeliveryList.clear()
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_reward_staff_delivery_list,
@@ -53,6 +56,10 @@ class RewardStaffDeliveryListFragment : Fragment() {
                     }
                     1 -> {
                         selectedDeliveryList =
+                            rewardDeliveryList.filter { r -> r.status == "Shipped" } as ArrayList<RewardDelivery>
+                    }
+                    2 -> {
+                        selectedDeliveryList =
                             rewardDeliveryList.filter { r -> r.status == "Completed" } as ArrayList<RewardDelivery>
                     }
                 }
@@ -68,9 +75,6 @@ class RewardStaffDeliveryListFragment : Fragment() {
             }
 
         })
-
-
-
 
         return binding.root
     }
