@@ -35,12 +35,47 @@
     <string name="description_text">Description Text</string>
     <string name="title">Title</string>
     <string name="image">image</string>
+    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
     <!-- Reward (Jiho) -->
-    <string name="RewardRedeemSuccessful">Your reward is pending to delivery.
-        You may receive the reward
-        between 2 week after the apply date.</string>
-    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
+    <string name="DeliveryPending">The staff is preparing to ship your reward</string>
+    <string name="DeliveryOTW">Your reward is on the way to delivery.\n
+    You may receive the reward in the \nfollowing week</string>
+    <string name="DeliveryCompleted">You have received the rewards</string>
+    <string name="StaffDeliveryPending">Pending to ship</string>
+    <string name="StaffDeliveryShipped">Shipped</string>
+    <string name="StaffDeliveryCompleted">The referral had received the reward</string>
+
+
+    <string-array name="State_Selection">
+        <item></item>
+        <item>Johor</item>
+        <item>Kedah</item>
+        <item>Kelantan</item>
+        <item>Melaka</item>
+        <item>Negeri Sembilan</item>
+        <item>Pahang</item>
+        <item>Pulau Pinang</item>
+        <item>Perak</item>
+        <item>Perlis</item>
+        <item>Selangor</item>
+        <item>Terengganu</item>
+        <item>Sabah</item>
+        <item>Sarawak</item>
+        <item>Kuala Lumpur</item>
+        <item>Labuan</item>
+        <item>Putrajaya</item>
+    </string-array>
+
+    <string-array name="Status_Selection">
+        <item></item>
+        <item>Active</item>
+        <item>Inactive</item>
+    </string-array>
+
+    <string name="QRDesc">Scan with your MyBee app to send point over</string>
+
+    <string name="QRScanDesc">You can only transfer maximum 100 point to an user per week</string>
 
 
     <!-- krysty -->

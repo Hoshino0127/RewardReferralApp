@@ -27,125 +27,138 @@
             <EditText
                 android:id="@+id/ptRERewardName"
                 android:layout_width="350dp"
-                android:layout_height="47dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tvRERewardNameShow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvRERewardNameShow" />
 
             <TextView
                 android:id="@+id/tvRERewardDescShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text=" Reward Description :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptRERewardName"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ptRERewardName" />
 
             <EditText
                 android:id="@+id/ptRERewardDescription"
-                android:layout_width="355dp"
-                android:layout_height="51dp"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/tvRERewardDescShow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvRERewardDescShow" />
 
             <TextView
                 android:id="@+id/tvREPointShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Point Needed :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptRERewardDescription"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ptRERewardDescription" />
 
             <EditText
                 android:id="@+id/ptREPointNeeded"
-                android:layout_width="352dp"
-                android:layout_height="43dp"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:inputType="number"
+                android:maxLength="4"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvREPointShow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvREPointShow" />
 
             <TextView
                 android:id="@+id/tvREDateShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Available Before :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/ptREPointNeeded"
-                app:layout_constraintTop_toBottomOf="@+id/ptREPointNeeded" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tdREStartDate" />
 
             <EditText
                 android:id="@+id/tdREDateBefore"
-                android:layout_width="353dp"
-                android:layout_height="56dp"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
                 android:ems="10"
                 android:inputType="date"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvREDateShow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvREDateShow" />
 
             <TextView
                 android:id="@+id/tvREStatusShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Status :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/tdREDateBefore"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tdREDateBefore" />
 
             <Spinner
                 android:id="@+id/spREStatus"
-                android:layout_width="353dp"
-                android:layout_height="30dp"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="30dp"
+                android:entries="@array/Status_Selection"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tvREStatusShow"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvREStatusShow" />
 
             <TextView
                 android:id="@+id/tvREPhotoShow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="20dp"
                 android:text="Photo :"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/spREStatus"
-                app:layout_constraintTop_toBottomOf="@+id/spREStatus" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ptREStock" />
 
             <ImageView
                 android:id="@+id/ImgREReward"
                 android:layout_width="334dp"
                 android:layout_height="231dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.47"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvREPhotoShow"
                 app:srcCompat="@drawable/rect_bg" />
@@ -182,6 +195,59 @@
                 app:layout_constraintEnd_toEndOf="@+id/btnREUploadPhoto"
                 app:layout_constraintStart_toStartOf="@+id/btnREUploadPhoto"
                 app:layout_constraintTop_toBottomOf="@+id/btnREUploadPhoto" />
+
+            <TextView
+                android:id="@+id/tvREStartDateShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="20dp"
+                android:text="Start Date"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ptREPointNeeded" />
+
+            <EditText
+                android:id="@+id/tdREStartDate"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
+                android:ems="10"
+                android:inputType="date"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvREStartDateShow" />
+
+            <TextView
+                android:id="@+id/tvREStockShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="20dp"
+                android:text="Stock:"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spREStatus" />
+
+            <EditText
+                android:id="@+id/ptREStock"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
+                android:ems="10"
+                android:inputType="number"
+                android:maxLength="4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvREStockShow" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
