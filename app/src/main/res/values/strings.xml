@@ -76,4 +76,5 @@
     <string name="share_via">Share via</string>
     <string name="share">Share</string>
     <string name="registerSuccessMsg">You have successfully registered a new account. Please check your email to verify the account. You can login to the account after the verification.</string>
+    <string name="waitingApproveMsg">Waiting to be approved</string>
 </resources>

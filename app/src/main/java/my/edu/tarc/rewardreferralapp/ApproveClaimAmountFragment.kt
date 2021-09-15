@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +26,7 @@ class ApproveClaimAmountFragment : Fragment() {
     private lateinit var binding: FragmentApproveClaimAmountBinding
     private var cfList: ArrayList<ClaimFigure> = ArrayList()
 
-    private var claimID: String = ""
+    private var claimUUID: String = ""
     private var deductible: Double = 0.0
 
     override fun onCreateView(
@@ -37,12 +38,26 @@ class ApproveClaimAmountFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_approve_claim_amount, container, false)
 
         val args = ApproveClaimAmountFragmentArgs.fromBundle(requireArguments())
-        claimID = args.claimID
+        claimUUID = args.claimUUID
         deductible = args.deductible.toDouble()
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    DetachListener()
+                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToAdminClaimListingFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+
 
         binding.btnAddClaim.setOnClickListener(){
             if(errorFreeAddFigure()){
-                val claimFigure: ClaimFigure = ClaimFigure(claimID,binding.txtClaimDesc.text.toString(),binding.txtClaimAmount.text.toString().toDouble())
+                val claimFigure: ClaimFigure = ClaimFigure(claimUUID,binding.txtClaimDesc.text.toString(),binding.txtClaimAmount.text.toString().toDouble())
                 cfList.add(claimFigure)
                 updateClaimFigure()
             }
@@ -72,6 +87,12 @@ class ApproveClaimAmountFragment : Fragment() {
                 Toast.makeText(requireContext(),"The amount should be in numbers",Toast.LENGTH_SHORT).show()
                 return false
             }
+
+            if(binding.txtClaimAmount.text.toString().toDouble() <= 0){
+                binding.txtClaimAmount.requestFocus()
+                Toast.makeText(requireContext(),"The amount should be more than 0",Toast.LENGTH_SHORT).show()
+                return false
+            }
         }
         return true
     }
@@ -86,7 +107,8 @@ class ApproveClaimAmountFragment : Fragment() {
                     }
                 }
                 if(successFlag){
-                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimID)
+                    DetachListener()
+                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID)
                     Navigation.findNavController(requireView()).navigate(action)
                 }
 
@@ -148,6 +170,15 @@ class ApproveClaimAmountFragment : Fragment() {
             null -> false
             else -> true
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        DetachListener()
+    }
+
+    private fun DetachListener(){
+        claimFigureRef.removeEventListener(claimFigureListener)
     }
 
 

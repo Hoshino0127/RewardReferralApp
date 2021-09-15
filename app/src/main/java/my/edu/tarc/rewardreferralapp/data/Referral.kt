@@ -10,5 +10,6 @@ data class Referral(
     val contactNo: String? = null,
     val email: String? = null,
     val address: String? = null,
-    val deductible: Double? = 0.0
+    val deductible: Double? = 0.0,
+    val points: Int? = 0
 )

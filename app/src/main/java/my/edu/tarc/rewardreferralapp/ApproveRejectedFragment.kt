@@ -16,7 +16,7 @@ class ApproveRejectedFragment : Fragment() {
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val claimRef = database.getReference("Claim")
 
-    private var claimID: String = ""
+    private var claimUUID: String = ""
     private lateinit var binding: FragmentApproveRejectedBinding
 
     override fun onCreateView(
@@ -37,13 +37,13 @@ class ApproveRejectedFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         val args = ApproveRejectedFragmentArgs.fromBundle(requireArguments())
-        claimID = args.claimID
+        claimUUID = args.claimUUID
 
         val updateStatus = mapOf<String,Any?>(
             "claimStatus" to "Rejected"
         )
 
-        claimRef.child(claimID).updateChildren(updateStatus).addOnSuccessListener {
+        claimRef.child(claimUUID).updateChildren(updateStatus).addOnSuccessListener {
             Toast.makeText(requireContext(),"Claim rejected", Toast.LENGTH_SHORT).show()
         }.addOnFailureListener {
             Toast.makeText(requireContext(),"Claim updated failed", Toast.LENGTH_SHORT).show()

@@ -11,12 +11,14 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.adapter.AdminClaimAdapter
 import my.edu.tarc.rewardreferralapp.data.Claim
+import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentAdminClaimListingBinding
 import my.edu.tarc.rewardreferralapp.helper.MyButton
@@ -31,16 +33,18 @@ class AdminClaimListingFragment : Fragment() {
     private lateinit var adapter: AdminClaimAdapter
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private val referralRef = database.getReference("Referral")
     private val claimRef = database.getReference("Claim")
+    private val insuranceRef = database.getReference("Insurance")
+    private val referralRef = database.getReference("Referral")
     private lateinit var claimListener: ValueEventListener
+    private lateinit var insuranceListener: ValueEventListener
     private lateinit var referralListener: ValueEventListener
 
     private lateinit var binding: FragmentAdminClaimListingBinding
 
     private var claimList: ArrayList<Claim> = ArrayList()
     private var tempClaimList: ArrayList<Claim> = ArrayList()
-
+    private var insuranceList: ArrayList<Insurance> = ArrayList()
     private var referralList: ArrayList<Referral> = ArrayList()
 
     override fun onCreateView(
@@ -49,6 +53,9 @@ class AdminClaimListingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_admin_claim_listing, container, false)
+
+        claimList.clear()
+        tempClaimList.clear()
 
         val swipe = object: MySwipeHelper(requireActivity(), binding.rvClaimList, 200) {
             override fun instantiateMyButton(
@@ -59,10 +66,10 @@ class AdminClaimListingFragment : Fragment() {
                     object: MyButtonClickListener{
                         override fun onClick(pos: Int) {
 
-                            val claimID = claimList[pos].claimID
-                            val referralID = claimList[pos].insuranceReferral
+                            val claimUUID = claimList[pos].claimUUID
+                            val referralUID = claimList[pos].referralUID
 
-                            val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToApproveClaimFragment(claimID!!,referralID!!)
+                            val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToApproveClaimFragment(claimUUID!!,referralUID!!)
                             view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }))
@@ -81,13 +88,13 @@ class AdminClaimListingFragment : Fragment() {
                     val search = newText.lowercase(Locale.getDefault())
                     for (claim in claimList) {
                         println(claim.claimID)
-                        val combineText:String = claim.claimID!! + "-" + claim.insuranceReferral
+                        val combineText:String = claim.claimID!! + "-" + claim.referralUID
                         if (combineText.lowercase(Locale.getDefault()).contains(search)) {
                             tempClaimList.add(claim)
                         }
                     }
 
-                    adapter = AdminClaimAdapter(requireActivity(), tempClaimList, referralList)
+                    adapter = AdminClaimAdapter(requireActivity(), tempClaimList, referralList,insuranceList)
                     binding.rvClaimList.adapter = adapter
 
                     binding.rvClaimList.adapter!!.notifyDataSetChanged()
@@ -113,8 +120,9 @@ class AdminClaimListingFragment : Fragment() {
                     referralList.clear()
                     for(currentReferral in snapshot.children){
                         val referralID: String = currentReferral.child("referralID").getValue().toString()
+                        val referralUID: String = currentReferral.child("referralUID").getValue().toString()
                         val fullName: String = currentReferral.child("fullName").getValue().toString()
-                        val referral: Referral = Referral(referralID = referralID, fullName = fullName)
+                        val referral: Referral = Referral(referralID = referralID, fullName = fullName, referralUID = referralUID)
                         referralList.add(referral)
                     }
                 }
@@ -129,14 +137,18 @@ class AdminClaimListingFragment : Fragment() {
     }
 
     private fun loadData() {
+
         claimListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     claimList.clear()
                     for (currentClaim in snapshot.children){
+                        val claimUUID = currentClaim.child("claimUUID").getValue().toString()
                         val claimID = currentClaim.child("claimID").getValue().toString()
                         val dt = Date(currentClaim.child("accidentDateTime").child("time").getValue() as Long)
-                        val accidentPlace = currentClaim.child("accidentPlace").getValue().toString()
+                        val accidentPlaceLong = currentClaim.child("accidentPlace").child("latitude").getValue() as Double
+                        val accidentPlaceLat = currentClaim.child("accidentPlace").child("longitude").getValue() as Double
+                        val accidentPlace: LatLng = LatLng(accidentPlaceLat,accidentPlaceLong)
                         val accidentType = currentClaim.child("accidentType").getValue().toString()
                         val accidentDesc = currentClaim.child("accidentDesc").getValue().toString()
                         val mileage = currentClaim.child("mileage").getValue().toString().toInt()
@@ -150,8 +162,8 @@ class AdminClaimListingFragment : Fragment() {
                         }
                         val claimStatus = currentClaim.child("claimStatus").getValue().toString()
                         val insuranceID = currentClaim.child("insuranceID").getValue().toString()
-                        val insuranceReferral = currentClaim.child("insuranceReferral").getValue().toString()
-                        val claim: Claim = Claim(claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,insuranceReferral)
+                        val referralUID = currentClaim.child("referralUID").getValue().toString()
+                        val claim: Claim = Claim(claimUUID,claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,referralUID)
 
 
                         claimList.add(claim)
@@ -159,16 +171,10 @@ class AdminClaimListingFragment : Fragment() {
                     }
 
                     tempClaimList.addAll(claimList)
-                    binding.shimmerViewContainer.stopShimmer()
-                    binding.shimmerViewContainer.visibility = View.GONE
-                    binding.rvClaimList.visibility = View.VISIBLE
-                    binding.rvClaimList.adapter?.notifyDataSetChanged()
 
-                } else {
+                }else{
                     claimList.clear()
                     tempClaimList.clear()
-                    binding.rvClaimList.visibility = View.INVISIBLE
-                    binding.rvClaimList.adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -179,7 +185,37 @@ class AdminClaimListingFragment : Fragment() {
 
         claimRef.addListenerForSingleValueEvent(claimListener)
 
-        adapter = AdminClaimAdapter(requireActivity(), claimList, referralList)
+        insuranceListener = object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    insuranceList.clear()
+                    for(insurance in snapshot.children){
+                        val insuranceID = insurance.child("insuranceID").getValue().toString()
+                        val insuranceName = insurance.child("insuranceName").getValue().toString()
+                        val insurance: Insurance = Insurance(insuranceID = insuranceID, insuranceName = insuranceName)
+                        insuranceList.add(insurance)
+                    }
+                    binding.shimmerViewContainer.stopShimmer()
+                    binding.shimmerViewContainer.visibility = View.GONE
+                    binding.rvClaimList.visibility = View.VISIBLE
+                    binding.rvClaimList.adapter?.notifyDataSetChanged()
+                }else{
+
+                    binding.rvClaimList.visibility = View.INVISIBLE
+                    binding.rvClaimList.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        }
+
+
+        insuranceRef.addListenerForSingleValueEvent(insuranceListener)
+
+        adapter = AdminClaimAdapter(requireActivity(), claimList, referralList, insuranceList)
         binding.rvClaimList.adapter = adapter
     }
 
@@ -191,8 +227,17 @@ class AdminClaimListingFragment : Fragment() {
         }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        DetachListener()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        DetachListener()
+    }
+
+    private fun DetachListener(){
         claimRef.removeEventListener(claimListener)
         referralRef.removeEventListener(referralListener)
     }

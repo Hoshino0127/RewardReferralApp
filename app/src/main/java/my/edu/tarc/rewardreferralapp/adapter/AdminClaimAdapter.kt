@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Claim
+import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.Referral
 
-class AdminClaimAdapter (internal var context: Context, private var claimList:MutableList<Claim>, private var referralList:MutableList<Referral>) :
+class AdminClaimAdapter (internal var context: Context, private var claimList:MutableList<Claim>, private var referralList:MutableList<Referral>, private var insuranceList:MutableList<Insurance>) :
     RecyclerView.Adapter<AdminClaimAdapter.myViewHolder>()
 {
 
@@ -24,14 +25,23 @@ class AdminClaimAdapter (internal var context: Context, private var claimList:Mu
         val currentItem = claimList[position]
         var currentReferral: Referral = Referral()
         for(ref in referralList){
-            if(ref.referralID!!.equals(currentItem.insuranceReferral)){
+            if(ref.referralUID!!.equals(currentItem.referralUID)){
                 currentReferral = ref
             }
         }
 
+        var currentInsurance: Insurance = Insurance()
+        for(ins in insuranceList){
+            if(ins.insuranceID!!.equals(currentItem.insuranceID)){
+                currentInsurance = ins
+            }
+        }
+
         holder.claimID.text = currentItem.claimID
+        holder.insuranceName.text = currentInsurance.insuranceName
         holder.claimStatus.text = currentItem.claimStatus
-        holder.referralDetails.text = "Claim by : ${currentReferral.fullName}"
+        val referralDetailsStr: String = "Claim by : ${currentReferral.fullName}"
+        holder.referralDetails.text =  referralDetailsStr
         if(currentItem.claimStatus.equals("Pending")){
             holder.claimStatus.setTextColor(Color.parseColor("#EC512B"))
         }else if(currentItem.claimStatus.equals("Accepted")){
@@ -49,6 +59,7 @@ class AdminClaimAdapter (internal var context: Context, private var claimList:Mu
 
     class myViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val claimID: TextView = itemView.findViewById(R.id.tvClaimID_AdminClaim)
+        val insuranceName: TextView = itemView.findViewById(R.id.tvInsuranceName_AdminClaim)
         val claimStatus: TextView = itemView.findViewById(R.id.tvClaimStatus_AdminClaim)
         val referralDetails: TextView = itemView.findViewById(R.id.tvReferralDetails_AdminClaim)
     }

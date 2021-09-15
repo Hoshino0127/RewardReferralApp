@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentLoggingInBinding
+import my.edu.tarc.rewardreferralapp.dialog.LoadingDialog
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 
@@ -41,6 +44,10 @@ class LoggingInFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_logging_in, container, false)
 
+
+
+        val dlg: LoadingDialog = LoadingDialog(requireActivity())
+        dlg.showAlertDialog()
         binding.txtLoginStatusLoggingin.addTextChangedListener(object: TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -64,7 +71,7 @@ class LoggingInFragment : Fragment() {
 
         })
 
-        if(isLogout == false){
+        if(!isLogout){
             referralListener = object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
@@ -75,6 +82,7 @@ class LoggingInFragment : Fragment() {
                                 val referralStatus = referralSS.child("referralStatus").getValue().toString()
                                 referral = Referral(referralID = referralID, referralUID = referralUID, referralStatus = referralStatus)
                                 binding.txtLoginStatusLoggingin.setText(referralStatus)
+                                dlg.dismissAlertDialog()
                             }
                         }
                     }
@@ -91,6 +99,8 @@ class LoggingInFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

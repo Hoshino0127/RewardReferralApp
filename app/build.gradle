@@ -89,4 +89,11 @@ dependencies {
 
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    //google maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }

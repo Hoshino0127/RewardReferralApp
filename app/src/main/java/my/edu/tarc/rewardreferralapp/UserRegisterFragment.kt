@@ -115,7 +115,7 @@ class UserRegisterFragment : Fragment() {
                 }
 
 
-                val referral = Referral(newID,userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1)
+                val referral = Referral(newID,userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0)
                 referralRef.child(referral.referralID!!).setValue(referral).addOnSuccessListener {
                     val action =
                         UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()

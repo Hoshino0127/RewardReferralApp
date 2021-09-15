@@ -28,6 +28,7 @@ import com.google.firebase.ktx.Firebase
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserLoginBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserRegisterBinding
+import my.edu.tarc.rewardreferralapp.dialog.LoadingDialog
 
 
 class UserLoginFragment : Fragment() {
@@ -71,6 +72,7 @@ class UserLoginFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_user_login, container, false)
 
+        val loadingDlg: LoadingDialog = LoadingDialog(requireActivity())
         val checkBox = binding.chkboxShowPass
 
         checkBox.setOnClickListener(){
@@ -89,6 +91,7 @@ class UserLoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener(){
             if(errorFree()){
+                loadingDlg.showAlertDialog()
                 val email = binding.txtLoginUsername.text.toString()
                 val password = binding.txtLoginPass.text.toString()
                 auth.signInWithEmailAndPassword(email, password)
@@ -104,9 +107,12 @@ class UserLoginFragment : Fragment() {
 
                         } else {
                             // If sign in fails, display a message to the user.
+                            Toast.makeText(requireContext(), "Login failed, invalid email or password",
+                                Toast.LENGTH_SHORT).show()
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
                             updateUI(null)
                         }
+                        loadingDlg.dismissAlertDialog()
                     }
 
             }

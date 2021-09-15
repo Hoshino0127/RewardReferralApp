@@ -25,9 +25,9 @@
         <argument
             android:name="insuranceID"
             app:argType="string" />
-        <argument
-            android:name="referralID"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_applyClaimFragment_to_referralInsuranceListingFragment"
+            app:destination="@id/referralInsuranceListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/referralInsuranceListingFragment"
@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_referralInsuranceListingFragment_to_renewInsuranceFragment"
             app:destination="@id/renewInsuranceFragment" />
+        <action
+            android:id="@+id/action_referralInsuranceListingFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/applyClaimSuccessFragment"
@@ -71,10 +74,7 @@
         android:label="fragment_claim_details"
         tools:layout="@layout/fragment_claim_details" >
         <argument
-            android:name="claimID"
-            app:argType="string" />
-        <argument
-            android:name="referralID"
+            android:name="claimUUID"
             app:argType="string" />
         <action
             android:id="@+id/action_claimDetailsFragment_to_claimListingFragment"
@@ -131,11 +131,14 @@
             android:id="@+id/action_approveClaimFragment_to_approveClaimAmountFragment"
             app:destination="@id/approveClaimAmountFragment" />
         <argument
-            android:name="claimID"
+            android:name="claimUUID"
             app:argType="string" />
         <argument
-            android:name="referralID"
+            android:name="referralUID"
             app:argType="string" />
+        <action
+            android:id="@+id/action_approveClaimFragment_to_adminClaimListingFragment"
+            app:destination="@id/adminClaimListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/approveClaimAmountFragment"
@@ -146,11 +149,14 @@
             android:id="@+id/action_approveClaimAmountFragment_to_approveAcceptedFragment"
             app:destination="@id/approveAcceptedFragment" />
         <argument
-            android:name="claimID"
+            android:name="claimUUID"
             app:argType="string" />
         <argument
             android:name="deductible"
             app:argType="float" />
+        <action
+            android:id="@+id/action_approveClaimAmountFragment_to_adminClaimListingFragment"
+            app:destination="@id/adminClaimListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/approveAcceptedFragment"
@@ -158,7 +164,7 @@
         android:label="ApproveAcceptedFragment"
         tools:layout="@layout/fragment_approve_accepted">
         <argument
-            android:name="claimID"
+            android:name="claimUUID"
             app:argType="string" />
         <action
             android:id="@+id/action_approveAcceptedFragment_to_adminClaimListingFragment"
@@ -170,7 +176,7 @@
         android:label="ApproveRejectedFragment"
         tools:layout="@layout/fragment_approve_rejected">
         <argument
-            android:name="claimID"
+            android:name="claimUUID"
             app:argType="string" />
         <action
             android:id="@+id/action_approveRejectedFragment_to_adminClaimListingFragment"

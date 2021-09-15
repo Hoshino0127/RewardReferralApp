@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
@@ -11,14 +12,20 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -31,7 +38,6 @@ import my.edu.tarc.rewardreferralapp.data.ClaimFigure
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApproveClaimBinding
-import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,16 +55,19 @@ class ApproveClaimFragment : Fragment() {
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var claimFigureListener: ValueEventListener
 
-    private lateinit var srref : StorageReference
+    private lateinit var imgStorageRef : StorageReference
 
-    private lateinit var claimID: String
-    private lateinit var referralID: String
+    private lateinit var claimUUID: String
+    private lateinit var referralUID: String
     private lateinit var binding: FragmentApproveClaimBinding
 
     private var referral: Referral = Referral()
     private var claim: Claim = Claim()
     private var insurance: Insurance = Insurance()
     private var cfList: ArrayList<ClaimFigure> = ArrayList()
+
+    private lateinit var mapFragment: SupportMapFragment
+    private lateinit var googleMap: GoogleMap
 
     private var isExpanded: Boolean = false
 
@@ -70,15 +79,27 @@ class ApproveClaimFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_approve_claim, container, false)
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    DetachListener()
+                    val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToAdminClaimListingFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
         val args = ApproveClaimFragmentArgs.fromBundle(requireArguments())
-        claimID = args.claimID
-        referralID = args.referralID
+        claimUUID = args.claimUUID
+        referralUID = args.referralUID
 
         referralListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     for(referralSS in snapshot.children){
-                        if(referralSS.child("referralID").getValue().toString().equals(referralID)){
+                        if(referralSS.child("referralUID").getValue().toString().equals(referralUID)){
                             val referralID: String = referralSS.child("referralID").getValue().toString()
                             val referralUID: String = referralSS.child("referralUID").getValue().toString()
                             val deductible: Double = referralSS.child("deductible").getValue().toString().toDouble()
@@ -109,26 +130,29 @@ class ApproveClaimFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     for(currentClaim in snapshot.children){
-                        Log.v(ContentValues.TAG,currentClaim.child("claimID").getValue().toString())
-                        if(currentClaim.child("claimID").getValue().toString().equals(claimID)){
+                        Log.v(ContentValues.TAG,currentClaim.child("claimUUID").getValue().toString())
+                        if(currentClaim.child("claimUUID").getValue().toString().equals(claimUUID)){
+                            val claimUUID = currentClaim.child("claimUUID").getValue().toString()
                             val claimID = currentClaim.child("claimID").getValue().toString()
                             val dt = Date(currentClaim.child("accidentDateTime").child("time").getValue() as Long)
-                            val accidentPlace = currentClaim.child("accidentPlace").getValue().toString()
+                            val accidentPlaceLat = currentClaim.child("accidentPlace").child("latitude").getValue() as Double
+                            val accidentPlaceLong = currentClaim.child("accidentPlace").child("longitude").getValue() as Double
+                            val accidentPlace: LatLng = LatLng(accidentPlaceLat,accidentPlaceLong)
                             val accidentType = currentClaim.child("accidentType").getValue().toString()
                             val accidentDesc = currentClaim.child("accidentDesc").getValue().toString()
                             val mileage = currentClaim.child("mileage").getValue().toString().toInt()
                             val imgMileage = currentClaim.child("imgMileage").getValue().toString()
                             val imgDamage = currentClaim.child("imgDamage").getValue().toString()
                             val applyDateTime: Date = Date(currentClaim.child("applyDateTime").child("time").getValue() as Long)
-                            var approveDateTime: Date? = if(currentClaim.child("approveDateTime").getValue() == null){
+                            val approveDateTime: Date? = if(currentClaim.child("approveDateTime").getValue() == null){
                                 null
                             }else{
                                 Date(currentClaim.child("approveDateTime").child("time").getValue() as Long)
                             }
                             val claimStatus = currentClaim.child("claimStatus").getValue().toString()
                             val insuranceID = currentClaim.child("insuranceID").getValue().toString()
-                            val insuranceReferral = currentClaim.child("insuranceReferral").getValue().toString()
-                            claim = Claim(claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,insuranceReferral)
+                            val referralUID = currentClaim.child("referralUID").getValue().toString()
+                            claim = Claim(claimUUID,claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,referralUID)
 
 
                             updateView()
@@ -160,14 +184,22 @@ class ApproveClaimFragment : Fragment() {
                             if(currentInsurance.child("insuranceID").getValue().toString().equals(claim.insuranceID)){
                                 val insuranceID = currentInsurance.child("insuranceID").getValue().toString()
                                 val insuranceName = currentInsurance.child("insuranceName").getValue().toString()
+                                val insuranceType = currentInsurance.child("insuranceType").getValue().toString()
                                 val insuranceComp = currentInsurance.child("insuranceComp").getValue().toString()
                                 val insurancePlan = currentInsurance.child("insurancePlan").getValue().toString()
-                                var insuranceCoverage: ArrayList<String> = ArrayList<String>()
+                                val insuranceCoverage: ArrayList<String> = ArrayList<String>()
                                 for(child in currentInsurance.child("insuranceCoverage").children){
                                     insuranceCoverage.add(child.getValue().toString())
-                                    println(child.getValue().toString())
+                                    //println(child.getValue().toString())
                                 }
-                                insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage)
+                                insurance = Insurance(
+                                    insuranceID = insuranceID,
+                                    insuranceName = insuranceName,
+                                    insuranceComp = insuranceComp,
+                                    insurancePlan = insurancePlan,
+                                    insuranceCoverage = insuranceCoverage,
+                                    insuranceType = insuranceType
+                                )
 
                                 updateInsuranceView()
                             }
@@ -191,13 +223,13 @@ class ApproveClaimFragment : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
                         for(currentCF in snapshot.children){
-                            if(currentCF.child("claimID").getValue().toString().equals(claimID)){
+                            if(currentCF.child("claimUUID").getValue().toString().equals(claimUUID)){
                                 val claimFigureName = currentCF.child("claimFigureName").getValue().toString()
                                 val claimFigureAmount = currentCF.child("claimFigureAmount").getValue().toString().toDouble()
-                                cfList.add(ClaimFigure(claimID,claimFigureName,claimFigureAmount))
+                                cfList.add(ClaimFigure(claimUUID,claimFigureName,claimFigureAmount))
                             }
                         }
-                        Log.v(ContentValues.TAG,cfList.size.toString())
+                        //Log.v(ContentValues.TAG,cfList.size.toString())
                         updateClaimFigure()
                     }
                 }
@@ -215,7 +247,7 @@ class ApproveClaimFragment : Fragment() {
         referralRef.orderByChild("referralID").addListenerForSingleValueEvent(referralListener)
         claimRef.orderByChild("claimID").addValueEventListener(claimListener)
 
-        binding.clCoverageDetails.setOnClickListener{
+        binding.clCoverageDetailsAC.setOnClickListener{
 
             var strCoverage = ""
             var rowCount = 0
@@ -230,9 +262,9 @@ class ApproveClaimFragment : Fragment() {
             binding.tvCoverageApproveClaim.text = strCoverage
 
             if(!isExpanded){
-                var height = 200 + (binding.tvCoverageApproveClaim.height* rowCount)
+                val height = 200 + (binding.tvCoverageApproveClaim.height* rowCount)
 
-                val layout: RelativeLayout = binding.clCoverageDetails
+                val layout: ConstraintLayout = binding.clCoverageDetailsAC
                 val params: ViewGroup.LayoutParams = layout.layoutParams
                 params.height = height
                 layout.layoutParams = params
@@ -254,12 +286,14 @@ class ApproveClaimFragment : Fragment() {
         }
 
         binding.btnAccept.setOnClickListener(){
-            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveClaimAmountFragment(claimID,referral.deductible!!.toFloat())
+            DetachListener()
+            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveClaimAmountFragment(claimUUID,referral.deductible!!.toFloat())
             Navigation.findNavController(it).navigate(action)
         }
 
         binding.btnReject.setOnClickListener(){
-            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveRejectedFragment(claimID)
+            DetachListener()
+            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveRejectedFragment(claimUUID)
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -269,25 +303,28 @@ class ApproveClaimFragment : Fragment() {
     fun updateInsuranceView(){
 
         binding.tvCompTitle.text = insurance.insuranceComp
-        binding.tvInsuranceID.text = insurance.insuranceID
+        binding.tvAccidentType.text = insurance.insuranceType
         binding.tvInsuranceName.text = insurance.insuranceName
         binding.tvInsurancePlanName.text = insurance.insurancePlan
 
     }
 
     fun updateView(){
-        val format = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
+        val format = SimpleDateFormat("dd/MM/yyyy hh:mm:ss",Locale.US)
 
         binding.tvStatus.text = claim.claimStatus
         binding.tvClaimIDApproveClaim.text = claim.claimID
-        binding.tvAccidentDate.text = format.format(claim.accidentDateTime)
-        binding.tvAccidentPlace.text = claim.accidentPlace
+        binding.tvAccidentDate.text = format.format(claim.accidentDateTime!!)
+        //binding.tvAccidentPlace.text = claim.accidentPlace
         binding.tvMileage.text = claim.mileage.toString()
         binding.tvAccidentDesc.text = claim.accidentDesc
+        binding.tvAccidentType.text = claim.accidentType
 
         binding.tvReferralName.text = referral.fullName
         binding.tvContactNo.text = referral.contactNo
         binding.tvEmail.text = referral.email
+
+        showMap()
 
         when (claim.claimStatus){
             "Pending" -> {
@@ -311,17 +348,71 @@ class ApproveClaimFragment : Fragment() {
         }
 
         if(!(claim.imgMileage.isNullOrEmpty())){
-            srref = FirebaseStorage.getInstance().getReference("User_"+ CheckUser().getCurrentUserUID()).child(claim.imgMileage.toString())
-            srref.downloadUrl.addOnSuccessListener {
+            imgStorageRef = FirebaseStorage.getInstance().getReference("User_$referralUID").child(claim.imgMileage.toString())
+            imgStorageRef.downloadUrl.addOnSuccessListener {
                 Glide
                     .with(binding.imgMileage.context)
                     .load(it.toString())
                     .into(binding.imgMileage)
-                println("Get image from ${it.toString()}")
+                //println("Get image from ${it.toString()}")
+            }
+        }
+
+        if(!(claim.imgDamage.isNullOrEmpty())){
+            imgStorageRef = FirebaseStorage.getInstance().getReference("User_$referralUID").child(claim.imgDamage.toString())
+            imgStorageRef.downloadUrl.addOnSuccessListener {
+                Glide
+                    .with(binding.imgDamage.context)
+                    .load(it.toString())
+                    .into(binding.imgDamage)
+                //println("Get image from ${it.toString()}")
             }
         }
 
 
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun showMap(){
+        mapFragment = childFragmentManager.findFragmentById(R.id.map_approveClaim) as SupportMapFragment
+        mapFragment.getMapAsync{
+
+            val location = claim.accidentPlace
+            googleMap = it
+
+            //add marker
+            googleMap.addMarker(MarkerOptions().position(location).draggable(true).title("Accident location"))
+
+            //zoom in camera to the bookmark
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
+        }
+
+        //binding.tvAccidentPlace.text = claim.accidentPlace.toString()
+
+        binding.transparentImage.setOnTouchListener { v, event ->
+
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    // Disallow ScrollView to intercept touch events.
+                    binding.scrollViewApproveClaim.requestDisallowInterceptTouchEvent(true)
+                    // Disable touch on transparent view
+                    false
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Allow ScrollView to intercept touch events.
+                    binding.scrollViewApproveClaim.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    binding.scrollViewApproveClaim.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+                else -> {
+                    true
+                }
+            }
+        }
     }
 
     fun updateClaimFigure(){
@@ -358,22 +449,26 @@ class ApproveClaimFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDetach() {
+        super.onDetach()
+        DetachListener()
+    }
+
+    private fun DetachListener(){
         referralRef.removeEventListener(referralListener)
         claimRef.removeEventListener(claimListener)
         insuranceRef.removeEventListener(insuranceListener)
         claimFigureRef.removeEventListener(claimFigureListener)
     }
 
-    fun hideClaimFigure(){
+    private fun hideClaimFigure(){
         binding.view6.visibility = View.INVISIBLE
         binding.lvAmountDetails.visibility = View.INVISIBLE
         binding.textView31.visibility = View.INVISIBLE
         binding.tbAmount.visibility = View.INVISIBLE
     }
 
-    fun hideButtons(){
+    private fun hideButtons(){
         binding.btnReject.visibility = View.INVISIBLE
         binding.btnReject.isEnabled = false
         binding.btnAccept.visibility = View.INVISIBLE
