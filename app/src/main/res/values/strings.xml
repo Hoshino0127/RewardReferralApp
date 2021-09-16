@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Reward &amp; Referral App</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="insurance_type">
+        <item>Act Cover</item>
+        <item>Comprehensive Cover</item>
+        <item>Third-Party Cover</item>
+        <item>Third Party, Fire &amp; Theft Cover</item>
+    </string-array>
+    <string-array name="insurance_comp">
+        <item>AIA</item>
+        <item>Allianz</item>
+        <item>Etiqa</item>
+        <item>Great Eastern</item>
+        <item>Prudential</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="insurance_claim_form">Insurance Claim Form</string>
     <string name="insurance_claim_details">Insurance Claim Details</string>
@@ -112,4 +125,14 @@
     <string name="share">Share</string>
     <string name="registerSuccessMsg">You have successfully registered a new account. Please check your email to verify the account. You can login to the account after the verification.</string>
     <string name="waitingApproveMsg">Waiting to be approved</string>
+    <string name="other">Other</string>
+    <string name="textview">TextView</string>
+    <string name="_4_wheel_standard">4 Wheel Standard</string>
+    <string name="_4_wheel">4 Wheel</string>
+    <string name="none">None</string>
+    <string name="personal">Personal</string>
+    <string name="carpool">Carpool</string>
+    <string name="business">Business</string>
+    <string name="driver_and_passenger"><![CDATA[Driver & Passenger]]></string>
+    <string name="driver">Driver</string>
 </resources>

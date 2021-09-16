@@ -38,6 +38,7 @@ import my.edu.tarc.rewardreferralapp.data.ClaimFigure
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentApproveClaimBinding
+import my.edu.tarc.rewardreferralapp.dialog.ImageDialog
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -355,6 +356,11 @@ class ApproveClaimFragment : Fragment() {
                     .load(it.toString())
                     .into(binding.imgMileage)
                 //println("Get image from ${it.toString()}")
+                val uri = it
+                binding.imgMileage.setOnClickListener(){
+                    val imgDlg: ImageDialog = ImageDialog(requireActivity(),uri)
+                    imgDlg.showAlertDialog()
+                }
             }
         }
 
@@ -366,6 +372,11 @@ class ApproveClaimFragment : Fragment() {
                     .load(it.toString())
                     .into(binding.imgDamage)
                 //println("Get image from ${it.toString()}")
+                val uri = it
+                binding.imgDamage.setOnClickListener(){
+                    val imgDlg: ImageDialog = ImageDialog(requireActivity(),uri)
+                    imgDlg.showAlertDialog()
+                }
             }
         }
 

@@ -12,6 +12,11 @@
     <color name="red_rejected">#F30E15</color>
     <color name="light_blue">#3F51B5</color>
     <color name="dark_blue">#303F98</color>
+    <color name="blue_500">#2266FF</color>
+    <color name="blue_300">#44CCFF</color>
+    <color name="blue_200">#CFF0F7</color>
+    <color name="gainsboro">#DCDCDC</color>
+    <color name="silver">#C0C0C0</color>
     <color name="orange">#FF5252</color>
     <color name="blue">#2266FF</color>
     <color name="grey">#F0F0F0</color>

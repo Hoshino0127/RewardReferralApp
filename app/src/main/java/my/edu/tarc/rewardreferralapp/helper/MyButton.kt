@@ -15,8 +15,7 @@ class MyButton(
     private val textSize:Int,
     private val imageResId:Int,
     private val color:Int,
-    private val listener: MyButtonClickListener
-) {
+    private val listener:MyButtonClickListener) {
     private var pos:Int = 0
     private var clickRegion: RectF?= null
     private val resources: Resources = context.resources

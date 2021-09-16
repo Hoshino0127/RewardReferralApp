@@ -69,7 +69,7 @@ class AdminClaimListingFragment : Fragment() {
                             val claimUUID = claimList[pos].claimUUID
                             val referralUID = claimList[pos].referralUID
 
-                            val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToApproveClaimFragment(claimUUID!!,referralUID!!)
+                            val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToApproveClaimFragment(referralUID!!,claimUUID!!)
                             view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }))

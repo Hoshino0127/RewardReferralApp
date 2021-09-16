@@ -113,20 +113,12 @@
         android:label="fragment_homepage"
         tools:layout="@layout/fragment_homepage" >
         <action
-            android:id="@+id/action_homepage_to_referralInsuranceListingFragment"
-            app:destination="@id/referralInsuranceListingFragment" />
-        <action
             android:id="@+id/action_homepage_to_claimListingFragment"
             app:destination="@id/claimListingFragment" />
         <action
-            android:id="@+id/action_homepage_to_userLoginFragment"
-            app:destination="@id/userLoginFragment" />
+            android:id="@+id/action_homepage_to_referralInsuranceListingFragment"
+            app:destination="@id/referralInsuranceListingFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/userRegisterFragment"
-        android:name="my.edu.tarc.rewardreferralapp.UserRegisterFragment"
-        android:label="UserRegisterFragment"
-        tools:layout="@layout/fragment_user_register"/>
     <fragment
         android:id="@+id/adminClaimListingFragment"
         android:name="my.edu.tarc.rewardreferralapp.AdminClaimListingFragment"
@@ -308,4 +300,109 @@
         android:id="@+id/referralTransferListingFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralTransferListingFragment"
         android:label="ReferralTransferListingFragment" />
+
+    <fragment
+        android:id="@+id/insuranceAddFragment"
+        android:name="my.edu.tarc.rewardreferralapp.InsuranceAddFragment"
+        android:label="InsuranceAddFragment"
+        tools:layout="@layout/fragment_add_insurance">
+        <action
+            android:id="@+id/action_insuranceAddFragment_to_listInsuranceFragment"
+            app:destination="@id/listInsuranceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/listInsuranceFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceFragment"
+        android:label="ListFragment"
+        tools:layout="@layout/fragment_list_insurance">
+        <action
+            android:id="@+id/action_listInsuranceFragment_to_insuranceAddFragment"
+            app:destination="@id/insuranceAddFragment" />
+        <action
+            android:id="@+id/action_listInsuranceFragment_to_updateInsuranceFragment"
+            app:destination="@id/updateInsuranceFragment" />
+        <action
+            android:id="@+id/action_listInsuranceFragment_to_homepage"
+            app:destination="@id/homepage" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateInsuranceFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UpdateInsuranceFragment"
+        android:label="UpdateInsuranceFragment"
+        tools:layout="@layout/fragment_update_insurance">
+        <action
+            android:id="@+id/action_updateInsuranceFragment_to_listInsuranceFragment"
+            app:destination="@id/listInsuranceFragment" />
+        <argument
+            android:name="insuranceID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/applyInsuranceFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ApplyInsuranceFragment"
+        android:label="fragment_apply_insurance"
+        tools:layout="@layout/fragment_apply_insurance" >
+        <action
+            android:id="@+id/action_applyInsuranceFragment_to_listInsuranceCustViewFragment"
+            app:destination="@id/listInsuranceCustViewFragment" />
+        <argument
+            android:name="insuranceID"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_applyInsuranceFragment_to_appliedSuccessfulFragment"
+            app:destination="@id/appliedSuccessfulFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listInsuranceApplicationFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceApplicationFragment"
+        android:label="fragment_list_insurance_application"
+        tools:layout="@layout/fragment_list_insurance_application" >
+        <action
+            android:id="@+id/action_listInsuranceApplicationFragment_to_homepage"
+            app:destination="@id/homepage" />
+        <action
+            android:id="@+id/action_listInsuranceApplicationFragment_to_updateInsuranceApplicationFragment"
+            app:destination="@id/updateInsuranceApplicationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateInsuranceApplicationFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UpdateInsuranceApplicationFragment"
+        android:label="UpdateInsuranceApplicationFragment"
+        tools:layout="@layout/fragment_update_insurance_application">
+        <action
+            android:id="@+id/action_updateInsuranceApplicationFragment_to_listInsuranceApplicationFragment"
+            app:destination="@id/listInsuranceApplicationFragment" />
+        <argument
+            android:name="applicationID"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="insuranceID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/listInsuranceCustViewFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceCustViewFragment"
+        android:label="ListInsuranceCustViewFragment"
+        tools:layout="@layout/fragment_list_insurance_cust_view">
+        <action
+            android:id="@+id/action_listInsuranceCustViewFragment_to_applyInsuranceFragment"
+            app:destination="@id/applyInsuranceFragment" />
+        <action
+            android:id="@+id/action_listInsuranceCustViewFragment_to_homepage"
+            app:destination="@id/homepage" />
+    </fragment>
+    <fragment
+        android:id="@+id/appliedSuccessfulFragment"
+        android:name="my.edu.tarc.rewardreferralapp.AppliedSuccessfulFragment"
+        android:label="fragment_applied_successful"
+        tools:layout="@layout/fragment_applied_successful" >
+        <action
+            android:id="@+id/action_appliedSuccessfulFragment_to_homepage"
+            app:destination="@id/homepage" />
+    </fragment>
 </navigation>

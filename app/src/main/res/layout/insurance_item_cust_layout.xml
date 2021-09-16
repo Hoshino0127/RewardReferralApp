@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="Insurance"
+            type="my.edu.tarc.rewardreferralapp.data.Insurance" />
+        <variable
+            name="ApplyListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.InsuranceCustAdapter.ApplyListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/RewardRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/imgRewardIcon"
+                android:layout_width="97dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvCustInsuranceComp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toTopOf="@+id/imgRewardIcon"
+                tools:text="Insurance Comp" />
+
+            <TextView
+                android:id="@+id/tvCustInsuranceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:text="Insurance Name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceComp" />
+
+            <TextView
+                android:id="@+id/tvCustInsurancePlan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:text="Insurance Plan"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceName" />
+
+            <TextView
+                android:id="@+id/tvCustInsuranceType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:text="Insurance Type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsurancePlan" />
+
+            <TextView
+                android:id="@+id/tvCustInsuranceCoverage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceType" />
+
+            <TextView
+                android:id="@+id/tvCustInsuranceCoverage1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="RM"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceCoverage" />
+
+            <TextView
+                android:id="@+id/tvCustInsurancePrice2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@+id/tvCustInsuranceCoverage1"
+                app:layout_constraintTop_toTopOf="@+id/tvCustInsuranceCoverage1" />
+
+            <TextView
+                android:id="@+id/tvCustInsurancePrice3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:text="per month"
+                app:layout_constraintStart_toEndOf="@+id/tvCustInsurancePrice2"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceCoverage" />
+
+            <Button
+                android:id="@+id/btnCustApply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{() -> ApplyListener.onClick(Insurance)}"
+                android:text="Apply"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCustInsurancePrice3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>
