@@ -360,10 +360,28 @@ class ReferralScanQRCodeFragment : Fragment() {
             tReferralJSON.getString("RefUID")
         )
 
+            //update two referral point
+
+            refRef.child("IR002").get().addOnSuccessListener(){
+                val upRefRecipientPoint = mapOf<String, Any?>(
+                    "points" to Integer.valueOf(it.child("points").value.toString()) + Integer.valueOf(
+                        binding.ptRSQRPointEnter.text.toString()
+                    )
+                )
+                refRef.child("IR002").updateChildren(upRefRecipientPoint)
+            }
+
+
+            val upRefDonorPoint = mapOf<String, Any?>(
+                "points" to Integer.valueOf(binding.tvRSQRMyPoint.text.toString()) - Integer.valueOf(
+                    binding.ptRSQRPointEnter.text.toString()
+                )
+            )
+
+        refRef.child("IR001").updateChildren(upRefDonorPoint)
+
         refTransferRef.child(newID).setValue(referralTransfer).addOnSuccessListener() {
             Toast.makeText(context, "Transfer point successful", Toast.LENGTH_LONG).show()
-
-            //update two referral point
 
             val action =
                 ReferralScanQRCodeFragmentDirections.actionReferralScanQRCodeFragmentToReferralTransferListingFragment()
