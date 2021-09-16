@@ -16,18 +16,19 @@ import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardDeliveryListBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardDeliveyDetailsBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 
 class RewardDeliveryListFragment : Fragment() {
 
     val database =
         FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    val rewdelref = database.getReference("RewardDelivery")
-    val refRewRef = database.getReference("RefferalReward")
-    var rewardDeliveryList = ArrayList<RewardDelivery>()
-    var refrewList = ArrayList<RefferalReward>()
-    lateinit var binding: FragmentRewardDeliveryListBinding
-    val referralID = "R0001"
+    private val rewdelref = database.getReference("RewardDelivery")
+    private val refRewRef = database.getReference("RefferalReward")
+    private var rewardDeliveryList = ArrayList<RewardDelivery>()
+    private var refrewList = ArrayList<RefferalReward>()
+    private lateinit var binding: FragmentRewardDeliveryListBinding
+    private val referralID = CheckUser().getCurrentUserUID()
 
 
     override fun onCreateView(
@@ -75,7 +76,14 @@ class RewardDeliveryListFragment : Fragment() {
                             if (item.deliveryID == Deliverysnap.child("deliveryID").getValue()
                                     .toString()
                             ) {
-                                rewardDeliveryList.add(Deliverysnap.getValue(RewardDelivery::class.java)!!)
+                                if (!rewardDeliveryList.contains(
+                                        Deliverysnap.getValue(
+                                            RewardDelivery::class.java
+                                        )
+                                    )
+                                ) {
+                                    rewardDeliveryList.add(Deliverysnap.getValue(RewardDelivery::class.java)!!)
+                                }
                             }
                         }
 
@@ -101,7 +109,8 @@ class RewardDeliveryListFragment : Fragment() {
                 if (it != null) {
                     val action =
                         RewardDeliveryListFragmentDirections.actionRewardDeliveryListFragmentToRewardRedeemSuccessFragment(
-                            deliveryID
+                            deliveryID,
+                            "List"
                         )
                     Navigation.findNavController(requireView()).navigate(action)
                 }

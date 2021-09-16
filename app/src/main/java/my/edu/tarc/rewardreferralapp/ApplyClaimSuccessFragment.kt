@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +28,15 @@ class ApplyClaimSuccessFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_apply_claim_success, container, false)
 
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToReferralInsuranceListingFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         binding.btnToClaimListing.setOnClickListener(){
             val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToClaimListingFragment()

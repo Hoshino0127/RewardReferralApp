@@ -2,6 +2,8 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,21 +26,20 @@ class RewardListingFragment : Fragment() {
 
     private lateinit var binding: FragmentRewardListingBinding
     private var rewardList = ArrayList<Reward>()
+    var rewardSearchList = ArrayList<Reward>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_listing, container, false)
+        rewardSearchList.clear()
+        rewardList.clear()
 
-        val rewardAdapter = RewardListAdapter(rewardList, RewardListAdapter.ViewListener{
-            rewardID -> val it = view
-            if (it != null) {
-            }
-        })
-        binding.RewardListRV.adapter = rewardAdapter
-        binding.RewardListRV.setHasFixedSize(true)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_reward_listing, container, false)
+
+
 
         getReward()
 
@@ -51,9 +52,10 @@ class RewardListingFragment : Fragment() {
 
         }
 
-        binding.fbtnRLAddNewReward.setOnClickListener(){
+        binding.fbtnRLAddNewReward.setOnClickListener() {
 
-            val action = RewardListingFragmentDirections.actionRewardListingFragmentToRewardEntryFragment()
+            val action =
+                RewardListingFragmentDirections.actionRewardListingFragmentToRewardEntryFragment("")
             Navigation.findNavController(requireView()).navigate(action)
         }
 
@@ -61,49 +63,61 @@ class RewardListingFragment : Fragment() {
 
     }
 
-    private fun getReward(){
-        rewardRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                rewardList.clear()
-                if (snapshot.exists()) {
+    private fun getReward() {
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            rewardRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    rewardList.clear()
+                    if (snapshot.exists()) {
 
-                    for (rewardSnapshot in snapshot.children) {
-                        rewardList.add(rewardSnapshot.getValue(Reward::class.java)!!)
+                        for (rewardSnapshot in snapshot.children) {
+                            rewardList.add(rewardSnapshot.getValue(Reward::class.java)!!)
+
+                        }
+
+                        setAdapter(rewardList)
 
                     }
-                    binding.RewardListRV.adapter?.notifyDataSetChanged()
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                }
+            })
+        }, 1500)
     }
 
-    private fun getRewardBySearch(){
-        var qry: Query = rewardRef.orderByChild("rewardName")
-            .startAt(binding.ptRLRewardName.text.toString())
-            .endAt(binding.ptRLRewardName.text.toString() + "\uf8ff")
+    private fun getRewardBySearch() {
 
-        qry.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                rewardList.clear()
-                if (snapshot.exists()) {
-                    for (rewardSnapshot in snapshot.children) {
-                        rewardList.add(rewardSnapshot.getValue(Reward::class.java)!!)
+        val iMm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        iMm.hideSoftInputFromWindow(view?.windowToken, 0)
+        view?.clearFocus()
 
-                    }
-                    binding.RewardListRV.adapter?.notifyDataSetChanged()
-                } else {
-                    Toast.makeText(context, "Reward Not Found", Toast.LENGTH_LONG).show()
+        rewardSearchList =
+            rewardList.filter { r ->
+                r.rewardName!!.uppercase()
+                    .contains(binding.ptRLRewardName.text.toString().uppercase())
+            } as ArrayList<Reward>
+
+        setAdapter(rewardSearchList)
+
+    }
+
+    private fun setAdapter(RewardAdapterList: ArrayList<Reward>) {
+        val rewardAdapter =
+            RewardListAdapter(RewardAdapterList, RewardListAdapter.ViewListener { rewardID ->
+                val it = view
+                if (it != null) {
+                    val action =
+                        RewardListingFragmentDirections.actionRewardListingFragmentToRewardEntryFragment(
+                            rewardID
+                        )
+                    Navigation.findNavController(requireView()).navigate(action)
                 }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
-        })
+            })
+        binding.RewardListRV.adapter = rewardAdapter
+        binding.RewardListRV.setHasFixedSize(true)
     }
 
 }

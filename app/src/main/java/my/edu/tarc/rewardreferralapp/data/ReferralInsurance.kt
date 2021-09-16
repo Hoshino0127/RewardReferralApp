@@ -5,6 +5,6 @@ import java.util.*
 data class ReferralInsurance(
     val insuranceReferralID: String? =null,
     val insuranceID: String? = null,
-    val insuranceReferral: String? = null,
+    val referralUID: String? = null,
     val insuranceExpiryDate: Date? = null
 )

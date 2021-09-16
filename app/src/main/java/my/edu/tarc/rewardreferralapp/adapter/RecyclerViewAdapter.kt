@@ -8,6 +8,7 @@ import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.InsuranceItemBinding
 import java.text.SimpleDateFormat
+import java.util.*
 
 
 class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: ClaimListener): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -28,7 +29,7 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
             }
         }
 
-        val insuranceID: TextView = binding.tvInsuranceIDCardview
+        val insuranceType: TextView = binding.tvInsuranceTypeCardview
         val insuranceComp: TextView = binding.tvInsuranceCompCardview
         val insuranceName: TextView = binding.tvInsuranceNameCardview
         val insurancePlan: TextView = binding.tvInsurancePlanCardview
@@ -45,11 +46,14 @@ class RecyclerViewAdapter(val insuranceList: List<Insurance>,val clickListener: 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentInsurance = insuranceList[position]
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val strComp: String = "Company: ${currentInsurance.insuranceComp}"
+        val strPlan: String = "Plan: ${currentInsurance.insurancePlan}"
+        val strType: String = "Type: ${currentInsurance.insuranceType}"
         holder.insuranceName.text = currentInsurance.insuranceName
-        holder.insuranceComp.text = currentInsurance.insuranceComp
-        holder.insuranceID.text = currentInsurance.insuranceID
-        holder.insurancePlan.text = currentInsurance.insurancePlan
+        holder.insuranceComp.text = strComp
+        holder.insuranceType.text = strType
+        holder.insurancePlan.text = strPlan
         //holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.insuranceExpiryDate)
         holder.bind(currentInsurance!!, clickListener)
         // bind image into the image view

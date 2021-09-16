@@ -74,7 +74,7 @@ class GetStarted : AppCompatActivity() {
             if (binding.introSliderViewPager.currentItem + 1 < introSliderAdapter.itemCount){
                 binding.introSliderViewPager.currentItem += 1
             } else {
-                val intent = Intent(this, HomepageActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -26,49 +26,34 @@
                 android:id="@+id/imgInsuranceIcon"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/tvInsuranceComp_cardview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:padding="2dp"
-                android:text="Insurance Comp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvInsuranceID_cardview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
-                android:padding="2dp"
-                android:text="Insurance ID"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@id/tvInsuranceComp_cardview" />
 
             <TextView
                 android:id="@+id/tvInsuranceName_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:padding="2dp"
                 android:text="Insurance Name"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@id/tvInsuranceID_cardview" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvInsuranceComp_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:padding="2dp"
+                android:text="Insurance Comp"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceName_cardview" />
 
             <TextView
                 android:id="@+id/tvInsurancePlan_cardview"
@@ -79,21 +64,31 @@
                 android:padding="2dp"
                 android:text="Insurance Plan"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@id/tvInsuranceName_cardview" />
+                app:layout_constraintTop_toBottomOf="@id/tvInsuranceComp_cardview" />
 
+
+            <TextView
+                android:id="@+id/tvInsuranceType_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:padding="2dp"
+                android:text="Insurance Type"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview" />
 
             <Button
                 android:id="@+id/btnRenew_cardview"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:text="Renew"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceType_cardview" />
 
             <Button
                 android:id="@+id/btnClaim_cardview"

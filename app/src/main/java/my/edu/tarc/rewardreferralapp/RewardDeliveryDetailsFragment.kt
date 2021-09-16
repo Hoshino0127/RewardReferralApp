@@ -113,82 +113,63 @@ class RewardDeliveryDetailsFragment : Fragment() {
 
     private fun addDeliveryDetail() {
 
-        var newID: String = ""
-
-        deliveryRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-
-                    newID = "RD" + "%04d".format(snapshot.childrenCount + 1)
-
-                } else {
-
-                    newID = "RD0001"
-
-                }
-
-                val dateformat = SimpleDateFormat("dd/MM/yyyy")
-                val applyDate = dateformat.format(Date())
-
-                val rd = RewardDelivery(
-                    newID,
-                    binding.ptRRDAddress1.text.toString(),
-                    binding.ptRDDAddress2.text.toString(),
-                    binding.ptRRDAddress3.text.toString(),
-                    binding.ptRDDCity.text.toString(),
-                    binding.spRDDState.selectedItem.toString(),
-                    binding.ptRDDPostCode.text.toString(),
-                    "Pending",
-                    applyDate
-                )
-
-                deliveryRef.child(newID).setValue(rd).addOnSuccessListener() {
+        var newID: String = UUID.randomUUID().toString()
 
 
-                    //update status to completed
-                    val upRefferalReward = mapOf<String, Any?>(
-                        "status" to "Completed",
-                        "deliveryID" to newID
+        val dateformat = SimpleDateFormat("dd/MM/yyyy")
+        val applyDate = dateformat.format(Date())
+
+        val rd = RewardDelivery(
+            newID,
+            binding.ptRRDAddress1.text.toString(),
+            binding.ptRDDAddress2.text.toString(),
+            binding.ptRRDAddress3.text.toString(),
+            binding.ptRDDCity.text.toString(),
+            binding.spRDDState.selectedItem.toString(),
+            binding.ptRDDPostCode.text.toString(),
+            "Pending",
+            applyDate
+        )
+
+        deliveryRef.child(newID).setValue(rd).addOnSuccessListener() {
+
+            //update status to completed
+            val upRefferalReward = mapOf<String, Any?>(
+                "status" to "Completed",
+                "deliveryID" to newID
+            )
+
+            var chkError = 0
+
+            for (chkRewardClaimID in chkRewardList) {
+
+                refRewRef.child(chkRewardClaimID).updateChildren(upRefferalReward)
+                    .addOnSuccessListener() {
+
+                    }
+                    .addOnFailureListener {
+                        chkError++
+                    }
+
+            }
+
+            if (chkError == 0) {
+
+                val action =
+                    RewardDeliveryDetailsFragmentDirections.actionRewardDeliveryDetailsFragmentToRewardRedeemSuccessFragment(
+                        newID,
+                        "Entry"
                     )
+                Navigation.findNavController(requireView()).navigate(action)
 
-                    var chkError = 0
-
-                    for (chkRewardClaimID in chkRewardList) {
-
-                        refRewRef.child(chkRewardClaimID).updateChildren(upRefferalReward)
-                            .addOnSuccessListener() {
-
-                            }
-                            .addOnFailureListener {
-                                chkError++
-                            }
-
-                    }
-
-                    if (chkError == 0) {
-
-                        val action =
-                            RewardDeliveryDetailsFragmentDirections.actionRewardDeliveryDetailsFragmentToRewardRedeemSuccessFragment(
-                                newID
-                            )
-                        Navigation.findNavController(view!!).navigate(action)
-
-                    } else {
-                        Toast.makeText(context, "update status fail", Toast.LENGTH_LONG).show()
-                    }
-
-
-                }.addOnFailureListener {
-                    Toast.makeText(context, "add delivery fail", Toast.LENGTH_LONG).show()
-                }
-
+            } else {
+                Toast.makeText(context, "update status fail", Toast.LENGTH_LONG).show()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
 
-        })
+        }.addOnFailureListener {
+            Toast.makeText(context, "add delivery fail", Toast.LENGTH_LONG).show()
+        }
 
 
     }

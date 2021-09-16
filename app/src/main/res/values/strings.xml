@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">Reward &amp; Referral App</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="insurance_type">
+        <item>Act Cover</item>
+        <item>Comprehensive Cover</item>
+        <item>Third-Party Cover</item>
+        <item>Third Party, Fire &amp; Theft Cover</item>
+    </string-array>
+    <string-array name="insurance_comp">
+        <item>AIA</item>
+        <item>Allianz</item>
+        <item>Etiqa</item>
+        <item>Great Eastern</item>
+        <item>Prudential</item>
+    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="insurance_claim_form">Insurance Claim Form</string>
     <string name="insurance_claim_details">Insurance Claim Details</string>
@@ -35,12 +48,17 @@
     <string name="description_text">Description Text</string>
     <string name="title">Title</string>
     <string name="image">image</string>
+    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
 
     <!-- Reward (Jiho) -->
     <string name="DeliveryPending">The staff is preparing to ship your reward</string>
     <string name="DeliveryOTW">Your reward is on the way to delivery.\n
-    You may receive the reward in the following week</string>
-    <string name="your_insurance_is_applied_successfully">Your insurance is applied successfully.</string>
+    You may receive the reward in the \nfollowing week</string>
+    <string name="DeliveryCompleted">You have received the rewards</string>
+    <string name="StaffDeliveryPending">Pending to ship</string>
+    <string name="StaffDeliveryShipped">Shipped</string>
+    <string name="StaffDeliveryCompleted">The referral had received the reward</string>
+
 
     <string-array name="State_Selection">
         <item></item>
@@ -61,6 +79,16 @@
         <item>Labuan</item>
         <item>Putrajaya</item>
     </string-array>
+
+    <string-array name="Status_Selection">
+        <item></item>
+        <item>Active</item>
+        <item>Inactive</item>
+    </string-array>
+
+    <string name="QRDesc">Scan with your MyBee app to send point over</string>
+
+    <string name="QRScanDesc">You can only transfer maximum 100 point to an user per week</string>
 
 
     <!-- krysty -->
@@ -96,4 +124,15 @@
     <string name="share_via">Share via</string>
     <string name="share">Share</string>
     <string name="registerSuccessMsg">You have successfully registered a new account. Please check your email to verify the account. You can login to the account after the verification.</string>
+    <string name="waitingApproveMsg">Waiting to be approved</string>
+    <string name="other">Other</string>
+    <string name="textview">TextView</string>
+    <string name="_4_wheel_standard">4 Wheel Standard</string>
+    <string name="_4_wheel">4 Wheel</string>
+    <string name="none">None</string>
+    <string name="personal">Personal</string>
+    <string name="carpool">Carpool</string>
+    <string name="business">Business</string>
+    <string name="driver_and_passenger"><![CDATA[Driver & Passenger]]></string>
+    <string name="driver">Driver</string>
 </resources>

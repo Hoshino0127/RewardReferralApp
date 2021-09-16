@@ -12,28 +12,32 @@
             tools:context=".ReferralInsuranceListingFragment">
 
             <TextView
-                android:id="@+id/tvCompanyListing"
+                android:id="@+id/tvInsuranceListing_ril"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="26dp"
-                android:text="Company Listing"
+                android:text="Insurance Listing"
                 android:textColor="#393737"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spCompanyListing"
+
+            <SearchView
+                android:id="@+id/searchInsuranceReferral"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="26dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="26dp"
+                android:iconifiedByDefault="false"
+                android:queryHint="Enter Claim ID or Referral ID"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCompanyListing" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceListing_ril" />
 
             <View
                 android:id="@+id/view"
@@ -41,7 +45,7 @@
                 android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spCompanyListing" />
+                app:layout_constraintTop_toBottomOf="@+id/searchInsuranceReferral" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/referralInsuranceRecyclerView"
@@ -50,36 +54,14 @@
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="26dp"
-                android:layout_marginBottom="10dp"
-                tools:listitem="@layout/insurance_item"
-                app:layout_constraintBottom_toTopOf="@+id/btnToApplyClaim"
+                android:layout_marginBottom="20dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-            <Button
-                android:id="@+id/btnToApplyClaim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="To Apply Claim"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <Button
-                android:id="@+id/btnToRenewInsurance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="To Renew Insurance"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                tools:listitem="@layout/insurance_item" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

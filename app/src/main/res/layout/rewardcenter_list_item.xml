@@ -120,13 +120,13 @@
 
             <CheckBox
                 android:id="@+id/chkReward"
-                android:layout_width="38dp"
-                android:layout_height="46dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

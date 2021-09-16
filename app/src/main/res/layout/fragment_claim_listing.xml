@@ -26,14 +26,14 @@
                     android:id="@+id/tiAll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:text="All" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tiPending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:text="Pending" />
 
                 <com.google.android.material.tabs.TabItem
@@ -41,14 +41,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Accept"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/tiRejected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Reject"
-                    android:textSize="12sp" />
+                    android:textSize="0sp" />
             </com.google.android.material.tabs.TabLayout>
 
             <View

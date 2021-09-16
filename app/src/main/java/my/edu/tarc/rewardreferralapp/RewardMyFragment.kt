@@ -1,6 +1,8 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import my.edu.tarc.rewardreferralapp.adapter.RewardMyAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardMyBinding
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.data.RefferalReward
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 class RewardMyFragment : Fragment() {
 
@@ -25,7 +28,7 @@ class RewardMyFragment : Fragment() {
     val refRewRef = database.getReference("RefferalReward")
     val refferalRewardList = ArrayList<RefferalReward>()
     var rewardList = ArrayList<Reward>()
-    val referralID = "R0001"
+    val referralID = CheckUser().getCurrentUserUID()
     lateinit var binding: FragmentRewardMyBinding
 
     override fun onCreateView(
@@ -33,11 +36,12 @@ class RewardMyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        refferalRewardList.clear()
+        rewardList.clear()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
         getPendingClaimReward()
-
 
         return binding.root
 
@@ -45,54 +49,60 @@ class RewardMyFragment : Fragment() {
 
     private fun getPendingClaimReward() {
 
-        var qryRefRew: Query = refRewRef.orderByChild("refferalID").equalTo(referralID)
-        qryRefRew.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (refrewsnap in snapshot.children) {
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
 
-                        if (refrewsnap.child("status").getValue().toString() == "Pending") {
-                            refferalRewardList.add(refrewsnap.getValue(RefferalReward::class.java)!!)
-                        }
-                    }
-                }
-            }
+            var qryRefRew: Query = refRewRef.orderByChild("refferalID").equalTo(referralID)
+            qryRefRew.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (refrewsnap in snapshot.children) {
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
-
-        })
-
-        rewardRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (rewardsnap in snapshot.children) {
-
-                        for (item in refferalRewardList) {
-                            if (item.rewardID == rewardsnap.child("rewardID").getValue()
-                                    .toString()
-                            ) {
-                                rewardList.add(rewardsnap.getValue(Reward::class.java)!!)
+                            if (refrewsnap.child("status").getValue().toString() == "Pending") {
+                                refferalRewardList.add(refrewsnap.getValue(RefferalReward::class.java)!!)
                             }
                         }
-
                     }
-
-                    showView()
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                }
+            })
 
-        })
 
+            rewardRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (rewardsnap in snapshot.children) {
+
+                            for (item in refferalRewardList) {
+                                if (item.rewardID == rewardsnap.child("rewardID").getValue()
+                                        .toString()
+                                ) {
+                                    rewardList.add(rewardsnap.getValue(Reward::class.java)!!)
+                                }
+                            }
+
+                        }
+                        showView()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+                }
+
+            })
+
+        }, 1000)
     }
 
 
     private fun showView() {
+
+        rewardList.sortByDescending { r -> r.rewardID }
+        refferalRewardList.sortByDescending { r -> r.rewardID }
 
         val rewardApter = RewardMyAdapter(
             rewardList,
@@ -111,24 +121,27 @@ class RewardMyFragment : Fragment() {
         binding.fbtnNext.setOnClickListener() {
             var chkRewardList: ArrayList<String> = ArrayList()
             val data = rewardApter.getchekList()
-            for (chkItem in data) {
-                chkRewardList.add(chkItem.rewardClaimID!!)
+            if (data.size != 0) {
+                for (chkItem in data) {
+                    chkRewardList.add(chkItem.rewardClaimID!!)
+                }
+
+                var rewardClaimID: String = ""
+
+                if (chkRewardList.size == 1) {
+                    rewardClaimID = chkRewardList[0]
+                }
+
+                val action =
+                    RewardMyFragmentDirections.actionRewardMyFragmentToRewardDeliveryDetailsFragment(
+                        chkRewardList.toTypedArray(),
+                        rewardClaimID
+                    )
+                Navigation.findNavController(requireView()).navigate(action)
+            }else{
+                Toast.makeText(context, "Please seelct a reward to proceed", Toast.LENGTH_LONG).show()
             }
-
-            var rewardClaimID: String = ""
-
-            if (chkRewardList.size == 1) {
-                rewardClaimID = chkRewardList[0]
-            }
-
-            val action =
-                RewardMyFragmentDirections.actionRewardMyFragmentToRewardDeliveryDetailsFragment(
-                    chkRewardList.toTypedArray(),
-                    rewardClaimID
-                )
-            Navigation.findNavController(requireView()).navigate(action)
         }
-
 
     }
 

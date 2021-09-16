@@ -5,8 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.RewardcenterListItemBinding
@@ -38,7 +42,7 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         val Stock: TextView = binding.tvStock
         val btnView: Button = binding.btnView
         val chkReward:CheckBox = binding.chkReward
-
+        val rewardImg: ImageView = binding.imgRewardIcon
 
     }
 
@@ -63,6 +67,17 @@ class RewardCenterAdapter(val rewardList: List<Reward>, val clickListener: Claim
         holder.btnView.visibility = View.GONE
         holder.chkReward.visibility = View.GONE
         holder.bind(currentReward!!, clickListener)
+
+        var Imgref: StorageReference =
+            FirebaseStorage.getInstance().getReference("RewardStorage")
+                .child(currentReward.rewardImg.toString())
+
+        Imgref.downloadUrl.addOnSuccessListener() {
+            Glide
+                .with(holder.rewardImg.context)
+                .load(it.toString())
+                .into(holder.rewardImg)
+        }
 
     }
 

@@ -57,12 +57,13 @@ class RewardDeliveryAdapter(val deliveryList: List<RewardDelivery>,val clickList
         holder.applyDate.text = "Apply Date: "+currentDelivery.applyDate
 
         if(currentDelivery.status == "Pending"){
-            holder.deliveryID.text = "Pending to ship"
+            holder.deliveryStatus.text = "Status: Pending to ship"
+        }else if(currentDelivery.status == "Shipped"){
+            holder.deliveryStatus.text = "Status: Shipped"
         }else{
-            holder.deliveryID.text = "Shipped"
+            holder.deliveryStatus.text = "Status: Completed"
         }
         holder.bind(currentDelivery!!,clickListener)
-
     }
 
 
