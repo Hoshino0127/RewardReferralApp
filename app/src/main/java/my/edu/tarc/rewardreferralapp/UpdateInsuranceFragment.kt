@@ -259,7 +259,7 @@ class UpdateInsuranceFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                
+
             }
         })
     }

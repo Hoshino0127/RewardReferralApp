@@ -431,7 +431,7 @@ class ApproveClaimFragment : Fragment() {
         var deductibleAmt: Double = 0.0
         var total: Double = 0.0
 
-        val adapter = ClaimFigureAdapter(requireContext(),cfList)
+        val adapter = ClaimFigureAdapter(requireContext(),false,cfList,ClaimFigureAdapter.RemoveListener{})
         binding.lvAmountDetails.adapter = adapter
 
         //set height

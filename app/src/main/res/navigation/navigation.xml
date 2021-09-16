@@ -118,6 +118,24 @@
         <action
             android:id="@+id/action_homepage_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardDeliveryListFragment"
+            app:destination="@id/rewardDeliveryListFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardMyFragment"
+            app:destination="@id/rewardMyFragment" />
+        <action
+            android:id="@+id/action_homepage_to_rewardCenterFragment"
+            app:destination="@id/rewardCenterFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralMyQRCodeFragment"
+            app:destination="@id/referralMyQRCodeFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralScanQRCodeFragment"
+            app:destination="@id/referralScanQRCodeFragment" />
+        <action
+            android:id="@+id/action_homepage_to_referralTransferListingFragment"
+            app:destination="@id/referralTransferListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClaimListingFragment"

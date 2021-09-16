@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.adapter.ReferralTransferAdapter
 import my.edu.tarc.rewardreferralapp.data.Referral
