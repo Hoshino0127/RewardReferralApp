@@ -13,19 +13,19 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
 import my.edu.tarc.rewardreferralapp.R
-import my.edu.tarc.rewardreferralapp.databinding.InsuranceApplicationLayoutBinding
+import my.edu.tarc.rewardreferralapp.databinding.InsuranceApplicationItemLayoutBinding
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import java.text.SimpleDateFormat
-
-private var tempInsList = ArrayList<Insurance>()
-private val database = FirebaseDatabase.getInstance()
-private val insuranceRef = database.getReference("Insurance")
 
 class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<InsuranceApplication>, val clickListener: ViewListener) :
     RecyclerView.Adapter<InsuranceApplicationAdapter.myViewHolder>() {
 
+    private var tempInsList = ArrayList<Insurance>()
+    private val database = FirebaseDatabase.getInstance()
+    private val insuranceRef = database.getReference("Insurance")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.insurance_application_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.insurance_application_item_layout, parent, false)
         return myViewHolder.from(parent)
     }
 
@@ -48,15 +48,9 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
                         for(child in insuranceSnapshot.child("insuranceCoverage").children){
                             insuranceCoverage.add(child.value.toString())
                         }
+                        val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
 
-                        val insurance = Insurance(
-                            insuranceID = insuranceID,
-                            insuranceName = insuranceName,
-                            insuranceComp = insuranceComp,
-                            insurancePlan = insurancePlan,
-                            insuranceType = insuranceType,
-                            insuranceCoverage = insuranceCoverage
-                        )
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage,insurancePrice.toDouble() ,insuranceType)
 
                         tempInsList.add(insurance)
 
@@ -108,7 +102,7 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
         return insuranceApplicationList.size
     }
 
-    class myViewHolder private constructor(val binding: InsuranceApplicationLayoutBinding) :
+    class myViewHolder private constructor(val binding: InsuranceApplicationItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: InsuranceApplication, clickListener: ViewListener) {
@@ -120,7 +114,7 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
         companion object {
             fun from(parent: ViewGroup): myViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = InsuranceApplicationLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = InsuranceApplicationItemLayoutBinding.inflate(layoutInflater, parent, false)
                 return myViewHolder(binding)
             }
         }
@@ -145,4 +139,3 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
 
 
 }
-

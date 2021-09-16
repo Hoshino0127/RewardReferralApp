@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import my.edu.tarc.kotlinswipemenu.LoadingDialogFragment
 import my.edu.tarc.rewardreferralapp.adapter.InsuranceApplicationAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceApplicationBinding
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
@@ -46,7 +47,7 @@ class ListInsuranceApplicationFragment : Fragment() {
         binding.rvInsApplication.setHasFixedSize(true)
 
         binding.btnBackListInsuranceApplication.setOnClickListener() {
-            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToHomepage()
+            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -156,43 +157,49 @@ class ListInsuranceApplicationFragment : Fragment() {
                     insApplicationList.clear()
                     for (insuranceSnapshot in snapshot.children) {
 
-                        val applicationID: String =
-                            insuranceSnapshot.child("applicationID").value.toString()
-                        val applicationAppliedDate: Date = Date(
-                            insuranceSnapshot.child("applicationAppliedDate")
-                                .child("time").value as Long
-                        )
-                        val insuranceID: String =
-                            insuranceSnapshot.child("insuranceID").value.toString()
-                        val referralID: String =
-                            insuranceSnapshot.child("referralID").value.toString()
-                        val insuranceStatus: String =
-                            insuranceSnapshot.child("applicationStatus").value.toString()
+                        if (insuranceSnapshot.child("applicationStatus").value.toString() == "Pending" ||
+                            insuranceSnapshot.child("applicationStatus").value.toString() == "Rejected" ||
+                            insuranceSnapshot.child("applicationStatus").value.toString() == "Accepted"
+                        ) {
 
-                        val insApp = InsuranceApplication(
-                            applicationID,
-                            insuranceID,
-                            referralID,
-                            applicationAppliedDate,
-                            insuranceStatus,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            false
-                        )
+                            val applicationID: String =
+                                insuranceSnapshot.child("applicationID").value.toString()
+                            val applicationAppliedDate: Date = Date(
+                                insuranceSnapshot.child("applicationAppliedDate")
+                                    .child("time").value as Long
+                            )
+                            val insuranceID: String =
+                                insuranceSnapshot.child("insuranceID").value.toString()
+                            val referralID: String =
+                                insuranceSnapshot.child("referralID").value.toString()
+                            val insuranceStatus: String =
+                                insuranceSnapshot.child("applicationStatus").value.toString()
 
-                        insApplicationList.add(insApp)
+                            val insApp = InsuranceApplication(
+                                applicationID,
+                                insuranceID,
+                                referralID,
+                                applicationAppliedDate,
+                                insuranceStatus,
+                                false,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                false
+                            )
+
+                            insApplicationList.add(insApp)
+                        }
+                        binding.tvNoRecordFound.visibility = View.GONE
+                        binding.shimmerViewContainer.stopShimmer()
+                        binding.shimmerViewContainer.visibility = View.GONE
+                        binding.rvInsApplication.visibility = View.VISIBLE
+                        binding.rvInsApplication.adapter?.notifyDataSetChanged()
                     }
-                    binding.tvNoRecordFound.visibility = View.GONE
-                    binding.shimmerViewContainer.stopShimmer()
-                    binding.shimmerViewContainer.visibility = View.GONE
-                    binding.rvInsApplication.visibility = View.VISIBLE
-                    binding.rvInsApplication.adapter?.notifyDataSetChanged()
 
                 } else {
                     insApplicationList.clear()
@@ -228,51 +235,6 @@ class ListInsuranceApplicationFragment : Fragment() {
 
     private fun showProgressBar(){
         dialog.show(getChildFragmentManager(), "loadingDialog")
-    }
-
-    private fun filterInsuranceAppList(insuranceApplicationList: List<InsuranceApplication>) {
-        if(binding.filterLayout.visibility == View.VISIBLE){
-
-            binding.applicationTabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab?) {
-                    var selectedApplication : ArrayList<InsuranceApplication> = ArrayList<InsuranceApplication>()
-                    when (tab?.position) {
-                        0 -> {
-                            binding.searchApplication.setQuery("", false)
-                            binding.searchApplication.clearFocus()
-                            selectedApplication = insApplicationList
-                        }
-                        1 -> {
-                            selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Pending"} as ArrayList<InsuranceApplication>
-                            selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
-                        }
-                        2 -> {
-                            selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Accepted"} as ArrayList<InsuranceApplication>
-                            selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
-                        }
-                        3 -> {
-                            selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Rejected"} as ArrayList<InsuranceApplication>
-                            selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
-                        }
-                    }
-
-                    changeView(selectedApplication)
-
-                }
-
-                override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab?) {
-
-                }
-
-            })
-
-        } else  {
-            binding.filterLayout.visibility = View.GONE
-        }
     }
 
 /*    private fun insertData() {

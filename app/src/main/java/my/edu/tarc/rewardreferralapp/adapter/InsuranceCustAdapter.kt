@@ -9,7 +9,7 @@ import my.edu.tarc.rewardreferralapp.databinding.InsuranceItemCustLayoutBinding
 import my.edu.tarc.rewardreferralapp.data.Insurance
 
 class InsuranceCustAdapter (internal var insuranceList:MutableList<Insurance>, val clickListener: ApplyListener) :
-RecyclerView.Adapter<InsuranceCustAdapter.myViewHolder>()
+    RecyclerView.Adapter<InsuranceCustAdapter.myViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.insurance_item_cust_layout, parent, false)

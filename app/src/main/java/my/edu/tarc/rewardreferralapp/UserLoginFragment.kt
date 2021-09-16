@@ -30,7 +30,6 @@ import my.edu.tarc.rewardreferralapp.databinding.FragmentUserLoginBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserRegisterBinding
 import my.edu.tarc.rewardreferralapp.dialog.LoadingDialog
 
-
 class UserLoginFragment : Fragment() {
 
     private lateinit var binding: FragmentUserLoginBinding
@@ -40,7 +39,6 @@ class UserLoginFragment : Fragment() {
     private val mHandler: Handler = Handler()
     private val mRunnable =
         Runnable { doubleBackToExitPressedOnce = false }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +63,6 @@ class UserLoginFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
-
 
 
         auth = FirebaseAuth.getInstance()

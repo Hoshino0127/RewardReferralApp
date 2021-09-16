@@ -55,7 +55,7 @@ class ListInsuranceCustViewFragment : Fragment() {
         })
 
         binding.btnBackListInsuranceCustView.setOnClickListener() {
-            val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToHomepage()
+            val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -119,15 +119,7 @@ class ListInsuranceCustViewFragment : Fragment() {
                         }
                         val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
 
-                        val insurance = Insurance(
-                            insuranceID = insuranceID,
-                            insuranceName = insuranceName,
-                            insuranceComp = insuranceComp,
-                            insurancePlan = insurancePlan,
-                            insuranceType = insuranceType,
-                            insuranceCoverage = insuranceCoverage,
-                            insurancePrice = insurancePrice.toDouble()
-                        )
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType)
 
                         insuranceList.add(insurance)
 

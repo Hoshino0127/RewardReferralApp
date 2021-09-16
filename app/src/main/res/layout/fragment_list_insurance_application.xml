@@ -110,7 +110,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/filterLayout"
                 app:layout_constraintVertical_bias="0.5"
-                tools:listitem="@layout/insurance_application_layout" />
+                tools:listitem="@layout/insurance_application_item_layout" />
 
             <ImageView
                 android:id="@+id/btnApplicationListFilter"
