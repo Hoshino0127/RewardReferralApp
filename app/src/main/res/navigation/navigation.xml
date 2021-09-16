@@ -136,6 +136,9 @@
         <action
             android:id="@+id/action_homepage_to_referralTransferListingFragment"
             app:destination="@id/referralTransferListingFragment" />
+        <action
+            android:id="@+id/action_homepage_to_navigationFragment"
+            app:destination="@id/navigationFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClaimListingFragment"
@@ -372,6 +375,9 @@
         <action
             android:id="@+id/action_navigationFragment_to_listInsuranceApplicationCustViewFragment"
             app:destination="@id/listInsuranceApplicationCustViewFragment" />
+        <action
+            android:id="@+id/action_navigationFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/applyInsuranceFragment"
