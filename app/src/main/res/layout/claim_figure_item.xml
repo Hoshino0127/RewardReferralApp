@@ -3,9 +3,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="removeListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.ClaimFigureAdapter.RemoveListener" />
+        <variable
+            name="position"
+            type="Integer" />
+    </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,14 +43,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="35dp"
                 android:layout_marginBottom="5dp"
                 android:padding="2dp"
                 android:text="Claim Figure Amount"
+                android:textAlignment="textEnd"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgCross_claimFigure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:onClick="@{() -> removeListener.onClick(position)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/quantum_ic_clear_grey600_24" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

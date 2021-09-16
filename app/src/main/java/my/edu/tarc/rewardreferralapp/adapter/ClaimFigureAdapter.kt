@@ -6,17 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.ClaimFigure
+import my.edu.tarc.rewardreferralapp.databinding.ClaimFigureItemBinding
 import my.edu.tarc.rewardreferralapp.databinding.ClaimItemBinding
+import java.util.zip.Inflater
 
 
-class ClaimFigureAdapter(private val context: Context, private val cfList: java.util.ArrayList<ClaimFigure>) : BaseAdapter() {
+class ClaimFigureAdapter(private val context: Context, private val removable: Boolean, private val cfList: java.util.ArrayList<ClaimFigure>, private val removeListener: RemoveListener) : BaseAdapter() {
     private lateinit var tvClaimFigureName: TextView
     private lateinit var tvClaimFigureAmount: TextView
+    private lateinit var imgCrossClaimFigure: ImageView
 
     override fun getCount(): Int {
         return cfList.size
@@ -29,13 +34,19 @@ class ClaimFigureAdapter(private val context: Context, private val cfList: java.
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        var convertView = convertView
-        convertView = LayoutInflater.from(context).inflate(R.layout.claim_figure_item, parent, false)
-        tvClaimFigureName = convertView.findViewById(R.id.tvClaimFigureName_cardview)
-        tvClaimFigureAmount = convertView.findViewById(R.id.tvClaimFigureAmount_cardview)
-        tvClaimFigureName.text = cfList[position].claimFigureName
-        tvClaimFigureAmount.text = String.format("%.2f",cfList[position].claimFigureAmount)
-        return convertView
+        val binding:ClaimFigureItemBinding = DataBindingUtil.inflate(LayoutInflater.from(context),R.layout.claim_figure_item,parent,false)
+        binding.position = position
+        binding.tvClaimFigureNameCardview.text = cfList[position].claimFigureName
+        binding.tvClaimFigureAmountCardview.text = String.format("%.2f",cfList[position].claimFigureAmount)
+        if(!removable){
+            binding.imgCrossClaimFigure.visibility = View.GONE
+        }else{
+            binding.removeListener = removeListener
+        }
+        return binding.root
     }
 
+    class RemoveListener(val clickListener:(position: Int) -> Unit){
+        fun onClick(position: Int) = clickListener(position)
+    }
 }

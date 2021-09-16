@@ -24,17 +24,28 @@
             android:background="@drawable/rounded_corner_grey_border_1dp">
 
             <TextView
-                android:id="@+id/tvInsuranceComp_cardview"
+                android:id="@+id/tvInsuranceName_cardview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
                 android:padding="2dp"
-                android:text="Insurance Comp"
+                android:text="Insurance Name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvInsuranceType_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:padding="2dp"
+                android:text="Insurance type"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvClaimID_cardview" />
 
             <TextView
                 android:id="@+id/tvClaimID_cardview"
@@ -42,20 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:padding="2dp"
-                android:text="Insurance ID"
-                android:textSize="16sp"
+                android:text="Claim ID"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvInsuranceComp_cardview" />
-
-            <TextView
-                android:id="@+id/tvInsuranceName_cardview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:padding="2dp"
-                android:text="Insurance Name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvClaimID_cardview" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceName_cardview" />
 
             <TextView
                 android:id="@+id/tvApplyDate_cardview"
@@ -63,11 +63,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="15dp"
+                android:padding="2dp"
                 android:text="Claim Apply Date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceName_cardview"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceType_cardview" />
 
             <Button
                 android:id="@+id/btnView_cardview"
