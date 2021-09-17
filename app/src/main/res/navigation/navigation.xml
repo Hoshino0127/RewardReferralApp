@@ -474,4 +474,61 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profileDetailsFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ProfileDetailsFragment"
+        android:label="ProfileDetailsFragment"
+        tools:layout="@layout/fragment_profile_details">
+        <action
+            android:id="@+id/action_profileDetailsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_profileDetailsFragment_to_updateProfileDetailsFragment"
+            app:destination="@id/updateProfileDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/referFriendFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferFriendFragment"
+        android:label="ReferFriendFragment"
+        tools:layout="@layout/fragment_refer_friend"/>
+    <fragment
+        android:id="@+id/referralListingFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferralListingFragment"
+        android:label="ReferralListingFragment"
+        tools:layout="@layout/fragment_referral_listing">
+        <action
+            android:id="@+id/action_referralListingFragment_to_addNewReferralFragment"
+            app:destination="@id/addNewReferralFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileDetailsFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UpdateProfileDetailsFragment"
+        android:label="UpdateProfileDetailsFragment"
+        tools:layout="@layout/fragment_update_profile_details">
+        <action
+            android:id="@+id/action_updateProfileDetailsFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserProfileFragment"
+        android:label="UserProfileFragment"
+        tools:layout="@layout/fragment_user_profile">
+        <action
+            android:id="@+id/action_userProfileFragment_to_profileDetailsFragment"
+            app:destination="@id/profileDetailsFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_referFriendFragment"
+            app:destination="@id/referFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewReferralFragment"
+        android:name="my.edu.tarc.rewardreferralapp.AddNewReferralFragment"
+        android:label="AddNewReferralFragment"
+        tools:layout="@layout/fragment_add_new_referral">
+        <action
+            android:id="@+id/action_addNewReferralFragment_to_referralListingFragment"
+            app:destination="@id/referralListingFragment" />
+    </fragment>
 </navigation>

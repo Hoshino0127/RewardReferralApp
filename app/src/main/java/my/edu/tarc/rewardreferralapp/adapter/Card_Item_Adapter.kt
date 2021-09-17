@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ class Card_Item_Adapter (private val carItems: List<Card_Item_Model>) : Recycler
 
         private val title = view.findViewById<TextView>(R.id.tvTitle)
         private val description = view.findViewById<TextView>(R.id.tvDescription)
-        private val status = view.findViewById<TextView>(R.id.tvAcceptorReject)
+        val status = view.findViewById<TextView>(R.id.tvAcceptorReject)
         private val image = view.findViewById<ImageView>(R.id.imgvInsurance)
 
         fun bind( car_Item_Model: Card_Item_Model){
@@ -24,7 +25,6 @@ class Card_Item_Adapter (private val carItems: List<Card_Item_Model>) : Recycler
             status.text = car_Item_Model.status
             image.setImageResource(car_Item_Model.image)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): cardItemHolder {
@@ -34,7 +34,16 @@ class Card_Item_Adapter (private val carItems: List<Card_Item_Model>) : Recycler
     }
 
     override fun onBindViewHolder(holder: cardItemHolder, position: Int) {
+        val currentCard = carItems[position]
         holder.bind(carItems[position])
+
+        if(currentCard.status.equals("Accepted")){
+            holder.status.setTextColor(Color.parseColor("#31B12C"))
+        }else if(currentCard.status.equals("Pending")){
+            holder.status.setTextColor(Color.parseColor("#EC512B"))
+        }else{
+            holder.status.setTextColor(Color.parseColor("#000000"))
+        }
     }
 
     override fun getItemCount(): Int {
