@@ -124,7 +124,7 @@ class HomepageFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-        binding.relativeLayout8.setOnClickListener() {
+        binding.relativeLayout9.setOnClickListener() {
             val action = HomepageFragmentDirections.actionHomepageToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
