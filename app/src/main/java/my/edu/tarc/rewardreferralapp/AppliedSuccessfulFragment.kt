@@ -20,7 +20,7 @@ class AppliedSuccessfulFragment : Fragment() {
         binding = FragmentAppliedSuccessfulBinding.inflate(inflater,  container ,false)
 
         binding.btnBackToMenu.setOnClickListener() {
-            val action = AppliedSuccessfulFragmentDirections.actionAppliedSuccessfulFragmentToHomepage()
+            val action = AppliedSuccessfulFragmentDirections.actionAppliedSuccessfulFragmentToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

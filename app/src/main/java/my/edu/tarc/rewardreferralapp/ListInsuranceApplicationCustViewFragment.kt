@@ -1,27 +1,28 @@
 package my.edu.tarc.rewardreferralapp
 
-import android.app.ProgressDialog
+import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import my.edu.tarc.kotlinswipemenu.LoadingDialogFragment
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.InsuranceApplicationAdapter
-import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceApplicationBinding
+import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceApplicationCustViewBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-class ListInsuranceApplicationFragment : Fragment() {
+class ListInsuranceApplicationCustViewFragment : Fragment() {
 
     private val database = FirebaseDatabase.getInstance()
     private val insuranceApplicationRef = database.getReference("InsuranceApplication")
@@ -31,29 +32,28 @@ class ListInsuranceApplicationFragment : Fragment() {
     private var insApplicationList = ArrayList<InsuranceApplication>()
     private var tempInsApplicationList = ArrayList<InsuranceApplication>()
 
-    private lateinit var binding: FragmentListInsuranceApplicationBinding
+    private lateinit var binding: FragmentListInsuranceApplicationCustViewBinding
 
-    private var dialog = LoadingDialogFragment()
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-
-        binding = FragmentListInsuranceApplicationBinding.inflate(inflater, container ,false)
+    ): View? {
+        binding = FragmentListInsuranceApplicationCustViewBinding.inflate(inflater, container ,false)
 
         loadData()
 
-        binding.rvInsApplication.setHasFixedSize(true)
+        binding.rvInsApplicationCustView.setHasFixedSize(true)
 
-        binding.btnBackListInsuranceApplication.setOnClickListener() {
-            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToNavigationFragment()
+        binding.btnBackListInsuranceApplicationCustView.setOnClickListener() {
+            val action = ListInsuranceApplicationCustViewFragmentDirections.actionListInsuranceApplicationCustViewFragmentToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
         changeView(insApplicationList)
 
-        binding.searchApplication.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchApplicationCustView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(newText: String?): Boolean {
                 if (newText!!.isNotEmpty()) {
                     tempInsApplicationList.clear()
@@ -97,7 +97,7 @@ class ListInsuranceApplicationFragment : Fragment() {
             }
         })
 
-        binding.btnApplicationListFilter.setOnClickListener() {
+        binding.btnApplicationListFilterCustView.setOnClickListener() {
             if(binding.filterLayout.visibility == View.GONE){
                 binding.filterLayout.visibility = View.VISIBLE
 
@@ -106,21 +106,21 @@ class ListInsuranceApplicationFragment : Fragment() {
                         var selectedApplication : ArrayList<InsuranceApplication> = ArrayList<InsuranceApplication>()
                         when (tab?.position) {
                             0 -> {
-                                binding.searchApplication.setQuery("", false)
-                                binding.searchApplication.clearFocus()
+                                binding.searchApplicationCustView.setQuery("", false)
+                                binding.searchApplicationCustView.clearFocus()
                                 selectedApplication = insApplicationList
                             }
                             1 -> {
                                 selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Pending"} as ArrayList<InsuranceApplication>
-                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
+                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplicationCustView.query.toString())} as ArrayList<InsuranceApplication>
                             }
                             2 -> {
                                 selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Accepted"} as ArrayList<InsuranceApplication>
-                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
+                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplicationCustView.query.toString())} as ArrayList<InsuranceApplication>
                             }
                             3 -> {
                                 selectedApplication = insApplicationList.filter{ s -> s.applicationStatus == "Rejected"} as ArrayList<InsuranceApplication>
-                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplication.query.toString())} as ArrayList<InsuranceApplication>
+                                selectedApplication = selectedApplication.filter{ s -> s.applicationID!!.contains(binding.searchApplicationCustView.query.toString())} as ArrayList<InsuranceApplication>
                             }
                         }
 
@@ -133,8 +133,8 @@ class ListInsuranceApplicationFragment : Fragment() {
                     }
 
                     override fun onTabReselected(tab: TabLayout.Tab?) {
-                        binding.searchApplication.setQuery("", false)
-                        binding.searchApplication.clearFocus()
+                        binding.searchApplicationCustView.setQuery("", false)
+                        binding.searchApplicationCustView.clearFocus()
                     }
 
                 })
@@ -157,10 +157,7 @@ class ListInsuranceApplicationFragment : Fragment() {
                     insApplicationList.clear()
                     for (insuranceSnapshot in snapshot.children) {
 
-                        if (insuranceSnapshot.child("applicationStatus").value.toString() == "Pending" ||
-                            insuranceSnapshot.child("applicationStatus").value.toString() == "Rejected" ||
-                            insuranceSnapshot.child("applicationStatus").value.toString() == "Accepted"
-                        ) {
+                        if (insuranceSnapshot.child("referralID").value.toString() == CheckUser().getCurrentUserUID()) {
 
                             val applicationID: String =
                                 insuranceSnapshot.child("applicationID").value.toString()
@@ -194,11 +191,12 @@ class ListInsuranceApplicationFragment : Fragment() {
 
                             insApplicationList.add(insApp)
                         }
+
                         binding.tvNoRecordFound.visibility = View.GONE
                         binding.shimmerViewContainer.stopShimmer()
                         binding.shimmerViewContainer.visibility = View.GONE
-                        binding.rvInsApplication.visibility = View.VISIBLE
-                        binding.rvInsApplication.adapter?.notifyDataSetChanged()
+                        binding.rvInsApplicationCustView.visibility = View.VISIBLE
+                        binding.rvInsApplicationCustView.adapter?.notifyDataSetChanged()
                     }
 
                 } else {
@@ -206,8 +204,8 @@ class ListInsuranceApplicationFragment : Fragment() {
                     binding.shimmerViewContainer.stopShimmer()
                     binding.shimmerViewContainer.visibility = View.GONE
                     binding.tvNoRecordFound.visibility = View.VISIBLE
-                    binding.rvInsApplication.visibility = View.INVISIBLE
-                    binding.rvInsApplication.adapter?.notifyDataSetChanged()
+                    binding.rvInsApplicationCustView.visibility = View.INVISIBLE
+                    binding.rvInsApplicationCustView.adapter?.notifyDataSetChanged()
                 }
             }
 
@@ -222,32 +220,26 @@ class ListInsuranceApplicationFragment : Fragment() {
         adapterInsApp = InsuranceApplicationAdapter(insuranceApplicationList, InsuranceApplicationAdapter.ViewListener{
                 applicationID,insuranceID -> val it = view
 
-            showProgressBar()
+            showLoading()
 
-            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToUpdateInsuranceApplicationFragment(applicationID, insuranceID)
-            view?.let { Navigation.findNavController(it).navigate(action) }
+            Handler().postDelayed({
+                hideLoading()
+                //val action = ListInsuranceApplicationCustViewFragmentDirections.actionListInsuranceApplicationCustViewFragmentToViewInsuranceApplicationCustFragment(insuranceID, applicationID)
+                //view?.let { Navigation.findNavController(it).navigate(action) }
+            }, 3000)
 
         })
 
-        binding.rvInsApplication.adapter = adapterInsApp
-        binding.rvInsApplication.adapter!!.notifyDataSetChanged()
+        binding.rvInsApplicationCustView.adapter = adapterInsApp
+        binding.rvInsApplicationCustView.adapter!!.notifyDataSetChanged()
     }
 
-    private fun showProgressBar(){
-        dialog.show(getChildFragmentManager(), "loadingDialog")
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
     }
 
-/*    private fun insertData() {
-
-        val insAppList: List<InsuranceApplication> = listOf(
-            InsuranceApplication("20210725-Etiqa-IA0001","IN001","IR001", Date("08/09/2021"),"Pending","bla"),
-            InsuranceApplication("20210725-Etiqa-IA0002","IN001","IR001", Date("08/09/2021"),"Pending","bla")
-        )
-
-        for (insurance in insAppList) {
-            insuranceApplicationRef.push().setValue(insurance)
-        }
-
-    }*/
-
+    private fun showLoading() {
+        hideLoading()
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
 }

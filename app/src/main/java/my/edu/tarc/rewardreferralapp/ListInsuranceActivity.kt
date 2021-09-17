@@ -1,10 +1,11 @@
-package my.edu.tarc.rewardreferralapp
+package my.edu.tarc.kotlinswipemenu
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.IntentCompat
+import my.edu.tarc.rewardreferralapp.R
 import kotlin.system.exitProcess
 
 

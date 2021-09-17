@@ -1,10 +1,11 @@
-package my.edu.tarc.rewardreferralapp
+package my.edu.tarc.kotlinswipemenu
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import my.edu.tarc.rewardreferralapp.R
 
 class LoadingDialogFragment : DialogFragment() {
     override fun onCreateView(

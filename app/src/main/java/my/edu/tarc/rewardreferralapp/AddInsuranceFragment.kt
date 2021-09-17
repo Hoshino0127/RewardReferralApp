@@ -24,7 +24,7 @@ import kotlin.collections.ArrayList
 
 class InsuranceAddFragment : Fragment() {
 
-    lateinit var adapter : InsuranceAdapter
+    private lateinit var adapter : InsuranceAdapter
 
     private val database = FirebaseDatabase.getInstance()
     private val insuranceRef = database.getReference("Insurance")
@@ -106,15 +106,7 @@ class InsuranceAddFragment : Fragment() {
                     newID = UUID.randomUUID().toString()
                 }
 
-                val newInsurance = Insurance(
-                    insuranceID = newID,
-                    insuranceName = insuranceName,
-                    insuranceComp = insuranceComp,
-                    insurancePlan = insurancePlan,
-                    insuranceType = insuranceType,
-                    insuranceCoverage = insuranceCoverage,
-                    insurancePrice = insurancePrice.toDouble()
-                )
+                val newInsurance = Insurance(newID, insuranceName, insuranceComp, insurancePlan, insuranceCoverage, insurancePrice.toDouble(), insuranceType)
 
                 insuranceRef.push().setValue(newInsurance).addOnSuccessListener(){
                     Toast.makeText(context, "Add successful", Toast.LENGTH_LONG).show()
@@ -147,14 +139,9 @@ class InsuranceAddFragment : Fragment() {
                         for(child in insuranceSnapshot.child("insuranceCoverage").children){
                             insuranceCoverage.add(child.value.toString())
                         }
+                        val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
 
-                        val insurance = Insurance(insuranceID = insuranceID,
-                            insuranceName = insuranceName,
-                            insuranceComp = insuranceComp,
-                            insurancePlan = insurancePlan,
-                            insuranceType = insuranceType,
-                            insuranceCoverage = insuranceCoverage
-                        )
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage,insurancePrice.toDouble(),insuranceType)
 
                         insuranceList.add(insurance)
                     }

@@ -85,8 +85,8 @@ class ListInsuranceFragment : Fragment() {
                             view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }))
+                }
             }
-        }
 
         binding.btnAdd.setOnClickListener(){
             val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToInsuranceAddFragment()
@@ -94,7 +94,7 @@ class ListInsuranceFragment : Fragment() {
         }
 
         binding.btnBackListInsurance.setOnClickListener() {
-            val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToHomepage()
+            val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToNavigationFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -267,15 +267,9 @@ class ListInsuranceFragment : Fragment() {
                         for(child in insuranceSnapshot.child("insuranceCoverage").children){
                             insuranceCoverage.add(child.value.toString())
                         }
+                        val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
 
-                        val insurance = Insurance(
-                            insuranceID = insuranceID,
-                            insuranceName = insuranceName,
-                            insuranceComp = insuranceComp,
-                            insurancePlan = insurancePlan,
-                            insuranceType = insuranceType,
-                            insuranceCoverage = insuranceCoverage
-                        )
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage,insurancePrice.toDouble(),insuranceType )
 
                         insuranceList.add(insurance)
 
@@ -333,23 +327,6 @@ class ListInsuranceFragment : Fragment() {
             Toast.makeText(requireContext(), "Refresh", Toast.LENGTH_SHORT).show()
             binding.srlInsuranceList.isRefreshing = false
         }
-    }
-
-    //Data Initialize
-    private fun insertData(){
-        val insList: List<Insurance> = listOf(
-            Insurance("IN001","Car insurance","Etiqa","Plan A",listOf("Coverage 1"),100.00, "Act Cover"),
-            Insurance("IN002","Motor insurance","Prudential","Plan C",listOf("Coverage 1"),200.00, "Third Party Cover"),
-            Insurance("IN003","Truck insurance","Etiqa","Plan D",listOf("Coverage 1"),900.00, "Third Party, Fire and Theft cover"),
-            Insurance("IN005","Truck insurance","AIA","Plan D",listOf("Coverage 1"),230.00, "Third Party, Fire and Theft cover"),
-            Insurance("IN006","Truck insurance","Great Eastern","Plan D",listOf("Coverage 1"),450.00, "Comprehensive cover"),
-            Insurance("IN004","Van insurance","Prudential","Plan B",listOf("Coverage 1"),700.00, "Act Cover" )
-        )
-
-        for (insurance in insList) {
-            myRef.push().setValue(insurance)
-        }
-
     }
 
     interface FirebaseSuccessListener {

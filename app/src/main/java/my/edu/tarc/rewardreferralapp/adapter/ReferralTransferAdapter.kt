@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.data.ReferralTransfer
-import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.databinding.ReferraltransferListItemBinding
 
 

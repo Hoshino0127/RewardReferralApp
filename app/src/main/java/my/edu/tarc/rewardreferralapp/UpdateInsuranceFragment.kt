@@ -84,13 +84,7 @@ class UpdateInsuranceFragment : Fragment() {
                         }
                         val insurancePrice:String = insuranceSnapshot.child("insurancePrice").value.toString()
 
-                        val insurance = Insurance(insuranceID = insuranceID,
-                            insuranceName = insuranceName,
-                            insuranceComp = insuranceComp,
-                            insurancePlan = insurancePlan,
-                            insuranceType = insuranceType,
-                            insuranceCoverage = insuranceCoverage,
-                            insurancePrice = insurancePrice.toDouble())
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType)
 
                         insuranceList.add(insurance)
                     }
@@ -156,7 +150,7 @@ class UpdateInsuranceFragment : Fragment() {
                         if(ds.insuranceCoverage?.contains(binding.cbMedical.text.toString()) == true) {
                             if (!binding.cbMedical.isChecked) {
                                 binding.cbMedical.toggle()
-                            }
+                           }
                         } else {
                             if (binding.cbMedical.isChecked) {
                                 binding.cbMedical.toggle()

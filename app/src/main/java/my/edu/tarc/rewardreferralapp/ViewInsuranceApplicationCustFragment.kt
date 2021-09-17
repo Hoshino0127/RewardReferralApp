@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.app.DownloadManager
 import android.app.ProgressDialog
@@ -10,12 +11,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.provider.OpenableColumns
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.database.DataSnapshot
@@ -25,25 +26,27 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.GetEvidenceAdapter
-import my.edu.tarc.rewardreferralapp.databinding.FragmentUpdateInsuranceApplicationBinding
+import my.edu.tarc.rewardreferralapp.databinding.FragmentViewInsuranceApplicationCustBinding
 import my.edu.tarc.rewardreferralapp.data.File
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
 import java.util.*
 import kotlin.collections.ArrayList
 
-class UpdateInsuranceApplicationFragment : Fragment() {
+class ViewInsuranceApplicationCustFragment : Fragment() {
 
-    private lateinit var binding: FragmentUpdateInsuranceApplicationBinding
+    private lateinit var binding: FragmentViewInsuranceApplicationCustBinding
+
     private var fileNameList = ArrayList<File>()
     private lateinit var fileAdapter : GetEvidenceAdapter
 
     private lateinit var referralUID: String
 
-    private val args: UpdateInsuranceApplicationFragmentArgs by navArgs()
+    private val args: ViewInsuranceApplicationCustFragmentArgs by navArgs()
 
     private lateinit var progressDownloadDialog : ProgressDialog
     private var completeDialog: Dialog?= null
+    private var loadingDialog: Dialog?= null
 
     private val database = FirebaseDatabase.getInstance()
     private val insuranceRef = database.getReference("Insurance")
@@ -54,9 +57,9 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_update_insurance_application, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_view_insurance_application_cust, container, false)
 
         progressDownloadDialog = ProgressDialog(this.context)
         progressDownloadDialog.setMessage("Downloading the file..")
@@ -79,17 +82,40 @@ class UpdateInsuranceApplicationFragment : Fragment() {
             }
         }
 
-        binding.btnBackUpdateInsuranceApplication.setOnClickListener() {
-            val action = UpdateInsuranceApplicationFragmentDirections.actionUpdateInsuranceApplicationFragmentToListInsuranceApplicationFragment()
+        binding.imgBackViewInsuranceApplicationCust.setOnClickListener() {
+            val action = ViewInsuranceApplicationCustFragmentDirections.actionViewInsuranceApplicationCustFragmentToListInsuranceApplicationCustViewFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
-        binding.btnAcceptApplication.setOnClickListener() {
-            updateApplication("Accepted")
+        binding.btnBackViewInsuranceApplicationCust.setOnClickListener() {
+            val action = ViewInsuranceApplicationCustFragmentDirections.actionViewInsuranceApplicationCustFragmentToListInsuranceApplicationCustViewFragment()
+            Navigation.findNavController(it).navigate(action)
         }
 
-        binding.btnRejectApplication.setOnClickListener() {
-            updateApplication("Rejected")
+        binding.btnCancelViewInsuranceApplicationCust.setOnClickListener() {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("MyBee Alert")
+            builder.setMessage("Are you sure to cancel the application?")
+            builder.setIcon(android.R.drawable.ic_dialog_alert)
+            //performing positive action
+            builder.setPositiveButton("Yes"){dialogInterface, which ->
+                showLoading()
+                Handler().postDelayed({
+                    hideLoading()
+                    updateApplication("Cancelled")
+                }, 1500)
+            }
+
+            //performing negative action
+            builder.setNegativeButton("No"){dialogInterface, which ->
+
+            }
+            // Create the AlertDialog
+            val alertDialog: AlertDialog = builder.create()
+            // Set other dialog properties
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+
         }
 
         return binding.root
@@ -125,6 +151,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                                 insuranceCoverage,
                                 insurancePrice.toDouble(),
                                 insuranceType
+
                             )
 
                             insuranceCustList.add(insurance)
@@ -173,7 +200,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             val applicationStatus : String =
                                 insuranceAppSnapshot.child("applicationStatus").value.toString()
                             val carNoPlate : String =
-                                insuranceAppSnapshot.child("applicationStatus").value.toString()
+                                insuranceAppSnapshot.child("carNoPlate").value.toString()
                             val yearMake : String =
                                 insuranceAppSnapshot.child("yearMake").value.toString()
                             val modelName : String =
@@ -242,6 +269,12 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                     else if (insAppList.airBag.equals(binding.radAirBagNone.text.toString()))
                         binding.radAirBagNone.toggle()
 
+                    if(insAppList.applicationStatus == "Cancelled") {
+                        binding.btnCancelViewInsuranceApplicationCust.isEnabled = false
+                        binding.btnCancelViewInsuranceApplicationCust.visibility = View.GONE
+                        binding.tvApplicationCancelled.visibility = View.VISIBLE
+                    }
+
                 }
 
 
@@ -254,7 +287,8 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     }
 
     private fun updateApplication(isApprove : String) {
-        insuranceApplicationRef.orderByChild("applicationID").equalTo(args.applicationID.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+        insuranceApplicationRef.orderByChild("applicationID").equalTo(args.applicationID.toString()).addListenerForSingleValueEvent(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ds in snapshot.children){
                     if (ds.exists()){
@@ -263,7 +297,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                                 .addOnSuccessListener {
                                     Toast.makeText(
                                         context,
-                                        "Update Successful",
+                                        "Cancelled Successful",
                                         Toast.LENGTH_LONG
                                     ).show()
                                 }
@@ -322,7 +356,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     }
 
     private fun  downloadFile(file: File) {
-        showLoading()
+        showComplete()
         progressDownloadDialog.show()
 
         var total: Long
@@ -335,7 +369,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
             total = it.sizeBytes
 
             Handler().postDelayed({
-                hideLoading()
+                hideComplete()
             }, (total/100)*2)
 
             val handler = Handler()
@@ -361,15 +395,22 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
     }
 
-    private fun hideLoading() {
+    private fun hideComplete() {
         completeDialog?.let { if(it.isShowing) it.cancel() }
     }
 
-    private fun showLoading() {
-        hideLoading()
+    private fun showComplete() {
+        hideComplete()
         completeDialog = MyLottie.showCompleteDialog(requireContext())
     }
 
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        hideComplete()
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
 }
-
-
