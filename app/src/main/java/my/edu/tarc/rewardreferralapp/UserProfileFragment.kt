@@ -1,39 +1,42 @@
 package my.edu.tarc.rewardreferralapp
 
-import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import android.widget.TextView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.airbnb.lottie.animation.keyframe.ValueCallbackKeyframeAnimation
+import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.adapter.Card_Item_Adapter
 import my.edu.tarc.rewardreferralapp.data.Card_Item_Model
+import my.edu.tarc.rewardreferralapp.data.Insurance
+import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserProfileBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
-import java.util.*
 import kotlin.collections.ArrayList
-
 
 class UserProfileFragment : Fragment() {
 
+    private val cardview = ArrayList<Card_Item_Model>()
     private var referral = ArrayList<Referral>()
+    private var insuranceApp = ArrayList<InsuranceApplication>()
+    private var insurance = ArrayList<Insurance>()
 
+    private val viewpager: ViewPager2 = binding.viewpagerInsurance
     private var tempbinding: FragmentUserProfileBinding? = null
     private val binding get() = tempbinding!!
-
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val referralRef = database.getReference("Referral")
 
-    private val cardItemAdapter = Card_Item_Adapter( //NEED TO CHANGE TO GET FROM THE
+    private val insuranceApply = database.getReference("InsuranceApplication")
+    private val insuranceRef = database.getReference("Insurance")
+
+    private val cardItemAdapter = Card_Item_Adapter(
         listOf(
             Card_Item_Model(
                 "PRUDENTIAL",
@@ -62,7 +65,6 @@ class UserProfileFragment : Fragment() {
         )
     )
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,7 +72,6 @@ class UserProfileFragment : Fragment() {
         loadData()
         tempbinding = FragmentUserProfileBinding.inflate(inflater,  container ,false)
 
-        val viewpager: ViewPager2 = binding.viewpagerInsurance
         viewpager.adapter = cardItemAdapter
 
         binding.btnInvite.setOnClickListener(){
@@ -91,6 +92,7 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+
         return binding.root
     }
 
@@ -102,10 +104,8 @@ class UserProfileFragment : Fragment() {
                     referral.clear()
                     if (referralUID != null) {
                         for (referralSnapshot in snapshot.children) {
-                            val referralPoints: String =
-                                referralSnapshot.child("points").value.toString()
-                            val referralName: String =
-                                referralSnapshot.child("fullName").value.toString()
+                            val referralPoints: String = referralSnapshot.child("points").value.toString()
+                            val referralName: String = referralSnapshot.child("fullName").value.toString()
 
                             binding.tvPoints.text = referralPoints
                             binding.tviewUserName.text = referralName
@@ -119,5 +119,54 @@ class UserProfileFragment : Fragment() {
             }
         })
     }
+
+    //compare insurance and insurance application insuranceID
+    private fun loadCardView(){
+        //get insurance
+
+        insuranceRef.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    insurance.clear()
+                        for(insuranceSnapshot in snapshot.children){
+                            insuranceApply.addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    TODO("Not yet implemented")
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                        }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+
+//        insuranceApply.addListenerForSingleValueEvent(object: ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if(snapshot.exists()){
+//                    insuranceApp.clear()
+//                    for(insAppSnapshot in snapshot.children){
+//                        val applicationStatus: String = insAppSnapshot.child("applicationStatus").value.toString()
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//
+//        })
+    }
 }
+
 

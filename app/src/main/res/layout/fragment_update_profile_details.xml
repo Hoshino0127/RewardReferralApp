@@ -100,34 +100,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/txtEditName"
-                    android:layout_width="350dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="23dp"
-                    android:background="@drawable/rectangle"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="10dp"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvFullname" />
-
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="336dp"
                     android:text="NRIC"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtEditName" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvRefFullName" />
+
+                <TextView
+                    android:id="@+id/tvRefFullName"
+                    android:layout_width="350dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/rounded_corner_grey_border_1dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFullname" />
 
                 <TextView
                     android:id="@+id/tvRefNRIC"
@@ -142,6 +142,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -150,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="19dp"
                     android:layout_marginEnd="332dp"
                     android:text="Email"
                     android:textSize="16sp"

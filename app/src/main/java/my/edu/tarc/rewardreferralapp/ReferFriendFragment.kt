@@ -29,7 +29,6 @@ class ReferFriendFragment : Fragment() {
 
         binding.btnGenerate.setOnClickListener(){
             binding.tvRefCodeResult.setText(generateCode())
-
         }
 
         binding.btnRefer.setOnClickListener(){
@@ -41,7 +40,6 @@ class ReferFriendFragment : Fragment() {
             shareIntent.putExtra(Intent.EXTRA_TEXT, "You can share this code : " + referralCode + " via")
             startActivity(Intent.createChooser(shareIntent, "Share referral code via :"))
         }
-
         return binding.root
     }
 

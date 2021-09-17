@@ -45,9 +45,8 @@ class UpdateProfileDetailsFragment : Fragment() {
         }
 
         binding.btnResetValue.setOnClickListener() {
-            binding.txtEditName.text.clear()
-            binding.txtEditName.requestFocus()
             binding.txtEditPhone.text.clear()
+            binding.txtEditPhone.requestFocus()
             binding.txtMultiAddress.text.clear()
             binding.spGenders.setSelection(0)
         }
@@ -58,15 +57,12 @@ class UpdateProfileDetailsFragment : Fragment() {
 
     private fun updateDetails() {
         binding.progressBarSave.visibility = View.VISIBLE
-
-        val fullName: String = binding.txtEditName.text.toString()
         val contact: String = binding.txtEditPhone.text.toString()
         val address: String = binding.txtMultiAddress.text.toString()
         val gender: String = binding.spGenders.selectedItem.toString()
         val referralUID = CheckUser().getCurrentUserUID()
 
         val referral = mapOf<String, Any?>(
-            "fullName" to fullName,
             "contactNo" to contact,
             "address" to address,
             "gender" to gender
@@ -116,11 +112,14 @@ class UpdateProfileDetailsFragment : Fragment() {
                     referral.clear()
                     if (referralUID != null) {
                         for (referralSnapshot in snapshot.children) {
+                            val referralName: String =
+                                referralSnapshot.child("fullName").value.toString()
                             val referralNric: String =
                                 referralSnapshot.child("nric").value.toString()
                             val referralEmail: String =
                                 referralSnapshot.child("email").value.toString()
 
+                            binding.tvRefFullName.text = referralName
                             binding.tvRefNRIC.text = referralNric
                             binding.tvRefEmail.text = referralEmail
                         }
@@ -135,12 +134,6 @@ class UpdateProfileDetailsFragment : Fragment() {
     }
 
     private fun checkError(): Boolean {
-        if (binding.txtEditName.text.toString().isEmpty()) {
-            Toast.makeText(context, "Please enter your full name", Toast.LENGTH_LONG).show()
-            binding.txtEditName.requestFocus()
-            return false
-        }
-
         if (binding.txtEditPhone.text.toString().isEmpty()) {
             Toast.makeText(context, "Please enter a valid contact number", Toast.LENGTH_LONG).show()
             binding.txtEditPhone.requestFocus()
@@ -158,7 +151,6 @@ class UpdateProfileDetailsFragment : Fragment() {
             binding.spGenders.requestFocus()
             return false
         }
-
         return true
     }
 }
