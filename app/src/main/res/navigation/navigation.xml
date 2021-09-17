@@ -378,6 +378,9 @@
         <action
             android:id="@+id/action_navigationFragment_to_homepage"
             app:destination="@id/homepage" />
+        <action
+            android:id="@+id/action_navigationFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/applyInsuranceFragment"
