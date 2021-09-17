@@ -70,7 +70,9 @@ class ReferralInsuranceListingFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     for(referralInsSnapshot in snapshot.children){
-                        referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
+                        if(referralInsSnapshot.child("status").getValue()!!.equals("Active")){
+                            referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
+                        }
                     }
                     //println("Referral Insurance Listing : insuranceReferral ${referralInsuranceList.size}")
                 }

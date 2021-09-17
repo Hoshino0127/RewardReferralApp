@@ -6,5 +6,6 @@ data class ReferralInsurance(
     val insuranceReferralID: String? =null,
     val insuranceID: String? = null,
     val referralUID: String? = null,
-    val insuranceExpiryDate: Date? = null
+    val insuranceExpiryDate: Date? = null,
+    val status: String? = null
 )
