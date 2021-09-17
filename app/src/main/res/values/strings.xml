@@ -135,4 +135,10 @@
     <string name="business">Business</string>
     <string name="driver_and_passenger"><![CDATA[Driver & Passenger]]></string>
     <string name="driver">Driver</string>
+
+    <string-array name="gender_items">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
 </resources>
