@@ -52,19 +52,18 @@ class ProfileDetailsFragment : Fragment() {
     }
 
     private fun loadData(){
-        val referralUID: String?  = CheckUser().getCurrentUserUID()
         referralRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     referral.clear()
-                    if (referralUID != null) {
                         for (referralSnapshot in snapshot.children) {
-                            val referralName: String = referralSnapshot.child("fullName").value.toString()
-                            val referralNRIC: String = referralSnapshot.child("nric").value.toString()
-                            val referralContact: String = referralSnapshot.child("contactNo").value.toString()
-                            val referralEmail: String = referralSnapshot.child("email").value.toString()
-                            val referralGender: String = referralSnapshot.child("gender").value.toString()
-                            val referralAddress: String = referralSnapshot.child("address").value.toString()
+                            if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
+                                val referralName: String = referralSnapshot.child("fullName").value.toString()
+                                val referralNRIC: String = referralSnapshot.child("nric").value.toString()
+                                val referralContact: String = referralSnapshot.child("contactNo").value.toString()
+                                val referralEmail: String = referralSnapshot.child("email").value.toString()
+                                val referralGender: String = referralSnapshot.child("gender").value.toString()
+                                val referralAddress: String = referralSnapshot.child("address").value.toString()
 
                             with(binding) {
                                 tviewFullName.text = referralName

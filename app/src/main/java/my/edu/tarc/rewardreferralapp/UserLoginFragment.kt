@@ -44,7 +44,6 @@ class UserLoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default*/ ) {
@@ -57,7 +56,6 @@ class UserLoginFragment : Fragment() {
                         }else{
                             activity?.finishAffinity()
                         }
-
                     }
                 }
             }

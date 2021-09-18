@@ -23,8 +23,7 @@ class UpdateProfileDetailsFragment : Fragment() {
     private var tempbinding: FragmentUpdateProfileDetailsBinding? = null
     private val binding get() = tempbinding!!
 
-    private val database =
-        FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val referralRef = database.getReference("Referral")
 
     override fun onCreateView(
@@ -50,13 +49,17 @@ class UpdateProfileDetailsFragment : Fragment() {
             binding.txtMultiAddress.text.clear()
             binding.spGenders.setSelection(0)
         }
-        binding.progressBarSave.visibility = View.GONE
+        //binding.progressBarSave.visibility = View.GONE
 
         return binding.root
     }
 
     private fun updateDetails() {
-        binding.progressBarSave.visibility = View.VISIBLE
+        //binding.progressBarSave.visibility = View.VISIBLE
+
+//        if(!(checkError())){
+//            binding.progressBarSave.visibility = View.GONE
+//        }
         val contact: String = binding.txtEditPhone.text.toString()
         val address: String = binding.txtMultiAddress.text.toString()
         val gender: String = binding.spGenders.selectedItem.toString()
@@ -78,19 +81,11 @@ class UpdateProfileDetailsFragment : Fragment() {
                                     if (checkError()) {
                                         referralRef.child(referralUID).updateChildren(referral)
                                             .addOnSuccessListener {
-                                                binding.progressBarSave.visibility = View.GONE
-                                                Toast.makeText(
-                                                    context,
-                                                    "Updated successfully!",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                                //binding.progressBarSave.visibility = View.GONE
+                                                Toast.makeText(context, "Updated successfully!", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {
-                                                binding.progressBarSave.visibility = View.GONE
-                                                Toast.makeText(
-                                                    context,
-                                                    "Unable to update details.",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                                //binding.progressBarSave.visibility = View.GONE
+                                                Toast.makeText(context, "Unable to update details.", Toast.LENGTH_LONG).show()
                                             }
                                     }
                                 }
@@ -105,13 +100,13 @@ class UpdateProfileDetailsFragment : Fragment() {
     }
 
     private fun loadData() {
-        val referralUID: String? = CheckUser().getCurrentUserUID()
+        //val referralUID: String? = CheckUser().getCurrentUserUID()
         referralRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     referral.clear()
-                    if (referralUID != null) {
-                        for (referralSnapshot in snapshot.children) {
+                    for (referralSnapshot in snapshot.children) {
+                        if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
                             val referralName: String =
                                 referralSnapshot.child("fullName").value.toString()
                             val referralNric: String =
@@ -142,7 +137,7 @@ class UpdateProfileDetailsFragment : Fragment() {
 
         if (binding.txtMultiAddress.text.toString().isEmpty()) {
             Toast.makeText(context, "Please enter your address", Toast.LENGTH_LONG).show()
-            binding.txtEditPhone.requestFocus()
+            binding.txtMultiAddress.requestFocus()
             return false
         }
 
