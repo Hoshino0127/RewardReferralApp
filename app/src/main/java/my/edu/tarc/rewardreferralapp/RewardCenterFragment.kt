@@ -40,6 +40,7 @@ class RewardCenterFragment : Fragment() {
 
     private var loadingDialog: Dialog?= null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -188,7 +189,7 @@ class RewardCenterFragment : Fragment() {
 
                                 rewardRef.child(rewardID).updateChildren(upReward)
                                     .addOnSuccessListener {
-                                        refRef.child(referralID)
+                                        refRef.child(refferal.referralUID.toString())
                                             .updateChildren(upRefPoint)
                                             .addOnSuccessListener() {
 

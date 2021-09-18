@@ -41,6 +41,10 @@ class NavigationFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.btnTest.setOnClickListener() {
+            val action = NavigationFragmentDirections.actionNavigationFragmentToUserProfileFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
         return binding.root
     }

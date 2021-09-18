@@ -91,8 +91,10 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
             holder.applicationStatus.setTextColor(Color.parseColor("#EC512B"))
         } else if (currentItem.applicationStatus.equals("Rejected")) {
             holder.applicationStatus.setTextColor(Color.parseColor("#F30E15"))
-        } else {
+        } else if (currentItem.applicationStatus.equals("Accepted"))  {
             holder.applicationStatus.setTextColor(Color.parseColor("#31B12C"))
+        } else {
+            holder.applicationStatus.setTextColor(Color.parseColor("#F30E15"))
         }
 
         holder.bind(currentItem!!, clickListener)

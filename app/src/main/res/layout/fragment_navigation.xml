@@ -92,11 +92,11 @@ tools:context=".NavigationFragment">
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnTest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="To Update Plan"
+                android:text="To Test"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnToApply" />
@@ -109,7 +109,7 @@ tools:context=".NavigationFragment">
                 android:text="View Application"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                app:layout_constraintTop_toBottomOf="@+id/btnTest" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

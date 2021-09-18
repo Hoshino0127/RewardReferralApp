@@ -5,5 +5,5 @@ data class Card_Item_Model (
     val description: String,
     val status: String,
     val image: Int
-    )
+)
 

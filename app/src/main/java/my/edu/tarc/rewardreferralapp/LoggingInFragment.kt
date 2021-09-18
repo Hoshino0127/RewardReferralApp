@@ -77,10 +77,9 @@ class LoggingInFragment : Fragment() {
                     if(snapshot.exists()){
                         for(referralSS in snapshot.children){
                             if(referralSS.child("referralUID").getValue().toString().equals(CheckUser().getCurrentUserUID())){
-                                val referralID = referralSS.child("referralID").getValue().toString()
                                 val referralUID = referralSS.child("referralUID").getValue().toString()
                                 val referralStatus = referralSS.child("referralStatus").getValue().toString()
-                                referral = Referral(referralID = referralID, referralUID = referralUID, referralStatus = referralStatus)
+                                referral = Referral(referralUID = referralUID, referralStatus = referralStatus)
                                 binding.txtLoginStatusLoggingin.setText(referralStatus)
                                 dlg.dismissAlertDialog()
                             }
