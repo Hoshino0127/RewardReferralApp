@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +41,7 @@ class RewardCenterFragment : Fragment() {
     private val referralID = CheckUser().getCurrentUserUID()
 
     private var loadingDialog: Dialog?= null
+    private val handler = Handler(Looper.getMainLooper())
 
 
     override fun onCreateView(
@@ -255,7 +258,9 @@ class RewardCenterFragment : Fragment() {
         binding.RewardCenterRV.adapter = RewardAdapter
         binding.RewardCenterRV.setHasFixedSize(true)
 
-        hideLoading()
+        handler.postDelayed({
+            hideLoading()
+        }, 200)
     }
 
     private fun hideLoading() {
