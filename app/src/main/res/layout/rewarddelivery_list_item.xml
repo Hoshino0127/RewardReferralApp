@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/tvDeliveryID"
-                android:layout_width="300dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"

@@ -2,6 +2,7 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardCenterBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,6 +38,7 @@ class RewardCenterFragment : Fragment() {
     private lateinit var binding: FragmentRewardCenterBinding
     private val referralID = CheckUser().getCurrentUserUID()
 
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +48,7 @@ class RewardCenterFragment : Fragment() {
         rewardSearchList.clear()
         rewardList.clear()
 
+        showLoading()
         getDetails()
 
         binding =
@@ -184,7 +188,7 @@ class RewardCenterFragment : Fragment() {
 
                                 rewardRef.child(rewardID).updateChildren(upReward)
                                     .addOnSuccessListener {
-                                        refRef.child(refferal.referralID.toString())
+                                        refRef.child(referralID)
                                             .updateChildren(upRefPoint)
                                             .addOnSuccessListener() {
 
@@ -249,6 +253,16 @@ class RewardCenterFragment : Fragment() {
 
         binding.RewardCenterRV.adapter = RewardAdapter
         binding.RewardCenterRV.setHasFixedSize(true)
+
+        hideLoading()
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 

@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,17 +20,21 @@ import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardMyBinding
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 class RewardMyFragment : Fragment() {
 
-    val database =
+    private val database =
         FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    val rewardRef = database.getReference("Reward")
-    val refRewRef = database.getReference("RefferalReward")
-    val refferalRewardList = ArrayList<RefferalReward>()
-    var rewardList = ArrayList<Reward>()
-    val referralID = CheckUser().getCurrentUserUID()
-    lateinit var binding: FragmentRewardMyBinding
+    private val rewardRef = database.getReference("Reward")
+    private val refRewRef = database.getReference("RefferalReward")
+    private val refferalRewardList = ArrayList<RefferalReward>()
+    private var rewardList = ArrayList<Reward>()
+    private val referralID = CheckUser().getCurrentUserUID()
+    private lateinit var binding: FragmentRewardMyBinding
+    private val handler = Handler(Looper.getMainLooper())
+
+    private var loadingDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +46,13 @@ class RewardMyFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
+        showLoading()
         getPendingClaimReward()
+
+        handler.postDelayed({
+            hideLoading()
+        }, 1500)
+
 
         return binding.root
 
@@ -49,7 +60,7 @@ class RewardMyFragment : Fragment() {
 
     private fun getPendingClaimReward() {
 
-        val handler = Handler(Looper.getMainLooper())
+
         handler.postDelayed({
 
             var qryRefRew: Query = refRewRef.orderByChild("refferalID").equalTo(referralID)
@@ -138,11 +149,20 @@ class RewardMyFragment : Fragment() {
                         rewardClaimID
                     )
                 Navigation.findNavController(requireView()).navigate(action)
-            }else{
-                Toast.makeText(context, "Please seelct a reward to proceed", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(context, "Please seelct a reward to proceed", Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if (it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 }

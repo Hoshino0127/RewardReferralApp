@@ -1,8 +1,11 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +19,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralMyQRCodeBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import org.json.JSONObject
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
@@ -39,11 +43,17 @@ class ReferralMyQRCodeFragment : Fragment() {
 
     private lateinit var binding: FragmentReferralMyQRCodeBinding
 
+    private var loadingDialog: Dialog?= null
+    private val handler = Handler(Looper.getMainLooper())
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
+
         binding =
             DataBindingUtil.inflate(
                 inflater,
@@ -52,7 +62,13 @@ class ReferralMyQRCodeFragment : Fragment() {
                 false
             )
 
+        showLoading()
+
         getRefDetails()
+
+        handler.postDelayed({
+            hideLoading()
+        }, 500)
 
 
         return binding.root
@@ -123,6 +139,12 @@ class ReferralMyQRCodeFragment : Fragment() {
         return ""
     }
 
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
 
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
 
 }

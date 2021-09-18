@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardDeliveryListBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardDeliveyDetailsBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 
 class RewardDeliveryListFragment : Fragment() {
@@ -29,6 +31,8 @@ class RewardDeliveryListFragment : Fragment() {
     private var refrewList = ArrayList<RefferalReward>()
     private lateinit var binding: FragmentRewardDeliveryListBinding
     private val referralID = CheckUser().getCurrentUserUID()
+
+    private var loadingDialog: Dialog?= null
 
 
     override fun onCreateView(
@@ -43,7 +47,9 @@ class RewardDeliveryListFragment : Fragment() {
             false
         )
 
+        showLoading()
         getDeliveryDetails()
+        hideLoading()
 
 
         return binding.root
@@ -125,6 +131,14 @@ class RewardDeliveryListFragment : Fragment() {
         layoutManager.setStackFromEnd(true)
         binding.RDLDeliveryRV.setLayoutManager(layoutManager)
 
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 
