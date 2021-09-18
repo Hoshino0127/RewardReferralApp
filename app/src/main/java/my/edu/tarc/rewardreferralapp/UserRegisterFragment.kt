@@ -101,22 +101,14 @@ class UserRegisterFragment : Fragment() {
     }
 
     private fun addReferral(userUID: String){
-        var newID: String = ""
         referralRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                newID = if (snapshot.exists()) {
+                val rnd: Random = Random()
+                var code: Int = rnd.nextInt(999999)
+                var invitationCode: String = String.format("%06d",code)
 
-                    "IR" + "%03d".format(snapshot.childrenCount + 1)
-
-                } else {
-
-                    "IR001"
-
-                }
-
-
-                val referral = Referral(newID,userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0)
-                referralRef.child(referral.referralID!!).setValue(referral).addOnSuccessListener {
+                val referral = Referral(userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0,invitationCode)
+                referralRef.child(referral.referralUID!!).setValue(referral).addOnSuccessListener {
                     val action =
                         UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
                     Navigation.findNavController(requireView()).navigate(action)

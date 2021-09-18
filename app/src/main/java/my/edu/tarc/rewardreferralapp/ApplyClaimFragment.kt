@@ -125,6 +125,9 @@ class ApplyClaimFragment : Fragment() {
 
         referralUID = CheckUser().getCurrentUserUID()!!
 
+        val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())
+        insuranceID = args.insuranceID
+
         ActivityCompat.requestPermissions(requireActivity(),
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),104)
 
@@ -240,9 +243,7 @@ class ApplyClaimFragment : Fragment() {
         })
 
 
-        val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())
-        insuranceID = args.insuranceID
-        referralUID = CheckUser().getCurrentUserUID()!!
+
 
 
 
@@ -259,8 +260,8 @@ class ApplyClaimFragment : Fragment() {
                             val referralUID: String = insuranceSnapshot.child("referralUID").getValue().toString()
                             val insuranceReferralID: String = insuranceSnapshot.child("insuranceReferralID").getValue().toString()
                             val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
-
-                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate)
+                            val status: String = insuranceSnapshot.child("status").getValue().toString()
+                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate, status)
 
                         }
                     }
@@ -273,7 +274,7 @@ class ApplyClaimFragment : Fragment() {
             }
 
         }
-        referralInsuranceRef.addListenerForSingleValueEvent(referralInsuranceListener)
+        referralInsuranceRef.addValueEventListener(referralInsuranceListener)
 
         insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -652,6 +653,11 @@ class ApplyClaimFragment : Fragment() {
 
         if(!imgDamageFlag){
             Toast.makeText(requireContext(),"Please upload damage image",Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(!(referralInsurance.status.equals("Active"))){
+            Toast.makeText(requireContext(),"This insurance is not active anymore, try to activate your insurance again",Toast.LENGTH_LONG).show()
             return false
         }
 

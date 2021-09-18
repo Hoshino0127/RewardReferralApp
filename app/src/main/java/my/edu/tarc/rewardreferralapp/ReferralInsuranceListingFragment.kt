@@ -34,7 +34,8 @@ class ReferralInsuranceListingFragment : Fragment() {
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var referralInsuranceListener: ValueEventListener
 
-    private val insuranceList = ArrayList<Insurance>()
+    private var insuranceList = ArrayList<Insurance>()
+    private var referralInsuranceList = ArrayList<ReferralInsurance>()
     private var tempInsuranceList = ArrayList<Insurance>()
 
     override fun onCreateView(
@@ -47,7 +48,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         referralUID = CheckUser().getCurrentUserUID()!!
 
-        val referralInsuranceList = ArrayList<ReferralInsurance>()
+
 
         //insuranceList.clear()
         //tempInsuranceList.clear()
@@ -69,6 +70,7 @@ class ReferralInsuranceListingFragment : Fragment() {
         referralInsuranceListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
+                    referralInsuranceList.clear()
                     for(referralInsSnapshot in snapshot.children){
                         if(referralInsSnapshot.child("status").getValue()!!.equals("Active")){
                             referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
@@ -123,7 +125,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
 
                     }
-                    changeView(insuranceList)
+                    changeView(insuranceList,referralInsuranceList)
 
                 }
 
@@ -135,7 +137,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         }
 
-        insuranceRef.addValueEventListener(insuranceListener)
+        insuranceRef.addListenerForSingleValueEvent(insuranceListener)
 
 
 
@@ -156,36 +158,37 @@ class ReferralInsuranceListingFragment : Fragment() {
                     tempInsuranceList = insuranceList
                 }
 
-                changeView(tempInsuranceList)
+                changeView(tempInsuranceList,referralInsuranceList)
 
                 return true
             }
 
         })
 
-        /*binding.btnToApplyClaim.setOnClickListener(){
-
-        }
-
-        binding.btnToRenewInsurance.setOnClickListener(){
-            val action = ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToRenewInsuranceFragment()
-            Navigation.findNavController(it).navigate(action)
-        }*/
 
 
 
         return binding.root
     }
 
-    private fun changeView(insuranceList: ArrayList<Insurance>){
-        val insuranceAdapter = RecyclerViewAdapter(insuranceList,
+    private fun changeView(insuranceList: ArrayList<Insurance>, referralInsuranceList: ArrayList<ReferralInsurance>){
+        val insuranceAdapter = RecyclerViewAdapter(insuranceList,referralInsuranceList,
             RecyclerViewAdapter.ClaimListener { insuranceID ->
 
                 val it = view
                 if (it != null) {
+                    DetachListener()
                     Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToApplyClaimFragment(insuranceID))
                 }
-            })
+            },
+            RecyclerViewAdapter.CancelListener{ insuranceReferralID ->
+                val it = view
+                if(it != null){
+                    DetachListener()
+                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToCancelInsuranceFragment(insuranceReferralID))
+                }
+            }
+        )
 
 
 

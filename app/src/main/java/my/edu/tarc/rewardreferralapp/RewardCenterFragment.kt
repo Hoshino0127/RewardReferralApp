@@ -184,7 +184,7 @@ class RewardCenterFragment : Fragment() {
 
                                 rewardRef.child(rewardID).updateChildren(upReward)
                                     .addOnSuccessListener {
-                                        refRef.child(refferal.referralID.toString())
+                                        refRef.child(refferal.referralUID.toString())
                                             .updateChildren(upRefPoint)
                                             .addOnSuccessListener() {
 

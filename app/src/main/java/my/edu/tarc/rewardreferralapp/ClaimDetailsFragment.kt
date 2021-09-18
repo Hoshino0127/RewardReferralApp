@@ -106,7 +106,7 @@ class ClaimDetailsFragment : Fragment() {
                             val referralID: String = referralSS.child("referralID").getValue().toString()
                             val referralUID: String = referralSS.child("referralUID").getValue().toString()
                             val deductible: Double = referralSS.child("deductible").getValue().toString().toDouble()
-                            referral = Referral(referralID = referralID, referralUID = referralUID, deductible = deductible)
+                            referral = Referral(referralUID = referralUID, deductible = deductible)
                             //println(referral)
                         }
                     }
