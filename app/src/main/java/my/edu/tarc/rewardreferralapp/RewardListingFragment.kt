@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.app.Activity
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,6 +17,7 @@ import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.adapter.RewardListAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardListingBinding
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 class RewardListingFragment : Fragment() {
 
@@ -27,6 +29,8 @@ class RewardListingFragment : Fragment() {
     private lateinit var binding: FragmentRewardListingBinding
     private var rewardList = ArrayList<Reward>()
     var rewardSearchList = ArrayList<Reward>()
+
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +45,7 @@ class RewardListingFragment : Fragment() {
 
 
 
+        showLoading()
         getReward()
 
         binding.btnRLSearch.setOnClickListener {
@@ -58,6 +63,8 @@ class RewardListingFragment : Fragment() {
                 RewardListingFragmentDirections.actionRewardListingFragmentToRewardEntryFragment("")
             Navigation.findNavController(requireView()).navigate(action)
         }
+
+        hideLoading()
 
         return binding.root
 
@@ -118,6 +125,14 @@ class RewardListingFragment : Fragment() {
             })
         binding.RewardListRV.adapter = rewardAdapter
         binding.RewardListRV.setHasFixedSize(true)
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 }

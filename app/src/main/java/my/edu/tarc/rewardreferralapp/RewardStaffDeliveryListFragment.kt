@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import my.edu.tarc.rewardreferralapp.adapter.RewardDeliveryAdapter
 import my.edu.tarc.rewardreferralapp.data.Claim
 import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardStaffDeliveryListBinding
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 
 class RewardStaffDeliveryListFragment : Fragment() {
@@ -28,6 +30,7 @@ class RewardStaffDeliveryListFragment : Fragment() {
     var rewardDeliveryList = ArrayList<RewardDelivery>()
     var selectedDeliveryList: ArrayList<RewardDelivery> = ArrayList<RewardDelivery>()
     lateinit var binding: FragmentRewardStaffDeliveryListBinding
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +47,7 @@ class RewardStaffDeliveryListFragment : Fragment() {
             false
         )
 
+        showLoading()
         getAllDeliveryDetails()
 
         binding.tlRSDLStatus.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -76,6 +80,7 @@ class RewardStaffDeliveryListFragment : Fragment() {
 
         })
 
+        hideLoading()
         return binding.root
     }
 
@@ -126,6 +131,14 @@ class RewardStaffDeliveryListFragment : Fragment() {
         layoutManager.setReverseLayout(true)
         layoutManager.setStackFromEnd(true)
         binding.RSDLDeliveryRV.setLayoutManager(layoutManager)
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 

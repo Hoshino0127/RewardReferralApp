@@ -9,5 +9,6 @@ data class RewardDelivery(
     val state :String? = null,
     val postCode :String? = null,
     val status :String? = null,
-    val applyDate:String? = null
+    val applyDate:String? = null,
+    val deliveryCode:String? = null
 )

@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardStaffDeliveryDetailsBinding
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 
 class RewardStaffDeliveryDetails : Fragment() {
@@ -35,6 +37,7 @@ class RewardStaffDeliveryDetails : Fragment() {
     private var rewardDelivery: RewardDelivery = RewardDelivery()
     private var refferal: Referral = Referral()
     private lateinit var binding: FragmentRewardStaffDeliveryDetailsBinding
+    private var loadingDialog: Dialog?= null
 
 
     override fun onCreateView(
@@ -56,6 +59,7 @@ class RewardStaffDeliveryDetails : Fragment() {
         )
 
 
+        showLoading()
         getDetails()
 
         binding.btnRSDBack.setOnClickListener {
@@ -80,6 +84,7 @@ class RewardStaffDeliveryDetails : Fragment() {
             alertDialog.show()
         }
 
+        hideLoading()
         return binding.root
     }
 
@@ -231,6 +236,14 @@ class RewardStaffDeliveryDetails : Fragment() {
         }
 
 
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 }
