@@ -376,5 +376,4 @@ class ApplyInsuranceFragment : Fragment() {
 
         return true
     }
-
 }

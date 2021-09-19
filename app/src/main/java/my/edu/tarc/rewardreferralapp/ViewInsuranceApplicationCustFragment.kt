@@ -151,7 +151,6 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
                                 insuranceCoverage,
                                 insurancePrice.toDouble(),
                                 insuranceType
-
                             )
 
                             insuranceCustList.add(insurance)

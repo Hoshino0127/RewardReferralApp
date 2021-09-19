@@ -85,8 +85,8 @@ class ListInsuranceFragment : Fragment() {
                             view?.let { Navigation.findNavController(it).navigate(action) }
                         }
                     }))
-                }
             }
+        }
 
         binding.btnAdd.setOnClickListener(){
             val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToInsuranceAddFragment()
@@ -268,8 +268,9 @@ class ListInsuranceFragment : Fragment() {
                             insuranceCoverage.add(child.value.toString())
                         }
                         val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
+                        println(insurancePrice)
 
-                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage,insurancePrice.toDouble(),insuranceType )
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan, insuranceCoverage,insurancePrice.toDouble(),insuranceType)
 
                         insuranceList.add(insurance)
 

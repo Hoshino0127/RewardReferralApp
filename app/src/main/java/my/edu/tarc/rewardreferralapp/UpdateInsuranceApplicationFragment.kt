@@ -29,6 +29,9 @@ import my.edu.tarc.rewardreferralapp.databinding.FragmentUpdateInsuranceApplicat
 import my.edu.tarc.rewardreferralapp.data.File
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
+import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,7 +41,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private var fileNameList = ArrayList<File>()
     private lateinit var fileAdapter : GetEvidenceAdapter
 
-    private lateinit var referralUID: String
+    private var referralUID: String = ""
 
     private val args: UpdateInsuranceApplicationFragmentArgs by navArgs()
 
@@ -50,6 +53,9 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private var insuranceCustList = ArrayList<Insurance>()
     private val insuranceApplicationRef = database.getReference("InsuranceApplication")
     private var insuranceAppList = ArrayList<InsuranceApplication>()
+
+    private val referralInsuranceRef = database.getReference("ReferralInsurance")
+    private var referralInsuranceList = ArrayList<ReferralInsurance>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,20 +71,6 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
         loadData(args.insuranceID.toString())
 
-        referralUID = "LQx5dlt2D1ZX1P6fCEXcSP4NEN83"
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
-        storageFile.listAll().addOnSuccessListener { it ->
-            for(item in it.items){
-                item.downloadUrl.addOnSuccessListener {
-                    val uri = it
-                    val name = getFileName(uri!!)
-                    val file = File(FileName = name, FileUri = uri)
-                    fileNameList.add(file)
-                    bindFiles()
-                }
-            }
-        }
-
         binding.btnBackUpdateInsuranceApplication.setOnClickListener() {
             val action = UpdateInsuranceApplicationFragmentDirections.actionUpdateInsuranceApplicationFragmentToListInsuranceApplicationFragment()
             Navigation.findNavController(it).navigate(action)
@@ -93,6 +85,24 @@ class UpdateInsuranceApplicationFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun loadFileList(tempReferralUID: String) {
+        referralUID = tempReferralUID
+        val storageFile =
+            FirebaseStorage.getInstance().getReference("Evidences Insurance Application")
+                .child("User_${referralUID}").child(args.applicationID.toString())
+        storageFile.listAll().addOnSuccessListener { it ->
+            for (item in it.items) {
+                item.downloadUrl.addOnSuccessListener {
+                    val uri = it
+                    val name = getFileName(uri!!)
+                    val file = File(FileName = name, FileUri = uri)
+                    fileNameList.add(file)
+                    bindFiles()
+                }
+            }
+        }
     }
 
     private fun loadData(insuranceID: String) {
@@ -212,6 +222,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
 
                 for(insAppList in insuranceAppList) {
+                    loadFileList(insAppList.referralID.toString())
                     binding.tfCarNoPlate.setText(insAppList.carNoPlate.toString())
                     binding.tfMileage.setText(insAppList.annualMileage.toString())
                     binding.tfModelName.setText(insAppList.modelName.toString())
@@ -276,6 +287,35 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
             }
         })
+
+        var newID:String = ""
+
+        referralInsuranceRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                val rnd: Random = Random()
+                var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
+                var newID = "CL" + IDFormat.format(Date()) + "_" + String.format("%04d",rnd.nextInt(9999))
+
+                val insuranceExpiryDate = Date()
+
+                val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), CheckUser().getCurrentUserUID(), insuranceExpiryDate, "Active")
+
+                referralInsuranceRef.child(newID).setValue(newInsurance).addOnSuccessListener(){
+                    Toast.makeText(context, "Add successful", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+                    Toast.makeText(context, "Add unsuccessful", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+
+
     }
 
     private fun bindFiles(){
@@ -371,5 +411,3 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     }
 
 }
-
-

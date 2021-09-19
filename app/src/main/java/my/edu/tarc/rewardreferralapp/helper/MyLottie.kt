@@ -14,13 +14,28 @@ object MyLottie {
         progressDialog.let {
             it.show()
             it.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-            it.setContentView(R.layout.fragment_complete_dialog)
+            it.setContentView(R.layout.fragment_download_complete_dialog)
             it.setCancelable(false)
             it.setCanceledOnTouchOutside(false)
 
             return it
         }
     }
+
+    fun showApplyDialog(context : Context): Dialog {
+        val progressDialog = Dialog(context)
+
+        progressDialog.let {
+            it.show()
+            it.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            it.setContentView(R.layout.fragment_apply_complete_dialog)
+            it.setCancelable(false)
+            it.setCanceledOnTouchOutside(false)
+
+            return it
+        }
+    }
+
 
     fun showLoadingDialog(context : Context): Dialog {
         val progressDialog = Dialog(context)

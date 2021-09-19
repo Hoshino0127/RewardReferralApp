@@ -2,6 +2,7 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ class InsuranceAddFragment : Fragment() {
     private var insuranceList = ArrayList<Insurance>()
     private var insuranceTypeList = ArrayList<String>()
 
+    private var loadingDialog: Dialog?= null
     private var completeDialog: Dialog?= null
 
     override fun onCreateView(
@@ -96,6 +98,7 @@ class InsuranceAddFragment : Fragment() {
 
     private fun insertData(insuranceComp: String, insuranceName: String, insurancePlan: String, insuranceType: String, insuranceCoverage: ArrayList<String>, insurancePrice: String) {
 
+        showLoading()
         var newID:String = ""
 
         insuranceRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -108,11 +111,14 @@ class InsuranceAddFragment : Fragment() {
 
                 val newInsurance = Insurance(newID, insuranceName, insuranceComp, insurancePlan, insuranceCoverage, insurancePrice.toDouble(), insuranceType)
 
-                insuranceRef.push().setValue(newInsurance).addOnSuccessListener(){
-                    Toast.makeText(context, "Add successful", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener {
-                    Toast.makeText(context, "Add unsuccessful", Toast.LENGTH_LONG).show()
-                }
+                Handler().postDelayed({
+                    hideLoading()
+                    insuranceRef.push().setValue(newInsurance).addOnSuccessListener(){
+                        Toast.makeText(context, "Add successfully", Toast.LENGTH_LONG).show()
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Add unsuccessful", Toast.LENGTH_LONG).show()
+                    }
+                }, 3000)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -253,11 +259,20 @@ class InsuranceAddFragment : Fragment() {
     }
 
     private fun hideLoading() {
-        completeDialog?.let { if(it.isShowing) it.cancel() }
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
     }
 
     private fun showLoading() {
         hideLoading()
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
+    private fun hideComplete() {
+        completeDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showComplete() {
+        hideComplete()
         completeDialog = MyLottie.showCompleteDialog(requireContext())
     }
 }
