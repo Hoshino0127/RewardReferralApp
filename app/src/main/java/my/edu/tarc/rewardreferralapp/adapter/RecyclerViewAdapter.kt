@@ -1,7 +1,9 @@
 package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
@@ -41,6 +43,7 @@ class RecyclerViewAdapter(
         val insuranceComp: TextView = binding.tvInsuranceCompCardview
         val insuranceName: TextView = binding.tvInsuranceNameCardview
         val insurancePlan: TextView = binding.tvInsurancePlanCardview
+        val btnCancel : Button = binding.btnCancelCardview
         //val insuranceExpiryDate: TextView = binding.tvInsuranceExpiryDateCardview
     }
 
@@ -72,7 +75,11 @@ class RecyclerViewAdapter(
         holder.bind(currentInsurance!!,currentRefIns, clickListener, cancelListener)
         // bind image into the image view
         //holder.imgInsuranceIcon.setImageResource(currentInsurance.img)
+        if(currentRefIns.status == "Pending") {
+            holder.btnCancel.visibility = View.GONE
+        }
     }
+
 
     override fun getItemCount(): Int {
         return insuranceList.size

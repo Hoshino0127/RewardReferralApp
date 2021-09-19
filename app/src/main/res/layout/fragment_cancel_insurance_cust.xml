@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/backgroundPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/btnBackCancelInsurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+
+                <TextView
+                    android:id="@+id/tvTitleAddInsurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel Insurance"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_input_textbox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Reason to cancel an insurance :"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/radGrpReason"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+                    <RadioButton
+                        android:id="@+id/radPaying"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Paying too much for insurance."
+                        android:textSize="14sp" />
+
+                    <RadioButton
+                        android:id="@+id/radCoverage"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Your business has changed, and you need different coverage." />
+
+                    <RadioButton
+                        android:id="@+id/radOffer"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="You’re moving out of state, and your current insurer doesn’t offer policies in your new location." />
+
+                    <RadioButton
+                        android:id="@+id/radUnhappy"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Unhappy with the service your insurer provides." />
+
+                    <RadioButton
+                        android:id="@+id/radCombine"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Want to combine separate policies into a less expensive bundled policy." />
+
+                    <RadioButton
+                        android:id="@+id/radOther"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Other" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/tfReason"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/custom_input_textbox"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="Please state your reason"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/radGrpReason" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnProceed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Proceed"
+                app:layout_constraintEnd_toStartOf="@+id/button4"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout13" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Cancel"
+                app:backgroundTint="@color/red_rejected"
+                app:layout_constraintBottom_toBottomOf="@+id/btnProceed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnProceed" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

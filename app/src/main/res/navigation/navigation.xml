@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_applyClaimFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <argument
+            android:name="insuranceReferralID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/referralInsuranceListingFragment"
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/action_referralInsuranceListingFragment_to_cancelInsuranceFragment"
             app:destination="@id/cancelInsuranceFragment" />
+        <action
+            android:id="@+id/action_referralInsuranceListingFragment_to_cancelInsuranceCustFragment"
+            app:destination="@id/cancelInsuranceCustFragment" />
     </fragment>
     <fragment
         android:id="@+id/applyClaimSuccessFragment"
@@ -547,5 +553,17 @@
         <action
             android:id="@+id/action_cancelInsuranceFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cancelInsuranceCustFragment"
+        android:name="my.edu.tarc.rewardreferralapp.CancelInsuranceCustFragment"
+        android:label="CancelInsuranceCustFragment"
+        tools:layout="@layout/CancelInsuranceCustFragment">
+        <action
+            android:id="@+id/action_cancelInsuranceCustFragment_to_referralInsuranceListingFragment"
+            app:destination="@id/referralInsuranceListingFragment" />
+        <argument
+            android:name="insuranceReferralID"
+            app:argType="string" />
     </fragment>
 </navigation>
