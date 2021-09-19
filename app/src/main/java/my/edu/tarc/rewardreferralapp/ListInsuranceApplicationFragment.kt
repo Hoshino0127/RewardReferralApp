@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import my.edu.tarc.kotlinswipemenu.LoadingDialogFragment
 import my.edu.tarc.rewardreferralapp.adapter.InsuranceApplicationAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceApplicationBinding
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,7 +35,7 @@ class ListInsuranceApplicationFragment : Fragment() {
 
     private lateinit var binding: FragmentListInsuranceApplicationBinding
 
-    private var dialog = LoadingDialogFragment()
+    private var loadingDialog : Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -222,7 +224,7 @@ class ListInsuranceApplicationFragment : Fragment() {
         adapterInsApp = InsuranceApplicationAdapter(insuranceApplicationList, InsuranceApplicationAdapter.ViewListener{
                 applicationID,insuranceID -> val it = view
 
-            showProgressBar()
+            showLoading()
 
             val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToUpdateInsuranceApplicationFragment(applicationID, insuranceID)
             view?.let { Navigation.findNavController(it).navigate(action) }
@@ -233,9 +235,15 @@ class ListInsuranceApplicationFragment : Fragment() {
         binding.rvInsApplication.adapter!!.notifyDataSetChanged()
     }
 
-    private fun showProgressBar(){
-        dialog.show(getChildFragmentManager(), "loadingDialog")
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
     }
+
+    private fun showLoading() {
+        hideLoading()
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
 
 /*    private fun insertData() {
 
