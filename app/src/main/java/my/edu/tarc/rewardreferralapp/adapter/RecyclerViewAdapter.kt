@@ -54,7 +54,12 @@ class RecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentInsurance = insuranceList[position]
-        val currentRefIns = insuranceReferralList[position]
+        var currentRefIns: ReferralInsurance = ReferralInsurance()
+        for(refIns in insuranceReferralList){
+            if(refIns.insuranceID.equals(currentInsurance.insuranceID)){
+                currentRefIns = refIns
+            }
+        }
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
         val strComp: String = "Company: \n${currentInsurance.insuranceComp}"
         val strPlan: String = "Plan: \n${currentInsurance.insurancePlan}"
@@ -73,8 +78,8 @@ class RecyclerViewAdapter(
         return insuranceList.size
     }
 
-    class ClaimListener(val clickListener: (insuranceID: String) -> Unit) {
-        fun onClick(insurance: Insurance) = clickListener(insurance.insuranceID!!)
+    class ClaimListener(val clickListener: (insuranceID: String, insuranceReferralID: String) -> Unit) {
+        fun onClick(insurance: Insurance, insuranceReferralID: String) = clickListener(insurance.insuranceID!!, insuranceReferralID)
     }
 
     class CancelListener(val clickListener: (insuranceReferralID: String) -> Unit){

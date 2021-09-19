@@ -2,7 +2,10 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +21,7 @@ import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardCenterBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,6 +40,9 @@ class RewardCenterFragment : Fragment() {
     private lateinit var binding: FragmentRewardCenterBinding
     private val referralID = CheckUser().getCurrentUserUID()
 
+    private var loadingDialog: Dialog?= null
+    private val handler = Handler(Looper.getMainLooper())
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +52,7 @@ class RewardCenterFragment : Fragment() {
         rewardSearchList.clear()
         rewardList.clear()
 
+        showLoading()
         getDetails()
 
         binding =
@@ -249,6 +257,18 @@ class RewardCenterFragment : Fragment() {
 
         binding.RewardCenterRV.adapter = RewardAdapter
         binding.RewardCenterRV.setHasFixedSize(true)
+
+        handler.postDelayed({
+            hideLoading()
+        }, 200)
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 

@@ -1,10 +1,14 @@
 package my.edu.tarc.rewardreferralapp
 
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Base64
 import android.view.LayoutInflater
@@ -25,6 +29,7 @@ import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.data.ReferralTransfer
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralScanQRCodeBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -59,6 +64,8 @@ class ReferralScanQRCodeFragment : Fragment() {
     private val iv = "tVSDNFNhmkQ2NjR4UUFaWA=="
 
     private lateinit var binding: FragmentReferralScanQRCodeBinding
+    private val handler = Handler(Looper.getMainLooper())
+    private var loadingDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +82,7 @@ class ReferralScanQRCodeFragment : Fragment() {
 
         thisWeekPointUsage = 100
 
+        showLoading()
         getReferralDetails()
 
         binding.tvRSQRRTransferName.visibility = View.GONE
@@ -95,8 +103,28 @@ class ReferralScanQRCodeFragment : Fragment() {
         }
 
         binding.btnRSQRTransfer.setOnClickListener {
+
             if (checkError()) {
-                transferPoint()
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Confirm details")
+                builder.setMessage(
+                    "Are you sure to transfer ${binding.ptRSQRPointEnter.text} points to ${
+                        tReferralJSON.getString(
+                            "RefName"
+                        )
+                    } ?"
+                )
+                builder.setPositiveButton("Yes") { dialogInterface, which ->
+                    transferPoint()
+                }
+
+                builder.setNegativeButton("No") { dialogInterface, which ->
+                    dialogInterface.dismiss()
+                }
+
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
             }
         }
 
@@ -183,7 +211,7 @@ class ReferralScanQRCodeFragment : Fragment() {
         } else {
 
             val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if (result != null) {
+            if (result.contents != null) {
                 try {
                     val decyptedContent = decrypt(result.contents)
                     val obj = JSONObject(decyptedContent)
@@ -278,6 +306,9 @@ class ReferralScanQRCodeFragment : Fragment() {
                 }
                 binding.tvRSQRThisWeekTransfer.text =
                     "You still can transfer $thisWeekPointUsage points in this week"
+                handler.postDelayed({
+                    hideLoading()
+                }, 200)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -319,11 +350,22 @@ class ReferralScanQRCodeFragment : Fragment() {
             return false
         }
 
+        if (Integer.valueOf(binding.ptRSQRPointEnter.text.toString()) == 0) {
+            binding.ptRSQRPointEnter.requestFocus()
+            Toast.makeText(
+                context,
+                "You cannot transfer 0 points",
+                Toast.LENGTH_LONG
+            )
+                .show()
+            return false
+        }
+
         if (Integer.valueOf(binding.ptRSQRPointEnter.text.toString()) > thisWeekPointUsage) {
             binding.ptRSQRPointEnter.requestFocus()
             Toast.makeText(
                 context,
-                "You can transfer amounts have exceed the weekly limit",
+                "The transfer amounts have exceed the weekly limit",
                 Toast.LENGTH_LONG
             )
                 .show()
@@ -332,7 +374,7 @@ class ReferralScanQRCodeFragment : Fragment() {
 
         if (Integer.valueOf(binding.ptRSQRPointEnter.text.toString()) > Integer.valueOf(binding.tvRSQRMyPoint.text.toString())) {
             binding.ptRSQRPointEnter.requestFocus()
-            Toast.makeText(context, "You have no enough point to transfer", Toast.LENGTH_LONG)
+            Toast.makeText(context, "You have not enough point to transfer", Toast.LENGTH_LONG)
                 .show()
             return false
         }
@@ -359,38 +401,47 @@ class ReferralScanQRCodeFragment : Fragment() {
             tReferralJSON.getString("RefUID")
         )
 
-            //update two referral point
+        //update two referral point
 
-            refRef.child("IR002").get().addOnSuccessListener(){
-                val upRefRecipientPoint = mapOf<String, Any?>(
-                    "points" to Integer.valueOf(it.child("points").value.toString()) + Integer.valueOf(
-                        binding.ptRSQRPointEnter.text.toString()
-                    )
-                )
-                refRef.child("IR002").updateChildren(upRefRecipientPoint)
-            }
-
-
-            val upRefDonorPoint = mapOf<String, Any?>(
-                "points" to Integer.valueOf(binding.tvRSQRMyPoint.text.toString()) - Integer.valueOf(
+        refRef.child(tReferralJSON.getString("RefUID")).get().addOnSuccessListener() {
+            val upRefRecipientPoint = mapOf<String, Any?>(
+                "points" to Integer.valueOf(it.child("points").value.toString()) + Integer.valueOf(
                     binding.ptRSQRPointEnter.text.toString()
                 )
             )
+            refRef.child(tReferralJSON.getString("RefUID")).updateChildren(upRefRecipientPoint)
+        }
 
-        refRef.child("IR001").updateChildren(upRefDonorPoint)
+
+        val upRefDonorPoint = mapOf<String, Any?>(
+            "points" to Integer.valueOf(binding.tvRSQRMyPoint.text.toString()) - Integer.valueOf(
+                binding.ptRSQRPointEnter.text.toString()
+            )
+        )
+
+        refRef.child(refferalUID.toString()).updateChildren(upRefDonorPoint)
 
         refTransferRef.child(newID).setValue(referralTransfer).addOnSuccessListener() {
-            Toast.makeText(context, "Transfer point successful", Toast.LENGTH_LONG).show()
 
+            Toast.makeText(context, "Transfer point successful", Toast.LENGTH_LONG).show()
             val action =
                 ReferralScanQRCodeFragmentDirections.actionReferralScanQRCodeFragmentToReferralTransferListingFragment()
             Navigation.findNavController(requireView()).navigate(action)
+
 
         }.addOnFailureListener {
             Toast.makeText(context, "Fail to transfer point", Toast.LENGTH_LONG).show()
         }
 
 
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if (it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 }

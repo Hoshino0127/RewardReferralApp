@@ -42,11 +42,11 @@
 
             <Button
                 android:id="@+id/btnRSQRScanQR"
-                android:layout_width="150sp"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="50dp"
-                android:text="Scan\n QR Code"
+                android:text="Scan QR Code"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvRSQRThisWeekTransfer"
                 tools:visibility="visible" />
@@ -63,13 +63,13 @@
 
             <Button
                 android:id="@+id/btnRSQRGallery"
-                android:layout_width="150sp"
+                android:layout_width="300sp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
                 android:text="Scan From Gallery"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRSQRThisWeekTransfer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRSQRScanQR"
                 tools:visibility="visible" />
 
             <TextView

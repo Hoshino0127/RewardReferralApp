@@ -2,6 +2,7 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,6 +24,7 @@ import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardEntryBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,6 +39,8 @@ class RewardEntryFragment : Fragment() {
     private var rewardID: String = ""
     private var checkImgChange: Int = 0
     private var upImgName: String = ""
+
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +63,9 @@ class RewardEntryFragment : Fragment() {
             binding.btnRESubmit.visibility = View.GONE
             binding.btnREUpdate.visibility = View.VISIBLE
             checkImgChange = 1
+            showLoading()
             loadReward()
+            hideLoading()
         }
 
         binding.btnRESubmit.setOnClickListener() {
@@ -333,6 +339,14 @@ class RewardEntryFragment : Fragment() {
                 RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 }

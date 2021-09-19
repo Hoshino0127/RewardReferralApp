@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralInsuranceListingBinding
 import my.edu.tarc.rewardreferralapp.dialog.LoadingDialog
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -56,7 +58,7 @@ class ReferralInsuranceListingFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    DetachListener()
+                    //DetachListener()
                     val action = ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToHomepage()
                     Navigation.findNavController(requireView()).navigate(action)
 
@@ -65,81 +67,9 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
-        loadingDlg = LoadingDialog(requireActivity())
-        loadingDlg.showAlertDialog()
-        referralInsuranceListener = object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    referralInsuranceList.clear()
-                    for(referralInsSnapshot in snapshot.children){
-                        if(referralInsSnapshot.child("status").getValue()!!.equals("Active")){
-                            referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
-                        }
-                    }
-                    //println("Referral Insurance Listing : insuranceReferral ${referralInsuranceList.size}")
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        }
-
-        referralInsuranceRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(referralInsuranceListener)
-
-        insuranceListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                if(snapshot.exists()){
-                    insuranceList.clear()
-                    for (insuranceSnapshot in snapshot.children){
-
-                        for(item in referralInsuranceList){
-                            if(item.insuranceID.equals(insuranceSnapshot.child("insuranceID").getValue().toString())){
-                                //insuranceList.add(insuranceSnapshot.getValue(Insurance::class.java)!!)
-                                val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
-                                val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
-                                val insuranceType: String = insuranceSnapshot.child("insuranceType").getValue().toString()
-                                val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
-                                val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
-                                //println(insuranceSnapshot.child("insuranceCoverage").getValue().toString())
-                                var insuranceCoverage: ArrayList<String> = ArrayList<String>()
-                                for(child in insuranceSnapshot.child("insuranceCoverage").children){
-                                    insuranceCoverage.add(child.getValue().toString())
-                                    //println(child.getValue().toString())
-                                }
-                                val insurance = Insurance(
-                                    insuranceID = insuranceID,
-                                    insuranceName = insuranceName,
-                                    insuranceComp = insuranceComp,
-                                    insurancePlan = insurancePlan,
-                                    insuranceCoverage = insuranceCoverage,
-                                    insuranceType = insuranceType
-                                )
-                                insuranceList.add(insurance)
-                                //println(insurance)
-                            }
-
-                        }
 
 
-                    }
-                    changeView(insuranceList,referralInsuranceList)
-
-                }
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        }
-
-        insuranceRef.addListenerForSingleValueEvent(insuranceListener)
-
-
+        loadData()
 
 
         binding.searchInsuranceReferral.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -173,18 +103,18 @@ class ReferralInsuranceListingFragment : Fragment() {
 
     private fun changeView(insuranceList: ArrayList<Insurance>, referralInsuranceList: ArrayList<ReferralInsurance>){
         val insuranceAdapter = RecyclerViewAdapter(insuranceList,referralInsuranceList,
-            RecyclerViewAdapter.ClaimListener { insuranceID ->
+            RecyclerViewAdapter.ClaimListener { insuranceID, insuranceReferralID ->
 
                 val it = view
                 if (it != null) {
-                    DetachListener()
-                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToApplyClaimFragment(insuranceID))
+                    //DetachListener()
+                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToApplyClaimFragment(insuranceID,insuranceReferralID))
                 }
             },
             RecyclerViewAdapter.CancelListener{ insuranceReferralID ->
                 val it = view
                 if(it != null){
-                    DetachListener()
+                    //DetachListener()
                     Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToCancelInsuranceFragment(insuranceReferralID))
                 }
             }
@@ -195,19 +125,99 @@ class ReferralInsuranceListingFragment : Fragment() {
         binding.referralInsuranceRecyclerView.adapter = insuranceAdapter
         binding.referralInsuranceRecyclerView.setHasFixedSize(true)
         binding.referralInsuranceRecyclerView.adapter?.notifyDataSetChanged()
-        loadingDlg.dismissAlertDialog()
+
     }
 
 
     override fun onDetach() {
         super.onDetach()
-        DetachListener()
+        //DetachListener()
     }
 
 
-    private fun DetachListener(){
+    /*private fun DetachListener(){
         insuranceRef.removeEventListener(insuranceListener)
         referralInsuranceRef.removeEventListener(referralInsuranceListener)
+    }*/
+
+
+    private fun loadData(){
+        loadingDlg = LoadingDialog(requireActivity())
+        loadingDlg.showAlertDialog()
+
+        referralInsuranceRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    referralInsuranceList.clear()
+                    for(referralInsSnapshot in snapshot.children){
+                        if(referralInsSnapshot.child("status").getValue()!!.equals("Active")){
+                            val insuranceReferralID: String = referralInsSnapshot.child("insuranceReferralID").getValue().toString()
+                            val insuranceID: String = referralInsSnapshot.child("insuranceID").getValue().toString()
+                            val referralUID: String = referralInsSnapshot.child("referralUID").getValue().toString()
+                            val insuranceExpiryDate: Date = Date(referralInsSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
+                            val status: String = referralInsSnapshot.child("status").getValue().toString()
+                            val refIns: ReferralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate,status)
+                            referralInsuranceList.add(refIns)
+                        }
+                    }
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        insuranceRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if(snapshot.exists()){
+                    insuranceList.clear()
+                    for (insuranceSnapshot in snapshot.children){
+
+                        for(item in referralInsuranceList){
+                            if(item.insuranceID.equals(insuranceSnapshot.child("insuranceID").getValue().toString())){
+                                //insuranceList.add(insuranceSnapshot.getValue(Insurance::class.java)!!)
+                                val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
+                                val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
+                                val insuranceType: String = insuranceSnapshot.child("insuranceType").getValue().toString()
+                                val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
+                                val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
+                                //println(insuranceSnapshot.child("insuranceCoverage").getValue().toString())
+                                var insuranceCoverage: ArrayList<String> = ArrayList<String>()
+                                for(child in insuranceSnapshot.child("insuranceCoverage").children){
+                                    insuranceCoverage.add(child.getValue().toString())
+                                    //println(child.getValue().toString())
+                                }
+                                val insurance = Insurance(
+                                    insuranceID = insuranceID,
+                                    insuranceName = insuranceName,
+                                    insuranceComp = insuranceComp,
+                                    insurancePlan = insurancePlan,
+                                    insuranceCoverage = insuranceCoverage,
+                                    insuranceType = insuranceType
+                                )
+                                insuranceList.add(insurance)
+                            }
+
+                        }
+
+
+                    }
+
+                }
+                changeView(insuranceList,referralInsuranceList)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+
+        loadingDlg.dismissAlertDialog()
     }
 
 
