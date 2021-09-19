@@ -1,7 +1,10 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +17,7 @@ import my.edu.tarc.rewardreferralapp.data.RefferalReward
 import my.edu.tarc.rewardreferralapp.data.Reward
 import my.edu.tarc.rewardreferralapp.data.RewardDelivery
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRewardRedeemSuccessBinding
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 
 class RewardRedeemSuccessFragment : Fragment() {
 
@@ -31,6 +35,9 @@ class RewardRedeemSuccessFragment : Fragment() {
     private var refferalRewardList: ArrayList<RefferalReward> = ArrayList<RefferalReward>()
     private var rewardList: ArrayList<Reward> = ArrayList<Reward>()
     private var rewardDelivery: RewardDelivery = RewardDelivery()
+
+    private var loadingDialog: Dialog?= null
+    private val handler = Handler(Looper.getMainLooper())
 
 
     override fun onCreateView(
@@ -59,6 +66,7 @@ class RewardRedeemSuccessFragment : Fragment() {
 
         binding.btnRRSReceived.visibility = View.GONE
 
+        showLoading()
         getDeliveryDetail()
 
         binding.btnRRSReturnHomepage.setOnClickListener {
@@ -89,6 +97,9 @@ class RewardRedeemSuccessFragment : Fragment() {
             alertDialog.show()
         }
 
+        handler.postDelayed({
+            hideLoading()
+        }, 400)
         return binding.root
     }
 
@@ -208,6 +219,14 @@ class RewardRedeemSuccessFragment : Fragment() {
         binding.tvRRSAddressDetails.text = addressText
 
 
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 
 

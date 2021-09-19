@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralInsuranceListingBinding
 import my.edu.tarc.rewardreferralapp.dialog.LoadingDialog
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -34,7 +36,8 @@ class ReferralInsuranceListingFragment : Fragment() {
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var referralInsuranceListener: ValueEventListener
 
-    private val insuranceList = ArrayList<Insurance>()
+    private var insuranceList = ArrayList<Insurance>()
+    private var referralInsuranceList = ArrayList<ReferralInsurance>()
     private var tempInsuranceList = ArrayList<Insurance>()
 
     override fun onCreateView(
@@ -47,7 +50,7 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         referralUID = CheckUser().getCurrentUserUID()!!
 
-        val referralInsuranceList = ArrayList<ReferralInsurance>()
+
 
         //insuranceList.clear()
         //tempInsuranceList.clear()
@@ -55,7 +58,7 @@ class ReferralInsuranceListingFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    DetachListener()
+                    //DetachListener()
                     val action = ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToHomepage()
                     Navigation.findNavController(requireView()).navigate(action)
 
@@ -64,29 +67,109 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+
+
+        loadData()
+
+
+        binding.searchInsuranceReferral.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                loadingDlg.showAlertDialog()
+                tempInsuranceList.clear()
+                if (newText!!.isNotEmpty()) {
+                    tempInsuranceList =
+                        insuranceList.filter { r -> r.insuranceName.toString().toUpperCase().contains(newText.toString().toUpperCase()) } as ArrayList<Insurance>
+
+                }else{
+                    tempInsuranceList = insuranceList
+                }
+
+                changeView(tempInsuranceList,referralInsuranceList)
+
+                return true
+            }
+
+        })
+
+
+
+
+        return binding.root
+    }
+
+    private fun changeView(insuranceList: ArrayList<Insurance>, referralInsuranceList: ArrayList<ReferralInsurance>){
+        val insuranceAdapter = RecyclerViewAdapter(insuranceList,referralInsuranceList,
+            RecyclerViewAdapter.ClaimListener { insuranceID, insuranceReferralID ->
+
+                val it = view
+                if (it != null) {
+                    //DetachListener()
+                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToApplyClaimFragment(insuranceID,insuranceReferralID))
+                }
+            },
+            RecyclerViewAdapter.CancelListener{ insuranceReferralID ->
+                val it = view
+                if(it != null){
+                    //DetachListener()
+                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToCancelInsuranceFragment(insuranceReferralID))
+                }
+            }
+        )
+
+
+
+        binding.referralInsuranceRecyclerView.adapter = insuranceAdapter
+        binding.referralInsuranceRecyclerView.setHasFixedSize(true)
+        binding.referralInsuranceRecyclerView.adapter?.notifyDataSetChanged()
+
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        //DetachListener()
+    }
+
+
+    /*private fun DetachListener(){
+        insuranceRef.removeEventListener(insuranceListener)
+        referralInsuranceRef.removeEventListener(referralInsuranceListener)
+    }*/
+
+
+    private fun loadData(){
         loadingDlg = LoadingDialog(requireActivity())
         loadingDlg.showAlertDialog()
-        referralInsuranceListener = object: ValueEventListener{
+
+        referralInsuranceRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
+                    referralInsuranceList.clear()
                     for(referralInsSnapshot in snapshot.children){
                         if(referralInsSnapshot.child("status").getValue()!!.equals("Active")){
-                            referralInsuranceList.add(referralInsSnapshot.getValue(ReferralInsurance::class.java)!!)
+                            val insuranceReferralID: String = referralInsSnapshot.child("insuranceReferralID").getValue().toString()
+                            val insuranceID: String = referralInsSnapshot.child("insuranceID").getValue().toString()
+                            val referralUID: String = referralInsSnapshot.child("referralUID").getValue().toString()
+                            val insuranceExpiryDate: Date = Date(referralInsSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
+                            val status: String = referralInsSnapshot.child("status").getValue().toString()
+                            val refIns: ReferralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate,status)
+                            referralInsuranceList.add(refIns)
                         }
                     }
-                    //println("Referral Insurance Listing : insuranceReferral ${referralInsuranceList.size}")
+
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
 
             }
+        })
 
-        }
-
-        referralInsuranceRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(referralInsuranceListener)
-
-        insuranceListener = object : ValueEventListener {
+        insuranceRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
@@ -116,95 +199,25 @@ class ReferralInsuranceListingFragment : Fragment() {
                                     insuranceType = insuranceType
                                 )
                                 insuranceList.add(insurance)
-                                //println(insurance)
                             }
 
                         }
 
 
                     }
-                    changeView(insuranceList)
 
                 }
+                changeView(insuranceList,referralInsuranceList)
 
             }
 
             override fun onCancelled(error: DatabaseError) {
 
             }
-
-        }
-
-        insuranceRef.addValueEventListener(insuranceListener)
-
-
-
-
-        binding.searchInsuranceReferral.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                loadingDlg.showAlertDialog()
-                tempInsuranceList.clear()
-                if (newText!!.isNotEmpty()) {
-                    tempInsuranceList =
-                        insuranceList.filter { r -> r.insuranceName.toString().toUpperCase().contains(newText.toString().toUpperCase()) } as ArrayList<Insurance>
-
-                }else{
-                    tempInsuranceList = insuranceList
-                }
-
-                changeView(tempInsuranceList)
-
-                return true
-            }
-
         })
 
-        /*binding.btnToApplyClaim.setOnClickListener(){
 
-        }
-
-        binding.btnToRenewInsurance.setOnClickListener(){
-            val action = ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToRenewInsuranceFragment()
-            Navigation.findNavController(it).navigate(action)
-        }*/
-
-
-
-        return binding.root
-    }
-
-    private fun changeView(insuranceList: ArrayList<Insurance>){
-        val insuranceAdapter = RecyclerViewAdapter(insuranceList,
-            RecyclerViewAdapter.ClaimListener { insuranceID ->
-
-                val it = view
-                if (it != null) {
-                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToApplyClaimFragment(insuranceID))
-                }
-            })
-
-
-
-        binding.referralInsuranceRecyclerView.adapter = insuranceAdapter
-        binding.referralInsuranceRecyclerView.setHasFixedSize(true)
-        binding.referralInsuranceRecyclerView.adapter?.notifyDataSetChanged()
         loadingDlg.dismissAlertDialog()
-    }
-
-
-    override fun onDetach() {
-        super.onDetach()
-        DetachListener()
-    }
-
-
-    private fun DetachListener(){
-        insuranceRef.removeEventListener(insuranceListener)
-        referralInsuranceRef.removeEventListener(referralInsuranceListener)
     }
 
 

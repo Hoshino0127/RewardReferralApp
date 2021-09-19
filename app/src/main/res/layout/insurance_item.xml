@@ -10,6 +10,12 @@
         <variable
             name="insurance"
             type="my.edu.tarc.rewardreferralapp.data.Insurance" />
+        <variable
+            name="cancelListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.RecyclerViewAdapter.CancelListener" />
+        <variable
+            name="insuranceReferralID"
+            type="String" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -34,73 +40,96 @@
 
             <TextView
                 android:id="@+id/tvInsuranceName_cardview"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:padding="2dp"
                 android:text="Insurance Name"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/btnRenew_cardview"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvInsuranceComp_cardview"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:padding="2dp"
                 android:text="Insurance Comp"
+                app:layout_constraintEnd_toStartOf="@+id/btnRenew_cardview"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
                 app:layout_constraintTop_toBottomOf="@+id/tvInsuranceName_cardview" />
 
             <TextView
                 android:id="@+id/tvInsurancePlan_cardview"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginEnd="5dp"
                 android:padding="2dp"
                 android:text="Insurance Plan"
+                app:layout_constraintEnd_toStartOf="@+id/btnRenew_cardview"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
                 app:layout_constraintTop_toBottomOf="@id/tvInsuranceComp_cardview" />
 
 
             <TextView
                 android:id="@+id/tvInsuranceType_cardview"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:padding="2dp"
                 android:text="Insurance Type"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnRenew_cardview"
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview"
+                app:layout_constraintVertical_bias="0.0" />
 
             <Button
                 android:id="@+id/btnRenew_cardview"
-                android:layout_width="80dp"
+                android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
                 android:text="Renew"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgInsuranceIcon"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceType_cardview" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnClaim_cardview"
-                android:layout_width="80dp"
+                android:layout_width="90dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> clickListener.onClick(insurance, insuranceReferralID)}"
                 android:text="Claim"
                 android:textSize="12sp"
-                android:onClick="@{() -> clickListener.onClick(insurance)}"
-                app:layout_constraintBottom_toBottomOf="@+id/btnRenew_cardview"
-                app:layout_constraintStart_toEndOf="@+id/btnRenew_cardview"
-                app:layout_constraintTop_toTopOf="@+id/btnRenew_cardview" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRenew_cardview" />
+
+            <Button
+                android:id="@+id/btnCancel_cardview"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:onClick="@{() -> cancelListener.onClick(insuranceReferralID)}"
+                android:text="Cancel"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnClaim_cardview"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

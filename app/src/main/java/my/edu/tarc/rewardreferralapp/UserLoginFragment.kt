@@ -62,7 +62,6 @@ class UserLoginFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
-
         auth = FirebaseAuth.getInstance()
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_user_login, container, false)

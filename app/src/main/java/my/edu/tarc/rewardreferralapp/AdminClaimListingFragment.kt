@@ -119,10 +119,9 @@ class AdminClaimListingFragment : Fragment() {
                 if(snapshot.exists()){
                     referralList.clear()
                     for(currentReferral in snapshot.children){
-                        val referralID: String = currentReferral.child("referralID").getValue().toString()
                         val referralUID: String = currentReferral.child("referralUID").getValue().toString()
                         val fullName: String = currentReferral.child("fullName").getValue().toString()
-                        val referral: Referral = Referral(referralID = referralID, fullName = fullName, referralUID = referralUID)
+                        val referral: Referral = Referral(fullName = fullName, referralUID = referralUID)
                         referralList.add(referral)
                     }
                 }

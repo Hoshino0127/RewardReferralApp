@@ -80,6 +80,7 @@ class ApplyClaimFragment : Fragment() {
     private lateinit var binding: FragmentApplyClaimBinding
     private var insuranceID: String = ""
     private var referralUID: String = ""
+    private var insuranceReferralID: String = ""
 
     private val myCalendar: Calendar = Calendar.getInstance()
     private var imgUriMileage: Uri = Uri.EMPTY
@@ -124,6 +125,10 @@ class ApplyClaimFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         referralUID = CheckUser().getCurrentUserUID()!!
+
+        val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())
+        insuranceID = args.insuranceID
+        insuranceReferralID = args.insuranceReferralID
 
         ActivityCompat.requestPermissions(requireActivity(),
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),104)
@@ -240,9 +245,7 @@ class ApplyClaimFragment : Fragment() {
         })
 
 
-        val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())
-        insuranceID = args.insuranceID
-        referralUID = CheckUser().getCurrentUserUID()!!
+
 
 
 
@@ -252,15 +255,16 @@ class ApplyClaimFragment : Fragment() {
 
 
                     for (insuranceSnapshot in snapshot.children) {
-                        if (insuranceSnapshot.child("referralUID").getValue().toString()
-                                .equals(referralUID)
+                        if (insuranceSnapshot.child("insuranceReferralID").getValue().toString()
+                                .equals(insuranceReferralID)
                         ) {
                             val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
                             val referralUID: String = insuranceSnapshot.child("referralUID").getValue().toString()
                             val insuranceReferralID: String = insuranceSnapshot.child("insuranceReferralID").getValue().toString()
+                            println(insuranceReferralID)
                             val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
-
-                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate)
+                            val status: String = insuranceSnapshot.child("status").getValue().toString()
+                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate, status)
 
                         }
                     }
@@ -273,7 +277,7 @@ class ApplyClaimFragment : Fragment() {
             }
 
         }
-        referralInsuranceRef.addListenerForSingleValueEvent(referralInsuranceListener)
+        referralInsuranceRef.addValueEventListener(referralInsuranceListener)
 
         insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -652,6 +656,11 @@ class ApplyClaimFragment : Fragment() {
 
         if(!imgDamageFlag){
             Toast.makeText(requireContext(),"Please upload damage image",Toast.LENGTH_LONG).show()
+            return false
+        }
+
+        if(!(referralInsurance.status.equals("Active"))){
+            Toast.makeText(requireContext(),"This insurance is not active anymore, try to activate your insurance again",Toast.LENGTH_LONG).show()
             return false
         }
 

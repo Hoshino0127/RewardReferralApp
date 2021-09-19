@@ -76,7 +76,6 @@ class HomepageFragment : Fragment() {
                 if(snapshot.exists()){
                     for(referralSS in snapshot.children){
                         if(referralSS.child("referralUID").getValue().toString().equals(referralUID)){
-                            val referralID: String = referralSS.child("referralID").getValue().toString()
                             val referralUID: String = referralSS.child("referralUID").getValue().toString()
                             val deductible: Double = referralSS.child("deductible").getValue().toString().toDouble()
                             val fullName: String = referralSS.child("fullName").getValue().toString()
@@ -84,7 +83,6 @@ class HomepageFragment : Fragment() {
                             val email: String = referralSS.child("email").getValue().toString()
                             val points: Int = referralSS.child("points").getValue().toString().toInt()
                             referral = Referral(
-                                referralID = referralID,
                                 referralUID = referralUID,
                                 deductible = deductible,
                                 fullName = fullName,

@@ -117,7 +117,12 @@ class RewardDeliveryDetailsFragment : Fragment() {
 
 
         val dateformat = SimpleDateFormat("dd/MM/yyyy")
+        var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
         val applyDate = dateformat.format(Date())
+        val rnd: Random = Random()
+
+        val deliveryCode =
+            "RD" + IDFormat.format(Date()) + "_" + String.format("%04d", rnd.nextInt(9999))
 
         val rd = RewardDelivery(
             newID,
@@ -128,7 +133,8 @@ class RewardDeliveryDetailsFragment : Fragment() {
             binding.spRDDState.selectedItem.toString(),
             binding.ptRDDPostCode.text.toString(),
             "Pending",
-            applyDate
+            applyDate,
+            deliveryCode
         )
 
         deliveryRef.child(newID).setValue(rd).addOnSuccessListener() {

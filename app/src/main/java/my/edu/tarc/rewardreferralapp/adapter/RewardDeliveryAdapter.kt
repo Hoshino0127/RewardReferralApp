@@ -53,7 +53,7 @@ class RewardDeliveryAdapter(val deliveryList: List<RewardDelivery>,val clickList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentDelivery = deliveryList[position]
-        holder.deliveryID.text = "Delivery ID: "+currentDelivery.deliveryID
+        holder.deliveryID.text = "Delivery ID: "+currentDelivery.deliveryCode
         holder.applyDate.text = "Apply Date: "+currentDelivery.applyDate
 
         if(currentDelivery.status == "Pending"){

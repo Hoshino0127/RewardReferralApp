@@ -101,14 +101,12 @@ class ApproveClaimFragment : Fragment() {
                 if(snapshot.exists()){
                     for(referralSS in snapshot.children){
                         if(referralSS.child("referralUID").getValue().toString().equals(referralUID)){
-                            val referralID: String = referralSS.child("referralID").getValue().toString()
                             val referralUID: String = referralSS.child("referralUID").getValue().toString()
                             val deductible: Double = referralSS.child("deductible").getValue().toString().toDouble()
                             val fullName: String = referralSS.child("fullName").getValue().toString()
                             val contactNo: String = referralSS.child("contactNo").getValue().toString()
                             val email: String = referralSS.child("email").getValue().toString()
                             referral = Referral(
-                                referralID = referralID,
                                 referralUID = referralUID,
                                 deductible = deductible,
                                 fullName = fullName,
@@ -245,7 +243,7 @@ class ApproveClaimFragment : Fragment() {
         },1000)
 
 
-        referralRef.orderByChild("referralID").addListenerForSingleValueEvent(referralListener)
+        referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(referralListener)
         claimRef.orderByChild("claimID").addValueEventListener(claimListener)
 
         binding.clCoverageDetailsAC.setOnClickListener{
