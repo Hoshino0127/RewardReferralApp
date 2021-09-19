@@ -82,17 +82,21 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-        binding.referralbutton.setOnClickListener(){
+        binding.relativeLRefeList.setOnClickListener(){
 
         }
 
-        binding.rewardbutton.setOnClickListener(){
+        binding.relativeLReward.setOnClickListener(){
             //go to jiho reward page
         }
 
-        binding.profilebutton.setOnClickListener(){
+        binding.relativeLProfile.setOnClickListener(){
             val action = UserProfileFragmentDirections.actionUserProfileFragmentToProfileDetailsFragment()
             Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.relativeLCode.setOnClickListener(){
+
         }
         return binding.root
     }
@@ -125,6 +129,7 @@ class UserProfileFragment : Fragment() {
     //compare insurance and insurance application insuranceID
     private fun loadCardView() {
 
+        //get insurance application
         insuranceApplicationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
@@ -153,7 +158,6 @@ class UserProfileFragment : Fragment() {
                                 "",
                                 false
                             )
-
                             insApplicationList.add(insApp)
                         }
                     }
@@ -163,15 +167,16 @@ class UserProfileFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
         })
 
+        //get insurance and compare insuranceID
         insuranceRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     insuranceList.clear()
                     for (insuranceSnapshot in snapshot.children) {
                         for (insAppList in insApplicationList) {
+                            //compare insuranceID here
                             if (insAppList.insuranceID.equals(insuranceSnapshot.child("insuranceID").getValue().toString())) {
                                 val insuranceID: String =
                                     insuranceSnapshot.child("insuranceID").value.toString()
@@ -232,9 +237,5 @@ class UserProfileFragment : Fragment() {
 
             }
         })
-
     }
-
 }
-
-

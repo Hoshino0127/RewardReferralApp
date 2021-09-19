@@ -162,81 +162,170 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-            <ImageButton
-                android:id="@+id/profilebutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/rect_without_color"
-                android:padding="13dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:srcCompat="@drawable/user_icon"
-                app:tint="#000000"
-                tools:ignore="MissingConstraints" />
-
-            <ImageButton
-                android:id="@+id/referralbutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/rect_without_color"
-                android:contentDescription="TODO"
-                android:padding="13dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/rewardbutton"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:srcCompat="@drawable/referral_icon" />
-
-            <ImageButton
-                android:id="@+id/settingbutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toEndOf="@+id/profilebutton"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:srcCompat="@drawable/setting"
-                android:background="@drawable/rect_without_color"
-                android:padding="10dp"
-                android:contentDescription="TODO" />
-
-            <ImageButton
-                android:id="@+id/rewardbutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toEndOf="@+id/settingbutton"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                app:srcCompat="@drawable/reward_icon"
-                android:background="@drawable/rect_without_color"
-                android:padding="13dp"
-                android:contentDescription="TODO" />
-
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpagerInsurance"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="23dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="21dp"
                 android:layout_marginEnd="30dp"
-                android:layout_marginBottom="40dp"
                 android:clipToPadding="false"
                 android:foregroundGravity="center"
                 android:overScrollMode="never"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profilebutton" />
+                app:layout_constraintTop_toBottomOf="@+id/relativeLReward" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLProfile"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_corner_grey_border_2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view">
+
+                <ImageView
+                    android:id="@+id/imgRewards"
+                    android:layout_width="35dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="22dp"
+                    app:srcCompat="@drawable/user_icon"
+                    app:tint="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/tvYourRef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgRewards"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Profile"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLReward"
+                android:layout_width="75dp"
+                android:layout_height="77dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_corner_grey_border_2dp"
+                app:layout_constraintStart_toEndOf="@+id/relativeLProfile"
+                app:layout_constraintTop_toBottomOf="@+id/view">
+
+                <ImageView
+                    android:id="@+id/imgReward"
+                    android:layout_width="35dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="22dp"
+                    app:srcCompat="@drawable/reward_icon" />
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgReward"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="13dp"
+                    android:text="Reward"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLRefeList"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_corner_grey_border_2dp"
+                app:layout_constraintStart_toEndOf="@+id/relativeLReward"
+                app:layout_constraintTop_toBottomOf="@+id/view">
+
+                <ImageView
+                    android:id="@+id/imgRefLists"
+                    android:layout_width="40dp"
+                    android:layout_height="33dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="20dp"
+                    app:srcCompat="@drawable/ic_referrallist"
+                    app:tint="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/textView53"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgRefLists"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Referrals"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLCode"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_corner_grey_border_2dp"
+                app:layout_constraintStart_toEndOf="@+id/relativeLRefeList"
+                app:layout_constraintTop_toBottomOf="@+id/view">
+
+                <ImageView
+                    android:id="@+id/imageView22"
+                    android:layout_width="35dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginEnd="20dp"
+                    app:srcCompat="@drawable/referral_icon_black" />
+
+                <TextView
+                    android:id="@+id/textView54"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView22"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
