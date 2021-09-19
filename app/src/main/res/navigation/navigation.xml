@@ -503,7 +503,11 @@
         android:id="@+id/referFriendFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendFragment"
         android:label="ReferFriendFragment"
-        tools:layout="@layout/fragment_refer_friend"/>
+        tools:layout="@layout/fragment_refer_friend">
+        <action
+            android:id="@+id/action_referFriendFragment_to_referFriendShareTypeFragment"
+            app:destination="@id/referFriendShareTypeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/referralListingFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralListingFragment"
@@ -533,6 +537,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_refEnterCodeFragment"
+            app:destination="@id/refEnterCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewReferralFragment"
@@ -545,7 +552,7 @@
     </fragment>
     <fragment
         android:id="@+id/cancelInsuranceFragment"
-        android:name="my.edu.tarc.rewardreferralapp.CancelInsuranceFragment"
+        android:name="my.edu.tarc.rewardreferralapp.CancelInsuranceCustFragment"
         android:label="CancelInsuranceFragment" >
         <argument
             android:name="insuranceReferralID"
@@ -558,7 +565,7 @@
         android:id="@+id/cancelInsuranceCustFragment"
         android:name="my.edu.tarc.rewardreferralapp.CancelInsuranceCustFragment"
         android:label="CancelInsuranceCustFragment"
-        tools:layout="@layout/CancelInsuranceCustFragment">
+        tools:layout="@layout/fragment_cancel_insurance_cust">
         <action
             android:id="@+id/action_cancelInsuranceCustFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
@@ -566,4 +573,14 @@
             android:name="insuranceReferralID"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/refEnterCodeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
+        android:label="RefEnterCodeFragment"
+        tools:layout="@layout/fragment_ref_enter_code"/>
+    <fragment
+        android:id="@+id/referFriendShareTypeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
+        android:label="ReferFriendShareTypeFragment"
+        tools:layout="@layout/fragment_refer_friend_share_type"/>
 </navigation>
