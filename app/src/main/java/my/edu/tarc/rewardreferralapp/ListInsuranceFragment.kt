@@ -48,6 +48,9 @@ class ListInsuranceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        insuranceList.clear()
+        tempInsuranceList.clear()
+
         binding = FragmentListInsuranceBinding.inflate(inflater,  container ,false)
 
         binding.shimmerViewContainer.startShimmer()
@@ -281,7 +284,7 @@ class ListInsuranceFragment : Fragment() {
                     binding.shimmerViewContainer.visibility = View.GONE
                     binding.rvInsuranceList.visibility = View.VISIBLE
                     binding.tvNoRecord.visibility = View.GONE
-                    binding.rvInsuranceList.adapter?.notifyDataSetChanged()
+
 
                 } else {
                     insuranceList.clear()
@@ -292,7 +295,7 @@ class ListInsuranceFragment : Fragment() {
                         binding.tvNoRecord.visibility = View.VISIBLE
                     }, 3000)
                     binding.rvInsuranceList.visibility = View.INVISIBLE
-                    binding.rvInsuranceList.adapter?.notifyDataSetChanged()
+
                 }
             }
 
