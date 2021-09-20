@@ -48,6 +48,9 @@ class ListInsuranceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        insuranceList.clear()
+        tempInsuranceList.clear()
+
         binding = FragmentListInsuranceBinding.inflate(inflater,  container ,false)
 
         binding.shimmerViewContainer.startShimmer()
