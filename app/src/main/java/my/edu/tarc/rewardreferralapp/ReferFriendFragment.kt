@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.Navigation
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -42,7 +43,9 @@ class ReferFriendFragment : Fragment() {
         }
 
         binding.btnRefer.setOnClickListener(){
-            //need to go to refer friend share type fragment
+            val action = ReferFriendFragmentDirections.actionReferFriendFragmentToReferFriendShareTypeFragment()
+            Navigation.findNavController(it).navigate(action)
+
 //            val referralCode = binding.tvRefCodeResult.text.toString()
 //            val shareIntent = Intent()
 //            shareIntent.action = Intent.ACTION_SEND
@@ -59,8 +62,7 @@ class ReferFriendFragment : Fragment() {
         val clipData = ClipData.newPlainText("text", copyText)
         myClipboard.setPrimaryClip(clipData)
 
-        Toast.makeText(context, "Referral code has been copied." + "text", Toast.LENGTH_LONG).show()
-        
+        Toast.makeText(context, "Referral code has been copied.", Toast.LENGTH_LONG).show()
     }
 
     //load to get invitation code and display in text view
@@ -85,7 +87,6 @@ class ReferFriendFragment : Fragment() {
         })
     }
 
-
     //-----------------------------------------------------------------------------
 //    private fun generateCode() : String {
 //        val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
@@ -95,7 +96,5 @@ class ReferFriendFragment : Fragment() {
 //            .map(charPool::get)
 //            .joinToString("")
 //    }
-
-
 
 }

@@ -87,7 +87,11 @@ class UserProfileFragment : Fragment() {
         }
 
         binding.relativeLReward.setOnClickListener(){
-            //go to jiho reward page
+            //go to jiho reward center page?
+        }
+
+        binding.btnRedeemReward.setOnClickListener(){
+            //go to redeem rewards page
         }
 
         binding.relativeLProfile.setOnClickListener(){
@@ -96,8 +100,10 @@ class UserProfileFragment : Fragment() {
         }
 
         binding.relativeLCode.setOnClickListener(){
-
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToRefEnterCodeFragment()
+            Navigation.findNavController(it).navigate(action)
         }
+
         return binding.root
     }
 

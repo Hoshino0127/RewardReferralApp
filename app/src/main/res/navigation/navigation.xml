@@ -577,7 +577,11 @@
         android:id="@+id/refEnterCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
         android:label="RefEnterCodeFragment"
-        tools:layout="@layout/fragment_ref_enter_code"/>
+        tools:layout="@layout/fragment_ref_enter_code">
+        <action
+            android:id="@+id/action_refEnterCodeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/referFriendShareTypeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"

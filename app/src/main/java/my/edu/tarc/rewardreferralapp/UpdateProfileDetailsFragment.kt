@@ -55,11 +55,6 @@ class UpdateProfileDetailsFragment : Fragment() {
     }
 
     private fun updateDetails() {
-        //binding.progressBarSave.visibility = View.VISIBLE
-
-//        if(!(checkError())){
-//            binding.progressBarSave.visibility = View.GONE
-//        }
         val contact: String = binding.txtEditPhone.text.toString()
         val address: String = binding.txtMultiAddress.text.toString()
         val gender: String = binding.spGenders.selectedItem.toString()
@@ -79,8 +74,7 @@ class UpdateProfileDetailsFragment : Fragment() {
                             updateSnapshot.key?.let {
                                 if (referralUID != null) {
                                     if (checkError()) {
-                                        referralRef.child(referralUID).updateChildren(referral)
-                                            .addOnSuccessListener {
+                                        referralRef.child(referralUID).updateChildren(referral).addOnSuccessListener {
                                                 //binding.progressBarSave.visibility = View.GONE
                                                 Toast.makeText(context, "Updated successfully!", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {

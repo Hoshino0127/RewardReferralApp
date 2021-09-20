@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.adapter.ReferralListAdapter
 import my.edu.tarc.rewardreferralapp.data.ReferralList
 import my.edu.tarc.rewardreferralapp.databinding.FragmentAddNewReferralBinding
@@ -69,7 +73,6 @@ class AddNewReferralFragment : Fragment() {
 
     //insert
 //    private fun addData(referralName: String, referralStatus: String?){
-//
 //        var newID: String = ""
 //
 //        referralRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -98,7 +101,7 @@ class AddNewReferralFragment : Fragment() {
 //            }
 //        })
 //    }
-
+//
 //    private fun loadData(){
 //        referralRef.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
