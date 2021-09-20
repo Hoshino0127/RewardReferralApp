@@ -3,6 +3,7 @@ package my.edu.tarc.rewardreferralapp
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -225,9 +226,11 @@ class ListInsuranceApplicationFragment : Fragment() {
                 applicationID,insuranceID -> val it = view
 
             showLoading()
-
-            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToUpdateInsuranceApplicationFragment(applicationID, insuranceID)
-            view?.let { Navigation.findNavController(it).navigate(action) }
+            Handler().postDelayed({
+                hideLoading()
+                val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToUpdateInsuranceApplicationFragment(applicationID, insuranceID)
+                view?.let { Navigation.findNavController(it).navigate(action) }
+            }, 3000)
 
         })
 

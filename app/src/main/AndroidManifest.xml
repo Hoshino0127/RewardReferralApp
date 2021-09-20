@@ -45,7 +45,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomepageActivity" />
-        <activity android:name=".StaffDashboard" />
         <activity android:name=".MainActivity" />
 
         <activity

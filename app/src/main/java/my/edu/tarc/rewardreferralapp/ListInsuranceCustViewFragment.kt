@@ -49,7 +49,7 @@ class ListInsuranceCustViewFragment : Fragment() {
             Handler().postDelayed({
                 hideLoading()
                 val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
-                view?.let { Navigation.findNavController(it).navigate(action) }
+                Navigation.findNavController(requireView()).navigate(action)
             }, 3000)
 
         })
@@ -79,9 +79,12 @@ class ListInsuranceCustViewFragment : Fragment() {
                     insCustAdapter = InsuranceCustAdapter(tempinsuranceList, InsuranceCustAdapter.ApplyListener{
                             insuranceID ->val it = view
 
-                        val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
-                        view?.let { Navigation.findNavController(it).navigate(action) }
-
+                        showLoading()
+                        Handler().postDelayed({
+                            hideLoading()
+                            val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
+                            view?.let { Navigation.findNavController(it).navigate(action) }
+                        }, 3000)
                     })
 
                     binding.rvListInsuranceCust.adapter = insCustAdapter
