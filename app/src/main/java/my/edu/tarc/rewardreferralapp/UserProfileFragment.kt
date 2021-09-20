@@ -82,31 +82,33 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-        binding.referralbutton.setOnClickListener(){
+        binding.relativeLRefeList.setOnClickListener(){
 
         }
 
-        binding.rewardbutton.setOnClickListener(){
+        binding.relativeLReward.setOnClickListener(){
             //go to jiho reward page
         }
 
-        binding.profilebutton.setOnClickListener(){
+        binding.relativeLProfile.setOnClickListener(){
             val action = UserProfileFragmentDirections.actionUserProfileFragmentToProfileDetailsFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.relativeLCode.setOnClickListener(){
 
+        }
         return binding.root
     }
 
     private fun loadData(){
-        val referralUID: String?  = CheckUser().getCurrentUserUID()
+        //val referralUID: String?  = CheckUser().getCurrentUserUID()
         referralRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()) {
                     referral.clear()
-                    if (referralUID != null) {
-                        for (referralSnapshot in snapshot.children) {
+                    for (referralSnapshot in snapshot.children) {
+                        if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
                             val referralPoints: String = referralSnapshot.child("points").value.toString()
                             val referralName: String = referralSnapshot.child("fullName").value.toString()
 
@@ -116,7 +118,6 @@ class UserProfileFragment : Fragment() {
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -128,25 +129,18 @@ class UserProfileFragment : Fragment() {
     //compare insurance and insurance application insuranceID
     private fun loadCardView() {
 
+        //get insurance application
         insuranceApplicationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
-                    for (insuranceSnapshot in snapshot.children) {
-
-                        if (insuranceSnapshot.child("referralID").value.toString() == CheckUser().getCurrentUserUID()) {
-
-                            val applicationID: String =
-                                insuranceSnapshot.child("applicationID").value.toString()
-                            val applicationAppliedDate: Date = Date(
-                                insuranceSnapshot.child("applicationAppliedDate")
-                                    .child("time").value as Long
-                            )
-                            val insuranceID: String =
-                                insuranceSnapshot.child("insuranceID").value.toString()
-                            val referralID: String =
-                                insuranceSnapshot.child("referralID").value.toString()
-                            val insuranceStatus: String =
-                                insuranceSnapshot.child("applicationStatus").value.toString()
+                    for (insuranceSnapshot in snapshot.children) { //go in insuranceApplication
+                        if (insuranceSnapshot.child("referralID").value.toString() == CheckUser().getCurrentUserUID()) { //compare referralID
+                            //then get the value that i needed here
+                            val applicationID: String = insuranceSnapshot.child("applicationID").value.toString()
+                            val applicationAppliedDate: Date = Date(insuranceSnapshot.child("applicationAppliedDate").child("time").value as Long)
+                            val insuranceID: String = insuranceSnapshot.child("insuranceID").value.toString()
+                            val referralID: String = insuranceSnapshot.child("referralID").value.toString()
+                            val insuranceStatus: String = insuranceSnapshot.child("applicationStatus").value.toString()
 
                             val insApp = InsuranceApplication(
                                 applicationID,
@@ -164,7 +158,6 @@ class UserProfileFragment : Fragment() {
                                 "",
                                 false
                             )
-
                             insApplicationList.add(insApp)
                         }
                     }
@@ -174,15 +167,16 @@ class UserProfileFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
         })
 
+        //get insurance and compare insuranceID
         insuranceRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     insuranceList.clear()
                     for (insuranceSnapshot in snapshot.children) {
                         for (insAppList in insApplicationList) {
+                            //compare insuranceID here
                             if (insAppList.insuranceID.equals(insuranceSnapshot.child("insuranceID").getValue().toString())) {
                                 val insuranceID: String =
                                     insuranceSnapshot.child("insuranceID").value.toString()
@@ -194,7 +188,7 @@ class UserProfileFragment : Fragment() {
                                     insuranceSnapshot.child("insurancePlan").value.toString()
                                 val insuranceType: String =
                                     insuranceSnapshot.child("insuranceType").value.toString()
-                                var insuranceCoverage: ArrayList<String> = ArrayList<String>()
+                                val insuranceCoverage: ArrayList<String> = ArrayList<String>()
                                 for (child in insuranceSnapshot.child("insuranceCoverage").children) {
                                     insuranceCoverage.add(child.value.toString())
                                 }
@@ -216,10 +210,10 @@ class UserProfileFragment : Fragment() {
                         }
                     }
 
-
+                    //loop the insurance list and insurance application list to get the value
                     for(insAppList in insApplicationList) {
                         for (insList in insuranceList) {
-
+                            //if both insuranceID in Insurance and InsuranceApplication is same then get the value from each of them (insList, insAppList)
                             if(insAppList.insuranceID.equals(insList.insuranceID)) {
                                 if(insList.insuranceComp == "Prudential") {
                                     cardItemList.add(Card_Item_Model(insList.insuranceComp.toString(), insList.insuranceName.toString(),insAppList.applicationStatus.toString(), R.drawable.prudential))
@@ -231,7 +225,6 @@ class UserProfileFragment : Fragment() {
                                     cardItemList.add(Card_Item_Model(insList.insuranceComp.toString(), insList.insuranceName.toString(),insAppList.applicationStatus.toString(), R.drawable.etiqa))
                                 }
                             }
-
                         }
                     }
 
@@ -244,9 +237,5 @@ class UserProfileFragment : Fragment() {
 
             }
         })
-
     }
-
 }
-
-

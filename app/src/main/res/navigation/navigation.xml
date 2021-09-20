@@ -506,7 +506,11 @@
         android:id="@+id/referFriendFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendFragment"
         android:label="ReferFriendFragment"
-        tools:layout="@layout/fragment_refer_friend"/>
+        tools:layout="@layout/fragment_refer_friend">
+        <action
+            android:id="@+id/action_referFriendFragment_to_referFriendShareTypeFragment"
+            app:destination="@id/referFriendShareTypeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/referralListingFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralListingFragment"
@@ -578,4 +582,14 @@
             android:id="@+id/action_listInsuranceCancelFragment_to_navigationFragment"
             app:destination="@id/navigationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/refEnterCodeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
+        android:label="RefEnterCodeFragment"
+        tools:layout="@layout/fragment_ref_enter_code"/>
+    <fragment
+        android:id="@+id/referFriendShareTypeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
+        android:label="ReferFriendShareTypeFragment"
+        tools:layout="@layout/fragment_refer_friend_share_type"/>
 </navigation>

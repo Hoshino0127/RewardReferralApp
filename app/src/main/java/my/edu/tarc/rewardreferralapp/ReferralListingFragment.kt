@@ -35,7 +35,7 @@ class ReferralListingFragment : Fragment() {
     private var strMsg: String? = null
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private val myRefList = database.getReference("ReferralList")
+    //private val myRefList = database.getReference("ReferralList")
     private val myRef = database.getReference("Referral")
 
     override fun onCreateView(
