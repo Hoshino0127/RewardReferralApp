@@ -118,8 +118,9 @@ class ListInsuranceCustViewFragment : Fragment() {
                             insuranceCoverage.add(child.value.toString())
                         }
                         val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
+                        val insuranceImg: String = insuranceSnapshot.child("insuranceImg").value.toString()
 
-                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType)
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType, insuranceImg)
 
                         insuranceList.add(insurance)
 

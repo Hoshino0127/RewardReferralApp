@@ -90,6 +90,7 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
 
         if(currentItem.applicationStatus.equals("Pending")){
             holder.applicationStatus.setTextColor(Color.parseColor("#EC512B"))
+            holder.viewDetails.visibility = View.VISIBLE
         } else if (currentItem.applicationStatus.equals("Rejected")) {
             holder.applicationStatus.setTextColor(Color.parseColor("#F30E15"))
             holder.viewDetails.visibility = View.GONE

@@ -24,11 +24,13 @@
             android:layout_margin="10dp">
 
             <ImageView
-                android:id="@+id/imgRewardIcon"
-                android:layout_width="97dp"
-                android:layout_height="102dp"
+                android:id="@+id/imgInsurance"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_corner_grey_border_1dp"
+                android:padding="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -42,8 +44,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
-                app:layout_constraintTop_toTopOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
+                app:layout_constraintTop_toTopOf="@+id/imgInsurance"
                 tools:text="Insurance Comp" />
 
             <TextView
@@ -55,7 +57,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Insurance Name"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceComp" />
 
             <TextView
@@ -67,7 +69,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Insurance Plan"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceName" />
 
             <TextView
@@ -79,7 +81,7 @@
                 android:layout_marginEnd="16dp"
                 android:text="Insurance Type"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsurancePlan" />
 
             <TextView
@@ -90,7 +92,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceType" />
 
             <TextView
@@ -101,7 +103,7 @@
                 android:layout_marginTop="5dp"
                 android:text="RM"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/imgRewardIcon"
+                app:layout_constraintStart_toEndOf="@+id/imgInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceCoverage" />
 
             <TextView

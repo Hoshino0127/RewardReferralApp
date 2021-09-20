@@ -224,8 +224,8 @@ class ListInsuranceApplicationCustViewFragment : Fragment() {
 
             Handler().postDelayed({
                 hideLoading()
-                //val action = ListInsuranceApplicationCustViewFragmentDirections.actionListInsuranceApplicationCustViewFragmentToViewInsuranceApplicationCustFragment(insuranceID, applicationID)
-                //view?.let { Navigation.findNavController(it).navigate(action) }
+                val action = ListInsuranceApplicationCustViewFragmentDirections.actionListInsuranceApplicationCustViewFragmentToViewInsuranceApplicationCustFragment(insuranceID, applicationID)
+                view?.let { Navigation.findNavController(it).navigate(action) }
             }, 3000)
 
         })
