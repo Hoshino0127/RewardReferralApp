@@ -586,5 +586,5 @@
         android:id="@+id/referFriendShareTypeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
         android:label="ReferFriendShareTypeFragment"
-        tools:layout="@layout/fragment_refer_friend_share_type"/>
+        tools:layout="@layout/fragment_refer_friend_email"/>
 </navigation>

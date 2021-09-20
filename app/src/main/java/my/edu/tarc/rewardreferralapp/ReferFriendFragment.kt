@@ -19,7 +19,6 @@ import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferFriendBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
-import kotlin.random.Random
 
 class ReferFriendFragment : Fragment() {
 
@@ -37,6 +36,7 @@ class ReferFriendFragment : Fragment() {
         loadData()
         tempbinding = FragmentReferFriendBinding.inflate(inflater,  container ,false)
 
+
         binding.btnCopyCode.setOnClickListener(){
             copyCode()
 //            binding.tvRefCodeResult.setText(generateCode())
@@ -45,7 +45,6 @@ class ReferFriendFragment : Fragment() {
         binding.btnRefer.setOnClickListener(){
             val action = ReferFriendFragmentDirections.actionReferFriendFragmentToReferFriendShareTypeFragment()
             Navigation.findNavController(it).navigate(action)
-
 //            val referralCode = binding.tvRefCodeResult.text.toString()
 //            val shareIntent = Intent()
 //            shareIntent.action = Intent.ACTION_SEND
@@ -55,6 +54,7 @@ class ReferFriendFragment : Fragment() {
         }
         return binding.root
     }
+
 
     private fun copyCode(){
         val copyText: String = binding.tvRefCodeResult.text.toString()
@@ -82,7 +82,7 @@ class ReferFriendFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
