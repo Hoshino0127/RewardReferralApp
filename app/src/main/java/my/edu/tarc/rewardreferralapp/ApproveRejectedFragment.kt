@@ -36,6 +36,11 @@ class ApproveRejectedFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackApproveClaimRejected.setOnClickListener(){
+            val action = ApproveRejectedFragmentDirections.actionApproveRejectedFragmentToAdminClaimListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         val args = ApproveRejectedFragmentArgs.fromBundle(requireArguments())
         claimUUID = args.claimUUID
 

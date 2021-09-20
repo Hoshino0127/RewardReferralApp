@@ -297,7 +297,12 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                 var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
                 var newID = "CL" + IDFormat.format(Date()) + "_" + String.format("%04d",rnd.nextInt(9999))
 
-                val insuranceExpiryDate = Date()
+                val calendar = Calendar.getInstance()
+
+                calendar.time = Date()
+                calendar.add(Calendar.YEAR, 1)
+
+                val insuranceExpiryDate = calendar.time
 
                 val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), CheckUser().getCurrentUserUID(), insuranceExpiryDate, "Active")
 

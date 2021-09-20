@@ -47,6 +47,10 @@ class RewardStaffDeliveryListFragment : Fragment() {
             false
         )
 
+        binding.btnBackRSD.setOnClickListener(){
+            // set staff dashboard
+        }
+
         showLoading()
         getAllDeliveryDetails()
 

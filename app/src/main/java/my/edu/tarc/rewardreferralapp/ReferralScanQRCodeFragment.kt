@@ -89,6 +89,11 @@ class ReferralScanQRCodeFragment : Fragment() {
         binding.btnRSQRTransfer.visibility = View.GONE
         binding.ptRSQRPointEnter.visibility = View.GONE
 
+        binding.btnBackRSQR.setOnClickListener(){
+            val action = ReferralScanQRCodeFragmentDirections.actionReferralScanQRCodeFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         binding.btnRSQRScanQR.setOnClickListener {
 
             val QRCodeScanner = IntentIntegrator.forSupportFragment(this)

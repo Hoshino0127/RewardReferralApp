@@ -62,7 +62,7 @@ class RewardStaffDeliveryDetails : Fragment() {
         showLoading()
         getDetails()
 
-        binding.btnRSDBack.setOnClickListener {
+        binding.btnBackRSDD.setOnClickListener {
             val action = RewardStaffDeliveryDetailsDirections.actionRewardStaffDeliveryDetailsToRewardStaffDeliveryListFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }

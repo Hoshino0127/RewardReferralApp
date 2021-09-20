@@ -31,12 +31,17 @@ class ApplyClaimSuccessFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToReferralInsuranceListingFragment()
+                    val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToHomepage()
                     Navigation.findNavController(requireView()).navigate(action)
                 }
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+        binding.btnBackApplyClaimSuccess.setOnClickListener(){
+            val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToReferralInsuranceListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
         binding.btnToClaimListing.setOnClickListener(){
             val action = ApplyClaimSuccessFragmentDirections.actionApplyClaimSuccessFragmentToClaimListingFragment()

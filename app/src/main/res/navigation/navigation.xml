@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_applyClaimSuccessFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <action
+            android:id="@+id/action_applyClaimSuccessFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/claimListingFragment"
@@ -229,6 +232,9 @@
         <action
             android:id="@+id/action_rewardMyFragment_to_rewardDeliveryDetailsFragment"
             app:destination="@id/rewardDeliveryDetailsFragment" />
+        <action
+            android:id="@+id/action_rewardMyFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/rewardCenterFragment"
@@ -237,6 +243,9 @@
         <action
             android:id="@+id/action_rewardCenterFragment_to_rewardMyFragment"
             app:destination="@id/rewardMyFragment" />
+        <action
+            android:id="@+id/action_rewardCenterFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/rewardDeliveryDetailsFragment"
@@ -252,6 +261,9 @@
             android:name="RewardClaimID"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_rewardDeliveryDetailsFragment_to_rewardMyFragment"
+            app:destination="@id/rewardMyFragment" />
     </fragment>
     <fragment
         android:id="@+id/rewardRedeemSuccessFragment"
@@ -277,6 +289,9 @@
         <action
             android:id="@+id/action_rewardDeliveryListFragment_to_rewardRedeemSuccessFragment"
             app:destination="@id/rewardRedeemSuccessFragment" />
+        <action
+            android:id="@+id/action_rewardDeliveryListFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/rewardListingFragment"
@@ -320,7 +335,11 @@
     <fragment
         android:id="@+id/referralMyQRCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralMyQRCodeFragment"
-        android:label="ReferralMyQRCodeFragment" />
+        android:label="ReferralMyQRCodeFragment" >
+        <action
+            android:id="@+id/action_referralMyQRCodeFragment_to_homepage"
+            app:destination="@id/homepage" />
+    </fragment>
     <fragment
         android:id="@+id/referralScanQRCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralScanQRCodeFragment"
@@ -328,11 +347,18 @@
         <action
             android:id="@+id/action_referralScanQRCodeFragment_to_referralTransferListingFragment"
             app:destination="@id/referralTransferListingFragment" />
+        <action
+            android:id="@+id/action_referralScanQRCodeFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/referralTransferListingFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralTransferListingFragment"
-        android:label="ReferralTransferListingFragment" />
+        android:label="ReferralTransferListingFragment" >
+        <action
+            android:id="@+id/action_referralTransferListingFragment_to_homepage"
+            app:destination="@id/homepage" />
+    </fragment>
     <fragment
         android:id="@+id/listInsuranceFragment"
         android:name="my.edu.tarc.rewardreferralapp.ListInsuranceFragment"

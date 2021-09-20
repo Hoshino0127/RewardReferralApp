@@ -52,7 +52,10 @@ class ApproveClaimAmountFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
-
+        binding.btnBackApproveClaimAmount.setOnClickListener(){
+            val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToAdminClaimListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
         binding.btnAddClaim.setOnClickListener(){
             if(errorFreeAddFigure()){

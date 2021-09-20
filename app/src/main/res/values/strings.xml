@@ -137,6 +137,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="adminClaimSearchHint">Enter Claim ID to search</string>
+    <string name="insuranceListSearchHint">Enter insurance name to search</string>
 
     <string-array name="gender_items">
         <item>Male</item>

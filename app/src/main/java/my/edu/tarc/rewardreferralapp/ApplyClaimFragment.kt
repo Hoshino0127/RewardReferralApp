@@ -120,6 +120,11 @@ class ApplyClaimFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackApplyClaim.setOnClickListener(){
+            val action = ApplyClaimFragmentDirections.actionApplyClaimFragmentToReferralInsuranceListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         referralUID = CheckUser().getCurrentUserUID()!!
 
         val args = ApplyClaimFragmentArgs.fromBundle(requireArguments())

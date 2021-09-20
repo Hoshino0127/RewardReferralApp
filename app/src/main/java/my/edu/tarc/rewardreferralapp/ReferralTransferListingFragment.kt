@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.adapter.ReferralTransferAdapter
 import my.edu.tarc.rewardreferralapp.data.Referral
@@ -46,6 +47,11 @@ class ReferralTransferListingFragment : Fragment() {
                 container,
                 false
             )
+
+        binding.btnBackRTL.setOnClickListener(){
+            val action = ReferralTransferListingFragmentDirections.actionReferralTransferListingFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
 
 

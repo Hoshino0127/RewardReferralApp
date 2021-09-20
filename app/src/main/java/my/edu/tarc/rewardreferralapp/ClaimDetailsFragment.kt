@@ -91,6 +91,11 @@ class ClaimDetailsFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackClaimDetails.setOnClickListener(){
+            val action = ClaimDetailsFragmentDirections.actionClaimDetailsFragmentToClaimListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         val args = ClaimDetailsFragmentArgs.fromBundle(requireArguments())
         claimUUID = args.claimUUID
         referralUID = CheckUser().getCurrentUserUID()!!

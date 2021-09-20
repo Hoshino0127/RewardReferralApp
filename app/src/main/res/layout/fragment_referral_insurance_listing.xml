@@ -11,19 +11,40 @@
             android:layout_height="match_parent"
             tools:context=".ReferralInsuranceListingFragment">
 
-            <TextView
-                android:id="@+id/tvInsuranceListing_ril"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="26dp"
-                android:text="Insurance Listing"
-                android:textColor="#393737"
-                android:textSize="20sp"
-                android:textStyle="bold"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/backgroundPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
 
+                <ImageView
+                    android:id="@+id/btnBackReferralInsuranceListing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+
+                <TextView
+                    android:id="@+id/tvTitleReferralInsuranceListing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Referral insurance listing"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <SearchView
                 android:id="@+id/searchInsuranceReferral"
@@ -33,11 +54,11 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="26dp"
                 android:iconifiedByDefault="false"
-                android:queryHint="Enter Claim ID or Referral ID"
+                android:queryHint="@string/insuranceListSearchHint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceListing_ril" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
             <View
                 android:id="@+id/view"

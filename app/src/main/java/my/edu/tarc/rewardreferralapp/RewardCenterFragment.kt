@@ -59,6 +59,10 @@ class RewardCenterFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_reward_center, container, false)
 
 
+        binding.btnBackRewardCenter.setOnClickListener(){
+            val action = RewardCenterFragmentDirections.actionRewardCenterFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
         binding.btnRCSearch.setOnClickListener() {
 
