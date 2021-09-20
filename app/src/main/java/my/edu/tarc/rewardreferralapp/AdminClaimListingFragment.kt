@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -33,9 +34,11 @@ class AdminClaimListingFragment : Fragment() {
     private lateinit var adapter: AdminClaimAdapter
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
+
     private val claimRef = database.getReference("Claim")
     private val insuranceRef = database.getReference("Insurance")
     private val referralRef = database.getReference("Referral")
+
     private lateinit var claimListener: ValueEventListener
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var referralListener: ValueEventListener
@@ -54,7 +57,19 @@ class AdminClaimListingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_admin_claim_listing, container, false)
 
-        claimList.clear()
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    //DetachListener()
+                    val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToClaimListingFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+
         tempClaimList.clear()
 
         val swipe = object: MySwipeHelper(requireActivity(), binding.rvClaimList, 200) {
@@ -82,21 +97,16 @@ class AdminClaimListingFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
+                tempClaimList.clear()
                 if (newText!!.isNotEmpty()) {
-                    tempClaimList.clear()
-                    val search = newText.lowercase(Locale.getDefault())
+
                     for (claim in claimList) {
-                        println(claim.claimID)
-                        val combineText:String = claim.claimID!! + "-" + claim.referralUID
-                        if (combineText.lowercase(Locale.getDefault()).contains(search)) {
-                            tempClaimList.add(claim)
-                        }
+
+                        tempClaimList = claimList.filter{c -> c.claimID!!.toUpperCase().contains(newText.toString().toUpperCase())} as ArrayList<Claim>
                     }
 
                     adapter = AdminClaimAdapter(requireActivity(), tempClaimList, referralList,insuranceList)
                     binding.rvClaimList.adapter = adapter
-
                     binding.rvClaimList.adapter!!.notifyDataSetChanged()
 
                 }
@@ -154,7 +164,7 @@ class AdminClaimListingFragment : Fragment() {
                         val imgMileage = currentClaim.child("imgMileage").getValue().toString()
                         val imgDamage = currentClaim.child("imgDamage").getValue().toString()
                         val applyDateTime: Date = Date(currentClaim.child("applyDateTime").child("time").getValue() as Long)
-                        var approveDateTime: Date? = if(currentClaim.child("approveDateTime").getValue() == null){
+                        val approveDateTime: Date? = if(currentClaim.child("approveDateTime").getValue() == null){
                             null
                         }else{
                             Date(currentClaim.child("approveDateTime").child("time").getValue() as Long)
@@ -188,10 +198,10 @@ class AdminClaimListingFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     insuranceList.clear()
-                    for(insurance in snapshot.children){
-                        val insuranceID = insurance.child("insuranceID").getValue().toString()
-                        val insuranceName = insurance.child("insuranceName").getValue().toString()
-                        val insurance: Insurance = Insurance(insuranceID = insuranceID, insuranceName = insuranceName)
+                    for(insSS in snapshot.children){
+                        val insuranceID = insSS.child("insuranceID").getValue().toString()
+                        val insuranceName = insSS.child("insuranceName").getValue().toString()
+                        val insurance = Insurance(insuranceID = insuranceID, insuranceName = insuranceName)
                         insuranceList.add(insurance)
                     }
                     binding.shimmerViewContainer.stopShimmer()
@@ -225,21 +235,5 @@ class AdminClaimListingFragment : Fragment() {
             binding.srlClaimList.isRefreshing = false
         }
     }
-
-    override fun onDetach() {
-        super.onDetach()
-        DetachListener()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        DetachListener()
-    }
-
-    private fun DetachListener(){
-        claimRef.removeEventListener(claimListener)
-        referralRef.removeEventListener(referralListener)
-    }
-
 
 }

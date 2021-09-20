@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Reward &amp; Referral App</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="insurance_type">
         <item>Act Cover</item>
         <item>Comprehensive Cover</item>
@@ -137,6 +136,7 @@
     <string name="driver">Driver</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="adminClaimSearchHint">Enter Claim ID to search</string>
 
     <string-array name="gender_items">
         <item>Male</item>

@@ -69,7 +69,7 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
         loadData(args.insuranceID.toString())
 
         referralUID = "LQx5dlt2D1ZX1P6fCEXcSP4NEN83"
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
         storageFile.listAll().addOnSuccessListener { it ->
             for(item in it.items){
                 item.downloadUrl.addOnSuccessListener {
@@ -360,7 +360,7 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
 
         var total: Long
 
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
             .child(file.FileName.toString())
 
         storageFile.metadata.addOnSuccessListener  {

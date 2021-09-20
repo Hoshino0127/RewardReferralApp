@@ -90,7 +90,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private fun loadFileList(tempReferralUID: String) {
         referralUID = tempReferralUID
         val storageFile =
-            FirebaseStorage.getInstance().getReference("Evidences Insurance Application")
+            FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication")
                 .child("User_${referralUID}").child(args.applicationID.toString())
         storageFile.listAll().addOnSuccessListener { it ->
             for (item in it.items) {
@@ -367,7 +367,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
         var total: Long
 
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
             .child(file.FileName.toString())
 
         storageFile.metadata.addOnSuccessListener  {

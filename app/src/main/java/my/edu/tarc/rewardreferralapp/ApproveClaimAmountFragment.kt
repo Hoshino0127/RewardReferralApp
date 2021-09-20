@@ -44,7 +44,6 @@ class ApproveClaimAmountFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    DetachListener()
                     val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToAdminClaimListingFragment()
                     Navigation.findNavController(requireView()).navigate(action)
 
@@ -82,6 +81,14 @@ class ApproveClaimAmountFragment : Fragment() {
             Toast.makeText(requireContext(),"The amount should not be empty",Toast.LENGTH_SHORT).show()
             return false
         }else{
+            for(cf in cfList){
+                if(binding.txtClaimDesc.text.toString().uppercase().equals(cf.claimFigureName.toString().uppercase())){
+                    binding.txtClaimDesc.requestFocus()
+                    Toast.makeText(requireContext(),"Duplicate figure description found",Toast.LENGTH_SHORT).show()
+                    return false
+                }
+            }
+
             if(!(isDouble(binding.txtClaimAmount.text.toString()))){
                 binding.txtClaimAmount.requestFocus()
                 Toast.makeText(requireContext(),"The amount should be in numbers",Toast.LENGTH_SHORT).show()
@@ -107,7 +114,6 @@ class ApproveClaimAmountFragment : Fragment() {
                     }
                 }
                 if(successFlag){
-                    DetachListener()
                     val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID)
                     Navigation.findNavController(requireView()).navigate(action)
                 }
@@ -167,15 +173,6 @@ class ApproveClaimAmountFragment : Fragment() {
             null -> false
             else -> true
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        DetachListener()
-    }
-
-    private fun DetachListener(){
-        claimFigureRef.removeEventListener(claimFigureListener)
     }
 
 
