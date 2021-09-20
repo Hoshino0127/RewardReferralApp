@@ -38,13 +38,6 @@ class ClaimListingFragment : Fragment() {
 
     private var claimList: ArrayList<Claim> = ArrayList()
 
-    /*private val claimListing: List<Claim> = listOf(
-        Claim("CL001", Date("2022/02/25"),
-            LatLng(3.157764,101.711861),"Theft","ASDF",1234,"","",Date(),null,"Pending","IN001","IR001"),
-        Claim("CL002",Date("2022/02/27"),
-            LatLng(3.157764,101.711861),"OwnDamage","ASDF",1234,"","",Date(),null,"Accepted","IN001","IR001")
-    )*/
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,15 +56,14 @@ class ClaimListingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackClaimListing.setOnClickListener(){
+            val action = ClaimListingFragmentDirections.actionClaimListingFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         referralUID = CheckUser().getCurrentUserUID()!!
 
-
-
-
         loadData()
-
-
-
 
         binding.tlClaimStatus.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

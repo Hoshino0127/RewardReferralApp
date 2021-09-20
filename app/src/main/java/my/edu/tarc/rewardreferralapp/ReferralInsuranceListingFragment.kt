@@ -63,6 +63,11 @@ class ReferralInsuranceListingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackReferralInsuranceListing.setOnClickListener(){
+            val action = ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         loadData()
 
         binding.searchInsuranceReferral.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -120,11 +125,11 @@ class ReferralInsuranceListingFragment : Fragment() {
                 if(snapshot.exists()){
                     referralInsuranceList.clear()
                     for(referralInsSnapshot in snapshot.children){
-                        if(referralInsSnapshot.child("status").value!! == "Active"){
+                        val insuranceExpiryDate = Date(referralInsSnapshot.child("insuranceExpiryDate").child("time").value as Long)
+                        if(referralInsSnapshot.child("status").value!! == "Active" && !(Date().after(insuranceExpiryDate))){
                             val insuranceReferralID: String = referralInsSnapshot.child("insuranceReferralID").value.toString()
                             val insuranceID: String = referralInsSnapshot.child("insuranceID").value.toString()
                             val referralUID: String = referralInsSnapshot.child("referralUID").value.toString()
-                            val insuranceExpiryDate = Date(referralInsSnapshot.child("insuranceExpiryDate").child("time").value as Long)
                             val status: String = referralInsSnapshot.child("status").value.toString()
                             val refIns = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate,status)
                             referralInsuranceList.add(refIns)

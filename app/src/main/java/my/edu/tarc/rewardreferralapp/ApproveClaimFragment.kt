@@ -83,7 +83,6 @@ class ApproveClaimFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    //DetachListener()
                     val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToAdminClaimListingFragment()
                     Navigation.findNavController(requireView()).navigate(action)
 
@@ -91,6 +90,11 @@ class ApproveClaimFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+        binding.btnBackApproveClaim.setOnClickListener(){
+            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToAdminClaimListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
         val args = ApproveClaimFragmentArgs.fromBundle(requireArguments())
         claimUUID = args.claimUUID
@@ -113,7 +117,7 @@ class ApproveClaimFragment : Fragment() {
             binding.tvCoverageApproveClaim.text = strCoverage
 
             if(!isExpanded){
-                val height = 200 + (binding.tvCoverageApproveClaim.height* rowCount)
+                val height = 200 + (binding.tvCoverageApproveClaim.height* rowCount) + (20/rowCount)
 
                 val layout: ConstraintLayout = binding.clCoverageDetailsAC
                 val params: ViewGroup.LayoutParams = layout.layoutParams
