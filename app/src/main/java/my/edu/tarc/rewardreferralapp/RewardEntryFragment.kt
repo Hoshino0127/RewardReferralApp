@@ -68,6 +68,11 @@ class RewardEntryFragment : Fragment() {
             hideLoading()
         }
 
+        binding.btnBackRE.setOnClickListener(){
+            val action = RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         binding.btnRESubmit.setOnClickListener() {
             if (checkError()) {
                 InsertReward()

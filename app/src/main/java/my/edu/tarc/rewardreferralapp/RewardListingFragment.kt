@@ -48,6 +48,11 @@ class RewardListingFragment : Fragment() {
         showLoading()
         getReward()
 
+
+        binding.btnBackRL.setOnClickListener(){
+            //set staff dashboard
+        }
+
         binding.btnRLSearch.setOnClickListener {
             val iMm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             iMm.hideSoftInputFromWindow(view?.windowToken, 0)
