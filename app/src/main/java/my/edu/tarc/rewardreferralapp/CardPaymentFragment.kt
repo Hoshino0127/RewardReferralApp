@@ -7,19 +7,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil.setContentView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import my.edu.tarc.rewardreferralapp.data.Card
+import my.edu.tarc.rewardreferralapp.databinding.ActivityMainBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentCardPaymentBinding
 
 class CardPaymentFragment : Fragment() {
 
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var database: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         // Inflate the layout for this fragment
-        val binding: FragmentCardPaymentBinding =
+        var binding: FragmentCardPaymentBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_card_payment, container, false)
+
+        binding = FragmentCardPaymentBinding.inflate(layoutInflater)
+
+
+        binding.cbUseSavedDetails.setOnClickListener{
+
+            val cardHolderName = binding.txtCardholderName.text.toString()
+            val CardNo = binding.txtCardNo.text.toString()
+            val ExpireDate = binding.txtExpiryDate.text.toString()
+            val Cvv = binding.txtCVV.text.toString()
+
+            database = FirebaseDatabase.getInstance().getReference("Card")
+            val Card= Card(cardHolderName,CardNo, ExpireDate, Cvv)
+
+            database.child(cardHolderName).setValue(Card).addOnSuccessListener {
+
+                Toast.makeText(context, "successfully Saved",Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener{
+                Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
+
+            }
+        }
 
 
         binding.txtExpiryDate.addTextChangedListener(object : TextWatcher {

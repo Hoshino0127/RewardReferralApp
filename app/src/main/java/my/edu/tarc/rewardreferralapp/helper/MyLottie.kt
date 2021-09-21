@@ -50,4 +50,18 @@ object MyLottie {
             return it
         }
     }
+
+    fun showRedirectingDialog(context : Context): Dialog {
+        val progressDialog = Dialog(context)
+
+        progressDialog.let {
+            it.show()
+            it.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+            it.setContentView(R.layout.fragment_redirecting_dialog)
+            it.setCancelable(false)
+            it.setCanceledOnTouchOutside(false)
+
+            return it
+        }
+    }
 }

@@ -16,6 +16,9 @@
         <variable
             name="insuranceReferralID"
             type="String" />
+        <variable
+            name="renewListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.RecyclerViewAdapter.RenewListener" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -90,11 +93,25 @@
                 app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
                 app:layout_constraintTop_toBottomOf="@+id/tvInsurancePlan_cardview" />
 
+            <TextView
+                android:id="@+id/tvInsuranceExpiryDate_cardview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp"
+                android:padding="2dp"
+                android:text="Insurance Expiry Date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/imgInsuranceIcon"
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceType_cardview" />
+
             <Button
                 android:id="@+id/btnRenew_cardview"
                 android:layout_width="90dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="15dp"
+                android:onClick="@{() -> renewListener.onClick(insurance, insuranceReferralID)}"
                 android:text="Renew"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/btnClaim_cardview"
@@ -113,7 +130,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceType_cardview" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInsuranceExpiryDate_cardview" />
 
             <Button
                 android:id="@+id/btnCancel_cardview"

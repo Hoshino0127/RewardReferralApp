@@ -47,7 +47,7 @@ class ReferralInsuranceListingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-         binding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_referral_insurance_listing, container, false)
 
         referralUID = CheckUser().getCurrentUserUID()!!
@@ -107,6 +107,12 @@ class ReferralInsuranceListingFragment : Fragment() {
                 if(it != null){
                     Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToCancelInsuranceCustFragment(insuranceReferralID))
                 }
+            },
+            RecyclerViewAdapter.RenewListener{insuranceID, insuranceReferralID ->
+                val it = view
+                if(it != null){
+                    Navigation.findNavController(it).navigate(ReferralInsuranceListingFragmentDirections.actionReferralInsuranceListingFragmentToRenewInsuranceFragment(insuranceID,insuranceReferralID))
+                }
             }
         )
 
@@ -126,7 +132,7 @@ class ReferralInsuranceListingFragment : Fragment() {
                     referralInsuranceList.clear()
                     for(referralInsSnapshot in snapshot.children){
                         val insuranceExpiryDate = Date(referralInsSnapshot.child("insuranceExpiryDate").child("time").value as Long)
-                        if(referralInsSnapshot.child("status").value!! == "Active" && !(Date().after(insuranceExpiryDate))){
+                        if(referralInsSnapshot.child("status").value!! == "Active"){
                             val insuranceReferralID: String = referralInsSnapshot.child("insuranceReferralID").value.toString()
                             val insuranceID: String = referralInsSnapshot.child("insuranceID").value.toString()
                             val referralUID: String = referralInsSnapshot.child("referralUID").value.toString()

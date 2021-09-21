@@ -112,7 +112,7 @@ class UserRegisterFragment : Fragment() {
                 var code: Int = rnd.nextInt(999999)
                 var invitationCode: String = String.format("%06d",code)
 
-                val referral = Referral(userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0,invitationCode)
+                val referral = Referral(userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0,invitationCode,"none")
                 referralRef.child(referral.referralUID!!).setValue(referral).addOnSuccessListener {
                     val action =
                         UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
