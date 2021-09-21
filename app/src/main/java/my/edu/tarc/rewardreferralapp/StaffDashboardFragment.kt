@@ -2,22 +2,25 @@ package my.edu.tarc.rewardreferralapp
 
 import android.R
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import android.widget.Toolbar
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import my.edu.tarc.rewardreferralapp.databinding.FragmentStaffDashboardBinding
 
 class StaffDashboardFragment : Fragment() {
 
     private lateinit var binding: FragmentStaffDashboardBinding
-
     private var toolbar: Toolbar? = null
     private var viewPager: ViewPager? = null
     private var tabLayout: TabLayout? = null
@@ -26,18 +29,43 @@ class StaffDashboardFragment : Fragment() {
     private var referralFragment: MenuStaffReferralFragment? = null
     private var rewardFragment: MenuStaffRewardFragment? = null
 
+    private var doubleBackToExitPressedOnce = false
+    private val mHandler: Handler = Handler()
+    private val mRunnable =
+        Runnable { doubleBackToExitPressedOnce = false }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+
+                    if(!doubleBackToExitPressedOnce){
+                        doubleBackToExitPressedOnce = true
+                        Toast.makeText(requireContext(),"Click back one more time to exit",
+                            Toast.LENGTH_SHORT).show()
+                        mHandler.postDelayed(mRunnable, 2000);
+                    }else{
+                        activity?.finishAffinity()
+                    }
+
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
         binding = FragmentStaffDashboardBinding.inflate(inflater, container ,false)
 
         binding.tabLayout.setupWithViewPager(binding.viewPager)
-        val viewPagerAdapter = ViewPagerAdapter(requireActivity().supportFragmentManager, 0)
+        val viewPagerAdapter = ViewPagerAdapter(childFragmentManager, 0)
         insuranceFragment = MenuStaffInsuranceFragment()
         referralFragment = MenuStaffReferralFragment()
         rewardFragment = MenuStaffRewardFragment()
+
         viewPagerAdapter.addFragment(insuranceFragment, "Insurance")
         viewPagerAdapter.addFragment(referralFragment, "Referral")
         viewPagerAdapter.addFragment(rewardFragment, "Reward")

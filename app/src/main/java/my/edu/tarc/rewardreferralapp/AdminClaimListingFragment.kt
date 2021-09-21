@@ -61,7 +61,8 @@ class AdminClaimListingFragment : Fragment() {
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
                     //DetachListener()
-                    val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToClaimListingFragment()
+                    //val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToClaimListingFragment()
+                    val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToStaffDashboardFragment()
                     Navigation.findNavController(requireView()).navigate(action)
 
                 }
@@ -69,6 +70,10 @@ class AdminClaimListingFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
+        binding.btnBackListAdminClaim.setOnClickListener(){
+            val action = AdminClaimListingFragmentDirections.actionAdminClaimListingFragmentToStaffDashboardFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
         tempClaimList.clear()
 
@@ -117,7 +122,7 @@ class AdminClaimListingFragment : Fragment() {
         })
 
         loadReferral()
-        loadData()
+
         onRefresh()
 
         return binding.root
@@ -134,6 +139,7 @@ class AdminClaimListingFragment : Fragment() {
                         val referral: Referral = Referral(fullName = fullName, referralUID = referralUID)
                         referralList.add(referral)
                     }
+                    loadData()
                 }
             }
 

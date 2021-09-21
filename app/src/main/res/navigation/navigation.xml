@@ -77,9 +77,6 @@
             android:id="@+id/action_claimListingFragment_to_claimDetailsFragment"
             app:destination="@id/claimDetailsFragment" />
         <action
-            android:id="@+id/action_claimListingFragment_to_adminClaimListingFragment"
-            app:destination="@id/adminClaimListingFragment" />
-        <action
             android:id="@+id/action_claimListingFragment_to_homepage"
             app:destination="@id/homepage" />
     </fragment>
@@ -155,76 +152,7 @@
             android:id="@+id/action_homepage_to_navigationFragment"
             app:destination="@id/navigationFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/adminClaimListingFragment"
-        android:name="my.edu.tarc.rewardreferralapp.AdminClaimListingFragment"
-        android:label="AdminClaimListingFragment" >
-        <action
-            android:id="@+id/action_adminClaimListingFragment_to_approveClaimFragment"
-            app:destination="@id/approveClaimFragment" />
-        <action
-            android:id="@+id/action_adminClaimListingFragment_to_claimListingFragment"
-            app:destination="@id/claimListingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/approveAcceptedFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ApproveAcceptedFragment"
-        android:label="ApproveAcceptedFragment" >
-        <action
-            android:id="@+id/action_approveAcceptedFragment_to_adminClaimListingFragment"
-            app:destination="@id/adminClaimListingFragment" />
-        <argument
-            android:name="claimUUID"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/approveClaimAmountFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ApproveClaimAmountFragment"
-        android:label="ApproveClaimAmountFragment" >
-        <action
-            android:id="@+id/action_approveClaimAmountFragment_to_adminClaimListingFragment"
-            app:destination="@id/adminClaimListingFragment" />
-        <action
-            android:id="@+id/action_approveClaimAmountFragment_to_approveAcceptedFragment"
-            app:destination="@id/approveAcceptedFragment" />
-        <argument
-            android:name="claimUUID"
-            app:argType="string" />
-        <argument
-            android:name="deductible"
-            app:argType="float" />
-    </fragment>
-    <fragment
-        android:id="@+id/approveClaimFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ApproveClaimFragment"
-        android:label="ApproveClaimFragment" >
-        <action
-            android:id="@+id/action_approveClaimFragment_to_approveClaimAmountFragment"
-            app:destination="@id/approveClaimAmountFragment" />
-        <argument
-            android:name="referralUID"
-            app:argType="string" />
-        <argument
-            android:name="claimUUID"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_approveClaimFragment_to_adminClaimListingFragment"
-            app:destination="@id/adminClaimListingFragment" />
-        <action
-            android:id="@+id/action_approveClaimFragment_to_approveRejectedFragment"
-            app:destination="@id/approveRejectedFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/approveRejectedFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ApproveRejectedFragment"
-        android:label="ApproveRejectedFragment" >
-        <action
-            android:id="@+id/action_approveRejectedFragment_to_adminClaimListingFragment"
-            app:destination="@id/adminClaimListingFragment" />
-        <argument
-            android:name="claimUUID"
-            app:argType="string" />
-    </fragment>
+
     <fragment
         android:id="@+id/rewardMyFragment"
         android:name="my.edu.tarc.rewardreferralapp.RewardMyFragment"
@@ -293,45 +221,7 @@
             android:id="@+id/action_rewardDeliveryListFragment_to_homepage"
             app:destination="@id/homepage" />
     </fragment>
-    <fragment
-        android:id="@+id/rewardListingFragment"
-        android:name="my.edu.tarc.rewardreferralapp.RewardListingFragment"
-        android:label="RewardListingFragment" >
-        <action
-            android:id="@+id/action_rewardListingFragment_to_rewardEntryFragment"
-            app:destination="@id/rewardEntryFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/rewardEntryFragment"
-        android:name="my.edu.tarc.rewardreferralapp.RewardEntryFragment"
-        android:label="RewardEntryFragment" >
-        <argument
-            android:name="RewardID"
-            app:argType="string"
-            app:nullable="true" />
-        <action
-            android:id="@+id/action_rewardEntryFragment_to_rewardListingFragment"
-            app:destination="@id/rewardListingFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/rewardStaffDeliveryListFragment"
-        android:name="my.edu.tarc.rewardreferralapp.RewardStaffDeliveryListFragment"
-        android:label="RewardStaffDeliveryListFragment" >
-        <action
-            android:id="@+id/action_rewardStaffDeliveryListFragment_to_rewardStaffDeliveryDetails"
-            app:destination="@id/rewardStaffDeliveryDetails" />
-    </fragment>
-    <fragment
-        android:id="@+id/rewardStaffDeliveryDetails"
-        android:name="my.edu.tarc.rewardreferralapp.RewardStaffDeliveryDetails"
-        android:label="RewardStaffDeliveryDetails" >
-        <argument
-            android:name="deliveryID"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_rewardStaffDeliveryDetails_to_rewardStaffDeliveryListFragment"
-            app:destination="@id/rewardStaffDeliveryListFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/referralMyQRCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferralMyQRCodeFragment"
@@ -359,54 +249,12 @@
             android:id="@+id/action_referralTransferListingFragment_to_homepage"
             app:destination="@id/homepage" />
     </fragment>
-    <fragment
-        android:id="@+id/listInsuranceFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceFragment"
-        android:label="ListFragment"
-        tools:layout="@layout/fragment_list_insurance">
-        <action
-            android:id="@+id/action_listInsuranceFragment_to_insuranceAddFragment"
-            app:destination="@id/insuranceAddFragment" />
-        <action
-            android:id="@+id/action_listInsuranceFragment_to_updateInsuranceFragment"
-            app:destination="@id/updateInsuranceFragment" />
-        <action
-            android:id="@+id/action_listInsuranceFragment_to_navigationFragment"
-            app:destination="@id/navigationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/insuranceAddFragment"
-        android:name="my.edu.tarc.rewardreferralapp.InsuranceAddFragment"
-        android:label="InsuranceAddFragment"
-        tools:layout="@layout/fragment_add_insurance">
-        <action
-            android:id="@+id/action_insuranceAddFragment_to_listInsuranceFragment"
-            app:destination="@id/listInsuranceFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/updateInsuranceFragment"
-        android:name="my.edu.tarc.rewardreferralapp.UpdateInsuranceFragment"
-        android:label="UpdateInsuranceFragment"
-        tools:layout="@layout/fragment_update_insurance">
-        <action
-            android:id="@+id/action_updateInsuranceFragment_to_listInsuranceFragment"
-            app:destination="@id/listInsuranceFragment" />
-        <argument
-            android:name="insuranceID"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+
     <fragment
         android:id="@+id/navigationFragment"
         android:name="my.edu.tarc.rewardreferralapp.NavigationFragment"
         android:label="fragment_navigation"
         tools:layout="@layout/fragment_navigation" >
-        <action
-            android:id="@+id/action_navigationFragment_to_listInsuranceFragment"
-            app:destination="@id/listInsuranceFragment" />
-        <action
-            android:id="@+id/action_navigationFragment_to_listInsuranceApplicationFragment"
-            app:destination="@id/listInsuranceApplicationFragment" />
         <action
             android:id="@+id/action_navigationFragment_to_listInsuranceCustViewFragment"
             app:destination="@id/listInsuranceCustViewFragment" />
@@ -422,9 +270,6 @@
         <action
             android:id="@+id/action_navigationFragment_to_staffDashboardFragment"
             app:destination="@id/staffDashboardFragment" />
-        <action
-            android:id="@+id/action_navigationFragment_to_listInsuranceCancelFragment"
-            app:destination="@id/listInsuranceCancelFragment" />
         <action
             android:id="@+id/action_navigationFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
@@ -448,18 +293,7 @@
             android:id="@+id/action_applyInsuranceFragment_to_appliedSuccessfulFragment"
             app:destination="@id/appliedSuccessfulFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/listInsuranceApplicationFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceApplicationFragment"
-        android:label="fragment_list_insurance_application"
-        tools:layout="@layout/fragment_list_insurance_application" >
-        <action
-            android:id="@+id/action_listInsuranceApplicationFragment_to_navigationFragment"
-            app:destination="@id/navigationFragment" />
-        <action
-            android:id="@+id/action_listInsuranceApplicationFragment_to_updateInsuranceApplicationFragment"
-            app:destination="@id/updateInsuranceApplicationFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/listInsuranceCustViewFragment"
         android:name="my.edu.tarc.rewardreferralapp.ListInsuranceCustViewFragment"
@@ -481,23 +315,7 @@
             android:id="@+id/action_appliedSuccessfulFragment_to_navigationFragment"
             app:destination="@id/navigationFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/updateInsuranceApplicationFragment"
-        android:name="my.edu.tarc.rewardreferralapp.UpdateInsuranceApplicationFragment"
-        android:label="UpdateInsuranceApplicationFragment"
-        tools:layout="@layout/fragment_update_insurance_application">
-        <action
-            android:id="@+id/action_updateInsuranceApplicationFragment_to_listInsuranceApplicationFragment"
-            app:destination="@id/listInsuranceApplicationFragment" />
-        <argument
-            android:name="applicationID"
-            app:argType="string"
-            app:nullable="true" />
-        <argument
-            android:name="insuranceID"
-            app:argType="string"
-            app:nullable="true" />
-    </fragment>
+
     <fragment
         android:id="@+id/listInsuranceApplicationCustViewFragment"
         android:name="my.edu.tarc.rewardreferralapp.ListInsuranceApplicationCustViewFragment"
@@ -614,18 +432,7 @@
             android:name="insuranceReferralID"
             app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/listInsuranceCancelFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ListInsuranceCancelFragment"
-        android:label="fragment_list_insurance_cancel"
-        tools:layout="@layout/fragment_list_insurance_cancel" >
-        <action
-            android:id="@+id/action_listInsuranceCancelFragment_to_navigationFragment"
-            app:destination="@id/navigationFragment" />
-        <action
-            android:id="@+id/action_listInsuranceCancelFragment_to_navigationFragment2"
-            app:destination="@id/navigationFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/refEnterCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
@@ -655,4 +462,6 @@
             android:id="@+id/action_staffDashboardFragment_to_navigationFragment"
             app:destination="@id/navigationFragment" />
     </fragment>
+        tools:layout="@layout/fragment_refer_friend_share_type"/>
+
 </navigation>

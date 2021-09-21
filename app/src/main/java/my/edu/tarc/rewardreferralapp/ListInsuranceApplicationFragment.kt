@@ -50,7 +50,7 @@ class ListInsuranceApplicationFragment : Fragment() {
         binding.rvInsApplication.setHasFixedSize(true)
 
         binding.btnBackListInsuranceApplication.setOnClickListener() {
-            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToNavigationFragment()
+            val action = ListInsuranceApplicationFragmentDirections.actionListInsuranceApplicationFragmentToStaffDashboardFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -75,6 +76,11 @@ class UserLoginFragment : Fragment() {
             }else{
                 binding.txtLoginPass.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
+        }
+
+        binding.btnStaffLogin.setOnClickListener(){
+            val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnToRegister.setOnClickListener(){

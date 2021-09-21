@@ -28,6 +28,7 @@ class ApproveClaimAmountFragment : Fragment() {
 
     private var claimUUID: String = ""
     private var deductible: Double = 0.0
+    private var email: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,7 @@ class ApproveClaimAmountFragment : Fragment() {
         val args = ApproveClaimAmountFragmentArgs.fromBundle(requireArguments())
         claimUUID = args.claimUUID
         deductible = args.deductible.toDouble()
+        email = args.email
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
@@ -117,7 +119,7 @@ class ApproveClaimAmountFragment : Fragment() {
                     }
                 }
                 if(successFlag){
-                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID)
+                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID,email)
                     Navigation.findNavController(requireView()).navigate(action)
                 }
 

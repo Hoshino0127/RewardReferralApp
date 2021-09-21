@@ -24,8 +24,8 @@
     <string name="fill_in_info">Please fill in the correct information</string>
     <string name="upload_image">Upload image</string>
     <string name="claim_success_msg">Your claim is successfully created and waiting to be approved. Please check for the updates at the claim listing page</string>
-    <string name="claim_accepted_msg">The claim is accepted. An email will be sent to the referral. </string>
-    <string name="claim_rejected_msg">The claim is rejected. An email will be sent to the referral. </string>
+    <string name="claim_accepted_msg">The claim is accepted. You can go back to the claim listing for further action. </string>
+    <string name="claim_rejected_msg">The claim is rejected. You can go back to the claim listing for further action. </string>
     <string name="renew_success_msg">You have successfully renewed your insurance.</string>
     <string name="payment_method_details">Please choose your payment method</string>
     <string name="bank_payment_details">Please choose the bank to pay</string>

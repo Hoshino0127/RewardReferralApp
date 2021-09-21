@@ -141,12 +141,12 @@ class ApproveClaimFragment : Fragment() {
         }
 
         binding.btnAccept.setOnClickListener(){
-            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveClaimAmountFragment(claimUUID,referral.deductible!!.toFloat())
+            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveClaimAmountFragment(claimUUID,referral.deductible!!.toFloat(),referral.email!!)
             Navigation.findNavController(it).navigate(action)
         }
 
         binding.btnReject.setOnClickListener(){
-            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveRejectedFragment(claimUUID)
+            val action = ApproveClaimFragmentDirections.actionApproveClaimFragmentToApproveRejectedFragment(claimUUID,referral.email!!)
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -171,9 +171,10 @@ class ApproveClaimFragment : Fragment() {
                                 contactNo = contactNo,
                                 email = email
                             )
-                            println(referral)
+                            updateReferralView()
                         }
                     }
+
                 }
             }
 
@@ -305,6 +306,12 @@ class ApproveClaimFragment : Fragment() {
 
     }
 
+    fun updateReferralView(){
+        binding.tvReferralName.text = referral.fullName
+        binding.tvContactNo.text = referral.contactNo
+        binding.tvEmail.text = referral.email
+    }
+
     fun updateView(){
         val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss",Locale.US)
 
@@ -315,9 +322,7 @@ class ApproveClaimFragment : Fragment() {
         binding.tvAccidentDesc.text = claim.accidentDesc
         binding.tvAccidentType.text = claim.accidentType
 
-        binding.tvReferralName.text = referral.fullName
-        binding.tvContactNo.text = referral.contactNo
-        binding.tvEmail.text = referral.email
+
 
         showMap()
 

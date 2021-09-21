@@ -23,16 +23,8 @@ class NavigationFragment : Fragment() {
         val binding: FragmentNavigationBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_navigation, container, false)
 
-        binding.btnToApplication.setOnClickListener() {
-            val action = NavigationFragmentDirections.actionNavigationFragmentToListInsuranceApplicationFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
         binding.btnToApply.setOnClickListener() {
             val action = NavigationFragmentDirections.actionNavigationFragmentToListInsuranceCustViewFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-        binding.btnToList.setOnClickListener() {
-            val action = NavigationFragmentDirections.actionNavigationFragmentToListInsuranceFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -48,11 +40,6 @@ class NavigationFragment : Fragment() {
 
         binding.btnToStaffDashBoard.setOnClickListener() {
             val action = NavigationFragmentDirections.actionNavigationFragmentToStaffDashboardFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
-        binding.btnToCancelList.setOnClickListener() {
-            val action = NavigationFragmentDirections.actionNavigationFragmentToListInsuranceCancelFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
