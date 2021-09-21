@@ -44,7 +44,7 @@ class InsuranceAddFragment : Fragment() {
     private var loadingDialog: Dialog?= null
     private var completeDialog: Dialog?= null
 
-    private lateinit var imgUriReward: Uri
+    private var imgUriReward: Uri = Uri.EMPTY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,13 +97,25 @@ class InsuranceAddFragment : Fragment() {
 
             var imageName = "insImg_$newID"
 
-            insertRewardImg(imageName)
-
-            if(insuranceComp.isNotEmpty() && insuranceName.isNotEmpty() && insurancePlan.isNotEmpty() && insuranceType.isNotEmpty() && insuranceCoverage.isNotEmpty() && insurancePrice.isNotEmpty()) {
-                insertData(insuranceComp,insuranceName,insurancePlan,insuranceType,insuranceCoverage, insurancePrice, imageName)
+            if(imgUriReward == Uri.EMPTY){
+                imageName = "default-img.jpg"
             } else {
-                Toast.makeText(requireContext(), "Please fill in the required details!", Toast.LENGTH_LONG).show()
+                insertRewardImg(imageName)
             }
+
+
+            if (checkError()) {
+                insertData(
+                    insuranceComp,
+                    insuranceName,
+                    insurancePlan,
+                    insuranceType,
+                    insuranceCoverage,
+                    insurancePrice,
+                    imageName
+                )
+            }
+
 
         }
 
@@ -324,4 +336,35 @@ class InsuranceAddFragment : Fragment() {
         hideComplete()
         completeDialog = MyLottie.showCompleteDialog(requireContext())
     }
+
+    private fun checkError() : Boolean {
+
+        if (binding.tfAddInsuranceComp.text.isNullOrEmpty()) {
+            binding.tfAddInsuranceComp.error = "Please enter a company name."
+            return false
+        }
+
+        if (binding.tfAddInsuranceName.text.isNullOrEmpty()) {
+            binding.tfAddInsuranceName.error = "Please enter a insurance name."
+            return false
+        }
+
+        if (binding.tfAddInsurancePrice.text.isNullOrEmpty()) {
+            binding.tfAddInsurancePrice.error = "Please enter a price."
+            return false
+        }
+
+        if (binding.tfAddInsurancePlan.text.isNullOrEmpty()) {
+            binding.tfAddInsurancePlan.error = "Please enter a plan name."
+            return false
+        }
+
+        if (!binding.cbBodyInjury.isChecked && !binding.cbInsured.isChecked && !binding.cbMedical.isChecked && !binding.cbPropertyDmg.isChecked) {
+            Toast.makeText(requireContext(), "Please check at least one insurance coverage.", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
 }

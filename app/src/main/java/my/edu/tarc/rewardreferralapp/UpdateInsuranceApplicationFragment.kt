@@ -4,20 +4,24 @@ import android.app.Dialog
 import android.app.DownloadManager
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.provider.OpenableColumns
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,12 +29,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.GetEvidenceAdapter
+import my.edu.tarc.rewardreferralapp.data.*
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUpdateInsuranceApplicationBinding
-import my.edu.tarc.rewardreferralapp.data.File
-import my.edu.tarc.rewardreferralapp.data.Insurance
-import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
-import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.utils.SimpleEmail
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,6 +55,9 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private var insuranceCustList = ArrayList<Insurance>()
     private val insuranceApplicationRef = database.getReference("InsuranceApplication")
     private var insuranceAppList = ArrayList<InsuranceApplication>()
+
+    private val referralRef = database.getReference("Referral")
+    private var referralList = ArrayList<Referral>()
 
     private val referralInsuranceRef = database.getReference("ReferralInsurance")
     private var referralInsuranceList = ArrayList<ReferralInsurance>()
@@ -272,6 +277,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                         ds.key?.let {
                             insuranceApplicationRef.child(it).child("applicationStatus").setValue(isApprove)
                                 .addOnSuccessListener {
+                                    send(isApprove)
                                     Toast.makeText(
                                         context,
                                         "Update Successful",
@@ -307,9 +313,13 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                 val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), CheckUser().getCurrentUserUID(), insuranceExpiryDate, "Active")
 
                 referralInsuranceRef.child(newID).setValue(newInsurance).addOnSuccessListener(){
-                    Toast.makeText(context, "Add successful", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Update successful. Redirecting you back to the listings...", Toast.LENGTH_LONG).show()
+                    Handler().postDelayed({
+                        val action = UpdateInsuranceApplicationFragmentDirections.actionUpdateInsuranceApplicationFragmentToListInsuranceApplicationFragment()
+                        Navigation.findNavController(requireView()).navigate(action)
+                    }, 2000)
                 }.addOnFailureListener {
-                    Toast.makeText(context, "Add unsuccessful", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Unable to update", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -413,6 +423,65 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private fun showLoading() {
         hideLoading()
         completeDialog = MyLottie.showCompleteDialog(requireContext())
+    }
+
+    // TODO: Compose and send email
+    private fun send(isApprove: String) {
+        hideKeyboard()
+
+        referralRef.orderByChild("referralUID").equalTo(referralUID).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(ds in snapshot.children){
+                    if(ds.exists()) {
+                        val email = ds.child("email").value.toString().trim()
+                        val subject = "Your application has been $isApprove - ${System.currentTimeMillis()}"
+                        val content = if(isApprove == "Accepted") {
+                            """
+                            <h1>Thanks you for subscribing to this insurance</h1>
+                            <p>Thank you very much!</p>
+                            <p>From</p>
+                            <p>MyBee Team</p>
+                            """.trimIndent()
+                        } else {
+                            """
+                            <h1>Sorry for your application has been rejected!</h1>
+                            <p>Thank you very much!</p>
+                            <p>From</p>
+                            <p>MyBee Team</p>
+                            """.trimIndent()
+                        }
+
+                        SimpleEmail().to(email)
+                            .subject(subject)
+                            .content(content)
+                            .isHtml()
+                            .send() {
+                                snackbar("Email sent.")
+                            }
+
+                        snackbar("Sending email to applicants...")
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+    }
+
+    // TODO: Validate if email address valid
+    private fun isEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    private fun snackbar(text: String) {
+        Snackbar.make(requireView(), text, Snackbar.LENGTH_SHORT).show()
     }
 
 }
