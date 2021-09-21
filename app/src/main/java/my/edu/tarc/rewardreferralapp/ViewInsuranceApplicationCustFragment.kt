@@ -48,6 +48,7 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
     private lateinit var progressDownloadDialog : ProgressDialog
     private var completeDialog: Dialog?= null
     private var loadingDialog: Dialog?= null
+    private var redirectDialog: Dialog?= null
 
     private val database = FirebaseDatabase.getInstance()
     private val insuranceRef = database.getReference("Insurance")
@@ -104,7 +105,13 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
                 Handler().postDelayed({
                     hideLoading()
                     updateApplication("Cancelled")
-                }, 1500)
+                    showRedirect()
+                    Handler().postDelayed({
+                        hideRedirect()
+                        val action = ViewInsuranceApplicationCustFragmentDirections.actionViewInsuranceApplicationCustFragmentToListInsuranceApplicationCustViewFragment()
+                        Navigation.findNavController(it).navigate(action)
+                    }, 2000)
+                }, 2000)
             }
 
             //performing negative action
@@ -414,6 +421,15 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
     private fun showLoading() {
         hideComplete()
         loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
+    private fun hideRedirect() {
+        redirectDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showRedirect() {
+        hideComplete()
+        redirectDialog = MyLottie.showRedirectingDialog(requireContext())
     }
 
 }

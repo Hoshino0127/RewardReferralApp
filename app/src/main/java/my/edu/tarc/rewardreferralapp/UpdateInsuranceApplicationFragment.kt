@@ -36,6 +36,7 @@ import my.edu.tarc.rewardreferralapp.utils.SimpleEmail
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.roundToInt
 
 class UpdateInsuranceApplicationFragment : Fragment() {
 
@@ -48,7 +49,8 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private val args: UpdateInsuranceApplicationFragmentArgs by navArgs()
 
     private lateinit var progressDownloadDialog : ProgressDialog
-    private var completeDialog: Dialog?= null
+    private var loadingDialog: Dialog?= null
+    private var redirectDialog: Dialog?= null
 
     private val database = FirebaseDatabase.getInstance()
     private val insuranceRef = database.getReference("Insurance")
@@ -151,6 +153,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                         binding.tvCustInsuranceComp.text = insCustList.insuranceComp
                         binding.tvCustInsurancePlan.text = insCustList.insurancePlan
                         binding.tvCustInsuranceType.text = insCustList.insuranceType
+                        binding.tvCustInsurancePrice.text = insCustList.insurancePrice.toString()
 
                         var strCover : String? = ""
                         val lastCover : String? = insCustList.insuranceCoverage!!.lastOrNull()
@@ -181,8 +184,8 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                     for (insuranceAppSnapshot in snapshot.children) {
                         if (insuranceAppSnapshot.child("applicationID").value.toString() == args.applicationID.toString()) {
 
-                            val referralID : String =
-                                insuranceAppSnapshot.child("referralID").value.toString()
+                            val referralUID : String =
+                                insuranceAppSnapshot.child("referralUID").value.toString()
                             val appliedDate : Date =
                                 Date(insuranceAppSnapshot.child("applicationAppliedDate").child("time").value as Long)
                             val applicationStatus : String =
@@ -207,7 +210,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             val newInsApp = InsuranceApplication(
                                 args.applicationID.toString(),
                                 args.insuranceID.toString(),
-                                referralID,
+                                referralUID,
                                 appliedDate,
                                 applicationStatus,
                                 evidences.toBoolean(),
@@ -227,7 +230,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
 
                 for(insAppList in insuranceAppList) {
-                    loadFileList(insAppList.referralID.toString())
+                    loadFileList(insAppList.referralUID.toString())
                     binding.tfCarNoPlate.setText(insAppList.carNoPlate.toString())
                     binding.tfMileage.setText(insAppList.annualMileage.toString())
                     binding.tfModelName.setText(insAppList.modelName.toString())
@@ -278,12 +281,28 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             insuranceApplicationRef.child(it).child("applicationStatus").setValue(isApprove)
                                 .addOnSuccessListener {
                                     send(isApprove)
-                                    Toast.makeText(
-                                        context,
-                                        "Update Successful",
-                                        Toast.LENGTH_LONG
-                                    ).show()
                                 }
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
+        referralRef.orderByChild("referralUID").equalTo(referralUID).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children){
+                    if (ds.exists()){
+                        ds.key?.let {
+                            val points = ds.child("points").value.toString().toInt()
+                            var newPoints = binding.tvCustInsurancePrice.text.toString().toDouble().roundToInt()
+                            newPoints = newPoints*10/100
+
+                            referralRef.child(it).child("points").setValue(points+newPoints)
+
                         }
                     }
                 }
@@ -310,14 +329,10 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
                 val insuranceExpiryDate = calendar.time
 
-                val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), CheckUser().getCurrentUserUID(), insuranceExpiryDate, "Active")
+                val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), referralUID, insuranceExpiryDate, "Active")
 
                 referralInsuranceRef.child(newID).setValue(newInsurance).addOnSuccessListener(){
-                    Toast.makeText(context, "Update successful. Redirecting you back to the listings...", Toast.LENGTH_LONG).show()
-                    Handler().postDelayed({
-                        val action = UpdateInsuranceApplicationFragmentDirections.actionUpdateInsuranceApplicationFragmentToListInsuranceApplicationFragment()
-                        Navigation.findNavController(requireView()).navigate(action)
-                    }, 2000)
+
                 }.addOnFailureListener {
                     Toast.makeText(context, "Unable to update", Toast.LENGTH_LONG).show()
                 }
@@ -417,18 +432,27 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     }
 
     private fun hideLoading() {
-        completeDialog?.let { if(it.isShowing) it.cancel() }
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
     }
 
     private fun showLoading() {
         hideLoading()
-        completeDialog = MyLottie.showCompleteDialog(requireContext())
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
+    private fun hideRedirect() {
+        redirectDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showRedirect() {
+        hideRedirect()
+        redirectDialog = MyLottie.showRedirectingDialog(requireContext())
     }
 
     // TODO: Compose and send email
     private fun send(isApprove: String) {
         hideKeyboard()
-
+        showLoading()
         referralRef.orderByChild("referralUID").equalTo(referralUID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(ds in snapshot.children){
@@ -456,7 +480,14 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             .content(content)
                             .isHtml()
                             .send() {
+                                hideLoading()
                                 snackbar("Email sent.")
+                                showRedirect()
+                                Handler().postDelayed({
+                                    hideRedirect()
+                                    val action = UpdateInsuranceApplicationFragmentDirections.actionUpdateInsuranceApplicationFragmentToListInsuranceApplicationFragment()
+                                    Navigation.findNavController(requireView()).navigate(action)
+                                }, 2000)
                             }
 
                         snackbar("Sending email to applicants...")

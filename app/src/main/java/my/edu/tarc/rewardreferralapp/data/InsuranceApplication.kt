@@ -5,7 +5,7 @@ import java.util.*
 data class InsuranceApplication(
     val applicationID:String?=null,
     val insuranceID:String?=null,
-    val referralID:String ?=null,
+    val referralUID:String ?=null,
     val applicationAppliedDate: Date? = null,
     val applicationStatus:String?=null,
     val isEvidences: Boolean? = false,
