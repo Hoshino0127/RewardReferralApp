@@ -97,7 +97,7 @@ class ListInsuranceFragment : Fragment() {
         }
 
         binding.btnBackListInsurance.setOnClickListener() {
-            val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToNavigationFragment()
+            val action = ListInsuranceFragmentDirections.actionListInsuranceFragmentToStaffDashboardFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

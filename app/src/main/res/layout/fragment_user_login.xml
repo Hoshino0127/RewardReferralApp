@@ -112,6 +112,19 @@
             tools:ignore="MissingConstraints" />
 
         <Button
+            android:id="@+id/btnStaffLogin"
+            android:layout_width="164dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="198dp"
+            android:layout_marginTop="30dp"
+            android:text="Login as staff"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/btnColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <Button
             android:id="@+id/btnToRegister"
             android:layout_width="114dp"
             android:layout_height="40dp"

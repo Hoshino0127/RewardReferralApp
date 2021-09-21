@@ -96,11 +96,6 @@ class ClaimListingFragment : Fragment() {
 
         })
 
-        binding.btnToViewClaim.setOnClickListener(){
-            val action = ClaimListingFragmentDirections.actionClaimListingFragmentToAdminClaimListingFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
         return binding.root
     }
 

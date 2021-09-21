@@ -397,7 +397,7 @@ class ApplyClaimFragment : Fragment() {
                     }
                 }
                 binding.tvInsuranceCoverage.text = strCoverage
-                val height = 450 + (binding.tvInsuranceCoverage.height* rowCount) + (20/rowCount)
+                val height = 470 + (binding.tvInsuranceCoverage.height* rowCount) + (20/rowCount)
 
                 val layout: ConstraintLayout = binding.rlInsuranceDetails
                 val params: ViewGroup.LayoutParams = layout.layoutParams

@@ -49,13 +49,13 @@ class ListInsuranceCancelFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    val action = ListInsuranceCancelFragmentDirections.actionListInsuranceCancelFragmentToNavigationFragment()
+                    val action = ListInsuranceCancelFragmentDirections.actionListInsuranceCancelFragmentToStaffDashboardFragment()
                     Navigation.findNavController(requireView()).navigate(action)
                 }
             }
 
         binding.btnBackListInsuranceApplicationCustView.setOnClickListener() {
-            val action = ListInsuranceCancelFragmentDirections.actionListInsuranceCancelFragmentToNavigationFragment()
+            val action = ListInsuranceCancelFragmentDirections.actionListInsuranceCancelFragmentToStaffDashboardFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
