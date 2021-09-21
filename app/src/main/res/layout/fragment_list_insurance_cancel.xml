@@ -109,7 +109,7 @@ tools:context=".ListInsuranceCancelFragment">
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNoRecord"
-            tools:listitem="@layout/insurance_application_item_layout" />
+            tools:listitem="@layout/insurance_cancel_item_layout" />
 
         <ImageView
             android:id="@+id/btnApplicationListFilterCustView"
