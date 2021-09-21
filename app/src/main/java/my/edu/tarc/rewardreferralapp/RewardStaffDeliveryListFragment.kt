@@ -48,7 +48,9 @@ class RewardStaffDeliveryListFragment : Fragment() {
         )
 
         binding.btnBackRSD.setOnClickListener(){
-            // set staff dashboard
+            val action = RewardStaffDeliveryListFragmentDirections.actionRewardStaffDeliveryListFragmentToStaffDashboardFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+
         }
 
         showLoading()
@@ -144,6 +146,4 @@ class RewardStaffDeliveryListFragment : Fragment() {
     private fun showLoading() {
         loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
-
-
 }

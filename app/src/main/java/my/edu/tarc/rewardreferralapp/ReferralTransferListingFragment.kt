@@ -114,7 +114,7 @@ class ReferralTransferListingFragment : Fragment() {
     }
 
     private fun setAdapter(){
-        refTransferList.sortByDescending { t -> t.transferID }
+        refTransferList.sortByDescending { t -> t.transferDate }
         val transferAdapter = ReferralTransferAdapter(refferalUID!!,refTransferList,refList)
         binding.RTLTransferRV.adapter = transferAdapter
         binding.RTLTransferRV.setHasFixedSize(true)

@@ -31,6 +31,7 @@ class RewardListingFragment : Fragment() {
     var rewardSearchList = ArrayList<Reward>()
 
     private var loadingDialog: Dialog?= null
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +51,9 @@ class RewardListingFragment : Fragment() {
 
 
         binding.btnBackRL.setOnClickListener(){
-            //set staff dashboard
+            val action = RewardListingFragmentDirections.actionRewardListingFragmentToStaffDashboardFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+
         }
 
         binding.btnRLSearch.setOnClickListener {
@@ -69,7 +72,7 @@ class RewardListingFragment : Fragment() {
             Navigation.findNavController(requireView()).navigate(action)
         }
 
-        hideLoading()
+
 
         return binding.root
 
@@ -130,6 +133,10 @@ class RewardListingFragment : Fragment() {
             })
         binding.RewardListRV.adapter = rewardAdapter
         binding.RewardListRV.setHasFixedSize(true)
+
+        handler.postDelayed({
+            hideLoading()
+        }, 600)
     }
 
     private fun hideLoading() {
