@@ -10,7 +10,9 @@ import androidx.navigation.Navigation
 import my.edu.tarc.rewardreferralapp.databinding.FragmentMenuStaffInsuranceBinding
 
 class MenuStaffInsuranceFragment : Fragment() {
+
     private lateinit var binding: FragmentMenuStaffInsuranceBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
