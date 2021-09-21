@@ -256,7 +256,7 @@ class ListInsuranceCancelFragment : Fragment() {
         })
 
     }
-    
+
     private fun isEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun hideKeyboard() {

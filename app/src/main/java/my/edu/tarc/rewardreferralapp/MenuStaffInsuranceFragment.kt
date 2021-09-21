@@ -18,7 +18,6 @@ class MenuStaffInsuranceFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_menu_staff_insurance, container, false)
 
-
         binding.btnManageInsurance.setOnClickListener(){
             val action = StaffDashboardFragmentDirections.actionStaffDashboardFragmentToListInsuranceFragment()
             Navigation.findNavController(it).navigate(action)
@@ -38,6 +37,7 @@ class MenuStaffInsuranceFragment : Fragment() {
             val action = StaffDashboardFragmentDirections.actionStaffDashboardFragmentToAdminClaimListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
         return binding.root
     }
 
