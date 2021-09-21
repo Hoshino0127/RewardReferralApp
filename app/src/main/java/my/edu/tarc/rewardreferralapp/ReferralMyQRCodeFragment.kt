@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
@@ -62,6 +63,10 @@ class ReferralMyQRCodeFragment : Fragment() {
                 false
             )
 
+        binding.btnBackRMQR.setOnClickListener(){
+            val action = ReferralMyQRCodeFragmentDirections.actionReferralMyQRCodeFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
         showLoading()
 
         getRefDetails()

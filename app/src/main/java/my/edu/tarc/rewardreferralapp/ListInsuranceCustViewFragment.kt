@@ -49,7 +49,7 @@ class ListInsuranceCustViewFragment : Fragment() {
             Handler().postDelayed({
                 hideLoading()
                 val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
-                view?.let { Navigation.findNavController(it).navigate(action) }
+                Navigation.findNavController(requireView()).navigate(action)
             }, 3000)
 
         })
@@ -79,9 +79,12 @@ class ListInsuranceCustViewFragment : Fragment() {
                     insCustAdapter = InsuranceCustAdapter(tempinsuranceList, InsuranceCustAdapter.ApplyListener{
                             insuranceID ->val it = view
 
-                        val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
-                        view?.let { Navigation.findNavController(it).navigate(action) }
-
+                        showLoading()
+                        Handler().postDelayed({
+                            hideLoading()
+                            val action = ListInsuranceCustViewFragmentDirections.actionListInsuranceCustViewFragmentToApplyInsuranceFragment(insuranceID)
+                            view?.let { Navigation.findNavController(it).navigate(action) }
+                        }, 3000)
                     })
 
                     binding.rvListInsuranceCust.adapter = insCustAdapter
@@ -118,8 +121,9 @@ class ListInsuranceCustViewFragment : Fragment() {
                             insuranceCoverage.add(child.value.toString())
                         }
                         val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
+                        val insuranceImg: String = insuranceSnapshot.child("insuranceImg").value.toString()
 
-                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType)
+                        val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan,insuranceCoverage, insurancePrice.toDouble(),insuranceType, insuranceImg)
 
                         insuranceList.add(insurance)
 

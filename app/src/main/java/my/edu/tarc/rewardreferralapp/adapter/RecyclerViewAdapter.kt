@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
@@ -16,9 +20,9 @@ import java.util.*
 
 class RecyclerViewAdapter(
     val insuranceList: List<Insurance>,
-    val insuranceReferralList: List<ReferralInsurance>,
+    private val insuranceReferralList: List<ReferralInsurance>,
     val clickListener: ClaimListener,
-    val cancelListener: CancelListener
+    private val cancelListener: CancelListener
     ): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder private constructor(val binding: InsuranceItemBinding) : RecyclerView.ViewHolder(binding.root){
@@ -43,8 +47,8 @@ class RecyclerViewAdapter(
         val insuranceComp: TextView = binding.tvInsuranceCompCardview
         val insuranceName: TextView = binding.tvInsuranceNameCardview
         val insurancePlan: TextView = binding.tvInsurancePlanCardview
+        val imgInsuranceIcon: ImageView = binding.imgInsuranceIcon
         val btnCancel : Button = binding.btnCancelCardview
-        //val insuranceExpiryDate: TextView = binding.tvInsuranceExpiryDateCardview
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,24 +61,35 @@ class RecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentInsurance = insuranceList[position]
-        var currentRefIns: ReferralInsurance = ReferralInsurance()
+        var currentRefIns = ReferralInsurance()
         for(refIns in insuranceReferralList){
             if(refIns.insuranceID.equals(currentInsurance.insuranceID)){
                 currentRefIns = refIns
             }
         }
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val strComp: String = "Company: \n${currentInsurance.insuranceComp}"
-        val strPlan: String = "Plan: \n${currentInsurance.insurancePlan}"
-        val strType: String = "Type: \n${currentInsurance.insuranceType}"
+        val strComp = "Company: ${currentInsurance.insuranceComp}"
+        val strPlan = "Plan: ${currentInsurance.insurancePlan}"
+        val strType = "Type: ${currentInsurance.insuranceType}"
+
         holder.insuranceName.text = currentInsurance.insuranceName
         holder.insuranceComp.text = strComp
         holder.insuranceType.text = strType
         holder.insurancePlan.text = strPlan
-        //holder.insuranceExpiryDate.text = dateFormat.format(currentInsurance.insuranceExpiryDate)
+
+        val Imgref: StorageReference =
+            FirebaseStorage.getInstance().getReference("InsuranceStorage")
+                .child(currentInsurance.insuranceImg.toString())
+
+        Imgref.downloadUrl.addOnSuccessListener() {
+            Glide
+                .with(holder.imgInsuranceIcon.context)
+                .load(it.toString())
+                .into(holder.imgInsuranceIcon)
+        }
+
         holder.bind(currentInsurance!!,currentRefIns, clickListener, cancelListener)
-        // bind image into the image view
-        //holder.imgInsuranceIcon.setImageResource(currentInsurance.img)
+
         if(currentRefIns.status == "Pending") {
             holder.btnCancel.visibility = View.GONE
         }

@@ -30,6 +30,7 @@ import my.edu.tarc.rewardreferralapp.databinding.FragmentViewInsuranceApplicatio
 import my.edu.tarc.rewardreferralapp.data.File
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -68,8 +69,8 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
 
         loadData(args.insuranceID.toString())
 
-        referralUID = "LQx5dlt2D1ZX1P6fCEXcSP4NEN83"
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        referralUID = CheckUser().getCurrentUserUID().toString()
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
         storageFile.listAll().addOnSuccessListener { it ->
             for(item in it.items){
                 item.downloadUrl.addOnSuccessListener {
@@ -142,6 +143,8 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
                             }
                             val insurancePrice: String =
                                 insuranceSnapshot.child("insurancePrice").value.toString()
+                            val insuranceImg: String =
+                                insuranceSnapshot.child("insuranceImg").value.toString()
 
                             val insurance = Insurance(
                                 insuranceID,
@@ -150,7 +153,8 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
                                 insurancePlan,
                                 insuranceCoverage,
                                 insurancePrice.toDouble(),
-                                insuranceType
+                                insuranceType,
+                                insuranceImg
                             )
 
                             insuranceCustList.add(insurance)
@@ -360,7 +364,7 @@ class ViewInsuranceApplicationCustFragment : Fragment() {
 
         var total: Long
 
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
             .child(file.FileName.toString())
 
         storageFile.metadata.addOnSuccessListener  {

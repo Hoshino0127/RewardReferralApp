@@ -47,6 +47,11 @@ class RewardDeliveryListFragment : Fragment() {
             false
         )
 
+        binding.btnBackRDL.setOnClickListener(){
+            val action = RewardDeliveryListFragmentDirections.actionRewardDeliveryListFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         showLoading()
         getDeliveryDetails()
         hideLoading()

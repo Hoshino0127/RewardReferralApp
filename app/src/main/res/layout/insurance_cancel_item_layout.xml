@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="acceptListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.CancelInsuranceApplicationAdapter.AcceptListener" />
+        <variable
+            name="rejectListener"
+            type="my.edu.tarc.rewardreferralapp.adapter.CancelInsuranceApplicationAdapter.RejectListener" />
+        <variable
+            name="cancelApplicationUID"
+            type="String" />
+        <variable
+            name="insuranceReferralUID"
+            type="String" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/toExpandLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/blue_300"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvCancelInsuranceID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="TextView"
+                    android:textAllCaps="true"
+                    android:textStyle="italic"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/expandableLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_200"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toExpandLayout"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/tvCancelInsuranceReferralID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvCancelInsuranceStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/textview"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvCancelInsuranceReferralID"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvCancelInsuranceReferralID" />
+
+                <TextView
+                    android:id="@+id/tvCancelInsuranceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Reason :"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/tvCancelInsuranceReason"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleAppliedDate" />
+
+                <TextView
+                    android:id="@+id/tvTitleAppliedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Applied Date :"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCancelInsuranceReferralID"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/tvAppliedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTitleAppliedDate"
+                    app:layout_constraintStart_toEndOf="@+id/tvTitleAppliedDate"
+                    app:layout_constraintTop_toTopOf="@+id/tvTitleAppliedDate"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <Button
+                    android:id="@+id/btnApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Approve"
+                    android:onClick="@{() -> acceptListener.onClick(cancelApplicationUID, insuranceReferralUID)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnReject"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCancelInsuranceReason" />
+
+                <Button
+                    android:id="@+id/btnReject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Reject"
+                    app:backgroundTint="@color/red_rejected"
+                    android:onClick="@{() -> rejectListener.onClick(cancelApplicationUID, insuranceReferralUID)}"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnApprove"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/btnApprove" />
+
+                <TextView
+                    android:id="@+id/tvCancelInsuranceReason"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:singleLine="false"
+                    android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/tvTitleAppliedDate"
+                    app:layout_constraintTop_toTopOf="@+id/tvCancelInsuranceTitle"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

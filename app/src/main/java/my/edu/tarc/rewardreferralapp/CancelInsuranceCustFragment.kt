@@ -101,7 +101,6 @@ class CancelInsuranceCustFragment : Fragment() {
                         for (ds in snapshot.children){
                             if (ds.exists()){
                                 ds.key?.let {
-                                    println("jiho")
                                     referralInsuranceRef.child(it).child("status").setValue("Pending")
                                 }
                             }

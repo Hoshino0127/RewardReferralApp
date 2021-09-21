@@ -12,7 +12,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE),104)
+        ActivityCompat.requestPermissions(this,arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE),101)
     }
 
     override fun onRequestPermissionsResult(
@@ -21,12 +21,12 @@ class LoginActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == 101 || requestCode == 102 || requestCode == 104){
+        if(requestCode == 101){
 
             if(grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED){
 
             }else{
-                Toast.makeText(applicationContext,"Permission granted",Toast.LENGTH_SHORT)
+                //Toast.makeText(applicationContext,"Permission granted",Toast.LENGTH_SHORT).show()
             }
         }
     }

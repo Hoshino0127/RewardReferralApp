@@ -90,7 +90,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
     private fun loadFileList(tempReferralUID: String) {
         referralUID = tempReferralUID
         val storageFile =
-            FirebaseStorage.getInstance().getReference("Evidences Insurance Application")
+            FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication")
                 .child("User_${referralUID}").child(args.applicationID.toString())
         storageFile.listAll().addOnSuccessListener { it ->
             for (item in it.items) {
@@ -297,7 +297,12 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                 var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
                 var newID = "CL" + IDFormat.format(Date()) + "_" + String.format("%04d",rnd.nextInt(9999))
 
-                val insuranceExpiryDate = Date()
+                val calendar = Calendar.getInstance()
+
+                calendar.time = Date()
+                calendar.add(Calendar.YEAR, 1)
+
+                val insuranceExpiryDate = calendar.time
 
                 val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), CheckUser().getCurrentUserUID(), insuranceExpiryDate, "Active")
 
@@ -367,7 +372,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
         var total: Long
 
-        val storageFile = FirebaseStorage.getInstance().getReference("Evidences Insurance Application").child("User_$referralUID").child(args.applicationID.toString())
+        val storageFile = FirebaseStorage.getInstance().getReference("EvidencesInsuranceApplication").child("User_$referralUID").child(args.applicationID.toString())
             .child(file.FileName.toString())
 
         storageFile.metadata.addOnSuccessListener  {

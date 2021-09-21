@@ -42,14 +42,19 @@ class AdminClaimAdapter (internal var context: Context, private var claimList:Mu
         holder.claimStatus.text = currentItem.claimStatus
         val referralDetailsStr: String = "Claim by : ${currentReferral.fullName}"
         holder.referralDetails.text =  referralDetailsStr
-        if(currentItem.claimStatus.equals("Pending")){
-            holder.claimStatus.setTextColor(Color.parseColor("#EC512B"))
-        }else if(currentItem.claimStatus.equals("Accepted")){
-            holder.claimStatus.setTextColor(Color.parseColor("#31B12C"))
-        }else if(currentItem.claimStatus.equals("Rejected")){
-            holder.claimStatus.setTextColor(Color.parseColor("#F30E15"))
-        }else{
-            holder.claimStatus.setTextColor(Color.parseColor("#000000"))
+        when {
+            currentItem.claimStatus.equals("Pending") -> {
+                holder.claimStatus.setTextColor(Color.parseColor("#EC512B"))
+            }
+            currentItem.claimStatus.equals("Accepted") -> {
+                holder.claimStatus.setTextColor(Color.parseColor("#31B12C"))
+            }
+            currentItem.claimStatus.equals("Rejected") -> {
+                holder.claimStatus.setTextColor(Color.parseColor("#F30E15"))
+            }
+            else -> {
+                holder.claimStatus.setTextColor(Color.parseColor("#000000"))
+            }
         }
     }
 

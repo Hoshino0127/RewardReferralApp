@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -71,7 +72,6 @@ class ApplyClaimFragment : Fragment() {
 
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var referralInsuranceListener: ValueEventListener
-    private lateinit var claimListener: ValueEventListener
 
     private lateinit var imgStorageRef : StorageReference
 
@@ -85,6 +85,8 @@ class ApplyClaimFragment : Fragment() {
     private val myCalendar: Calendar = Calendar.getInstance()
     private var imgUriMileage: Uri = Uri.EMPTY
     private var imgUriDamage: Uri = Uri.EMPTY
+    private var imgMileageFlag: Boolean = false
+    private var imgDamageFlag: Boolean = false
     private lateinit var bmpMileage: Bitmap
     private lateinit var bmpDamage: Bitmap
     private var fromAction: String = ""
@@ -92,14 +94,9 @@ class ApplyClaimFragment : Fragment() {
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var googleMap: GoogleMap
     private lateinit var autocompleteFragment: AutocompleteSupportFragment
-
     private var locationPermissionGranted: Boolean = false
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-
     private var hasMarker: Boolean = false
-    private var imgMileageFlag: Boolean = false
-    private var imgDamageFlag: Boolean = false
-
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
     private lateinit var currentLatLng: LatLng
@@ -115,7 +112,6 @@ class ApplyClaimFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    DetachListener()
                     val action = ApplyClaimFragmentDirections.actionApplyClaimFragmentToReferralInsuranceListingFragment()
                     Navigation.findNavController(requireView()).navigate(action)
 
@@ -123,6 +119,11 @@ class ApplyClaimFragment : Fragment() {
             }
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
+        binding.btnBackApplyClaim.setOnClickListener(){
+            val action = ApplyClaimFragmentDirections.actionApplyClaimFragmentToReferralInsuranceListingFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
 
         referralUID = CheckUser().getCurrentUserUID()!!
 
@@ -138,7 +139,7 @@ class ApplyClaimFragment : Fragment() {
                 as AutocompleteSupportFragment
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        autocompleteFragment?.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.TYPES))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.TYPES))
 
         // Specify the types of place data to return.
         if(!Places.isInitialized()){
@@ -146,12 +147,9 @@ class ApplyClaimFragment : Fragment() {
         }
 
         mapFragment.getMapAsync{
+            //default location is KL
             val location = LatLng(3.157764,101.711861)
             googleMap = it
-
-
-            //add marker
-            //googleMap.addMarker(MarkerOptions().position(kllocation).draggable(true).title("KLCC"))
 
             //zoom in camera to the bookmark
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
@@ -188,7 +186,7 @@ class ApplyClaimFragment : Fragment() {
 
         }
 
-
+        //cancel scroll view on map
         binding.transparentImage.setOnTouchListener { v, event ->
 
             when (event.action) {
@@ -215,11 +213,9 @@ class ApplyClaimFragment : Fragment() {
         }
 
         // Set up a PlaceSelectionListener to handle the response.
-        autocompleteFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
 
-                Log.i(TAG, "Place: ${place.name}, ${place.id}, ${place.latLng}, ${place.types}")
-                //var placeID = place.id.toString()
                 longitude = place.latLng!!.longitude
                 latitude = place.latLng!!.latitude
 
@@ -230,40 +226,28 @@ class ApplyClaimFragment : Fragment() {
                     hasMarker = false
                 }
 
-
                 googleMap.addMarker(MarkerOptions().position(currentLatLng).title(place.name.toString()))
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 10f))
                 hasMarker = true
-                //println("Marker is $hasMarker")
-
 
             }
 
             override fun onError(status: Status) {
-                Log.i(ContentValues.TAG, "Error occurred: $status")
+                Log.i(ContentValues.TAG, "Error occurred when searching location: $status")
             }
         })
-
-
-
-
-
 
         referralInsuranceListener = object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
 
-
-                    for (insuranceSnapshot in snapshot.children) {
-                        if (insuranceSnapshot.child("insuranceReferralID").getValue().toString()
-                                .equals(insuranceReferralID)
-                        ) {
-                            val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
-                            val referralUID: String = insuranceSnapshot.child("referralUID").getValue().toString()
-                            val insuranceReferralID: String = insuranceSnapshot.child("insuranceReferralID").getValue().toString()
-                            println(insuranceReferralID)
-                            val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
-                            val status: String = insuranceSnapshot.child("status").getValue().toString()
+                    for (refInsSnapshot in snapshot.children) {
+                        if (refInsSnapshot.child("insuranceReferralID").value.toString() == insuranceReferralID) {
+                            val insuranceID: String = refInsSnapshot.child("insuranceID").value.toString()
+                            val referralUID: String = refInsSnapshot.child("referralUID").value.toString()
+                            val insuranceReferralID: String = refInsSnapshot.child("insuranceReferralID").value.toString()
+                            val insuranceExpiryDate: Date = Date(refInsSnapshot.child("insuranceExpiryDate").child("time").value as Long)
+                            val status: String = refInsSnapshot.child("status").value.toString()
                             referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate, status)
 
                         }
@@ -286,21 +270,15 @@ class ApplyClaimFragment : Fragment() {
 
 
                     for (insuranceSnapshot in snapshot.children) {
-                        if (insuranceSnapshot.child("insuranceID").getValue().toString()
-                                .equals(insuranceID)
-                        ) {
-                            val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
-                            val insuranceType: String = insuranceSnapshot.child("insuranceType").getValue().toString()
-                            val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
-                            val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
-                            val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
-                            //val insuranceReferral: String = insuranceSnapshot.child("insuranceReferral").getValue().toString()
-                            //val insuranceExpiryDate: Date = Date(insuranceSnapshot.child("insuranceExpiryDate").child("time").getValue() as Long)
-                            println(insuranceSnapshot.child("insuranceCoverage").getValue().toString())
-                            var insuranceCoverage: ArrayList<String> = ArrayList<String>()
+                        if (insuranceSnapshot.child("insuranceID").value.toString() == insuranceID) {
+                            val insuranceID: String = insuranceSnapshot.child("insuranceID").value.toString()
+                            val insuranceType: String = insuranceSnapshot.child("insuranceType").value.toString()
+                            val insuranceName: String = insuranceSnapshot.child("insuranceName").value.toString()
+                            val insuranceComp: String = insuranceSnapshot.child("insuranceComp").value.toString()
+                            val insurancePlan: String = insuranceSnapshot.child("insurancePlan").value.toString()
+                            val insuranceCoverage: ArrayList<String> = ArrayList<String>()
                             for(child in insuranceSnapshot.child("insuranceCoverage").children){
-                                insuranceCoverage.add(child.getValue().toString())
-                                println(child.getValue().toString())
+                                insuranceCoverage.add(child.value.toString())
                             }
                             insurance = Insurance(
                                 insuranceID = insuranceID,
@@ -326,21 +304,19 @@ class ApplyClaimFragment : Fragment() {
 
 
         val datePicker: DatePickerDialog.OnDateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                val myFormat = "dd/MM/yyyy" //In which you need put here
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
+            DatePickerDialog.OnDateSetListener { view: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
+                myCalendar.set(Calendar.YEAR, year)
+                myCalendar.set(Calendar.MONTH, month)
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.US)
                 binding.dtAccidentDate.setText(sdf.format(myCalendar.time))
             }
 
         val timePicker: TimePickerDialog.OnTimeSetListener =
             TimePickerDialog.OnTimeSetListener { view: TimePicker?, hourOfDay: Int, minute: Int ->
-                myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                myCalendar.set(Calendar.MINUTE, minute);
-                val myFormat = "HH:mm"
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
+                myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                myCalendar.set(Calendar.MINUTE, minute)
+                val sdf = SimpleDateFormat("HH:mm", Locale.US)
                 binding.dtAccidentTime.setText(sdf.format(myCalendar.time))
             }
 
@@ -372,7 +348,6 @@ class ApplyClaimFragment : Fragment() {
                 if (applyClaim()) {
                     binding.imgDamage.setImageResource(0)
                     binding.imgMileage.setImageResource(0)
-                    DetachListener()
                     val action =
                         ApplyClaimFragmentDirections.actionApplyClaimFragmentToApplyClaimSuccessFragment()
                     Navigation.findNavController(it).navigate(action)
@@ -382,25 +357,13 @@ class ApplyClaimFragment : Fragment() {
         }
 
         binding.btnUploadMileage.setOnClickListener(){
-            //val intent = Intent(Intent.ACTION_PICK)
-            //intent.type = "image/*"
-
             fromAction = "Mileage"
             chooseImage()
-            //openImageIntent()
-            //takePicIntent(fromAction)
-            //addImage.launch(intent)
         }
 
         binding.btnUploadDamage.setOnClickListener(){
-            //val intent = Intent(Intent.ACTION_PICK)
-            //intent.type = "image/*"
-
             fromAction = "Damage"
             chooseImage()
-            //openImageIntent()
-            //takePicIntent(fromAction)
-            //addImage.launch(intent)
         }
 
         binding.imgCrossMileage.setOnClickListener(){
@@ -434,7 +397,7 @@ class ApplyClaimFragment : Fragment() {
                     }
                 }
                 binding.tvInsuranceCoverage.text = strCoverage
-                val height = 450 + (binding.tvInsuranceCoverage.height* rowCount)
+                val height = 450 + (binding.tvInsuranceCoverage.height* rowCount) + (20/rowCount)
 
                 val layout: ConstraintLayout = binding.rlInsuranceDetails
                 val params: ViewGroup.LayoutParams = layout.layoutParams
@@ -465,25 +428,25 @@ class ApplyClaimFragment : Fragment() {
                 if(hasMarker){
                     googleMap.clear()
                     hasMarker = false
-                    //println("Marker is $hasMarker")
                 }
                 googleMap.addMarker(MarkerOptions().draggable(true).position(currentLatLng).title("You are here"))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLatLng))
-                googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
                 hasMarker = true
-                //println("Marker is $hasMarker")
             }
         }
     }
 
     private fun chooseImage() {
+        // create a menu of options
         val optionsMenu = arrayOf<CharSequence>(
             "Take Photo",
             "Choose from Gallery",
             "Exit"
-        ) // create a menuOption Array
+        )
         // create a dialog for showing the optionsMenu
         val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+
         // set the items in builder
         try{
             builder.setItems(optionsMenu,
@@ -496,6 +459,7 @@ class ApplyClaimFragment : Fragment() {
                                 val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                                 startActivityForResult(takePicture, 0)
                             }else{
+                                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA),101)
                                 Toast.makeText(requireContext(),"Please allow the camera permission",Toast.LENGTH_SHORT).show()
                             }
 
@@ -504,8 +468,7 @@ class ApplyClaimFragment : Fragment() {
                             // choose from  external storage
                             if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                                 == PackageManager.PERMISSION_GRANTED){
-                                val pickPhoto =
-                                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                                val pickPhoto = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                                 startActivityForResult(pickPhoto, 1)
                             }else{
                                 ActivityCompat.requestPermissions(requireActivity(),arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),102)
@@ -545,13 +508,13 @@ class ApplyClaimFragment : Fragment() {
                 1 -> if (resultCode == RESULT_OK && data != null) {
                     val selectedImage = data.data
                     if(fromAction == "Mileage"){
-                        imgUriMileage  = data?.data!!
-                        binding.imgMileage.setImageURI(data?.data)
+                        imgUriMileage  = data.data!!
+                        binding.imgMileage.setImageURI(data.data)
                         showImgMileage()
                         imgMileageFlag = true
                     }else if(fromAction == "Damage"){
-                        imgUriDamage = data?.data!!
-                        binding.imgDamage.setImageURI(data?.data)
+                        imgUriDamage = data.data!!
+                        binding.imgDamage.setImageURI(data.data)
                         showImgDamage()
                         imgDamageFlag = true
                     }
@@ -624,7 +587,6 @@ class ApplyClaimFragment : Fragment() {
             binding.rgAccidentType.requestFocus()
             return false
         }
-        println("Marker is $hasMarker")
 
         if(!hasMarker){
             Toast.makeText(requireContext(),"Please select the accident place",Toast.LENGTH_LONG).show()
@@ -668,21 +630,25 @@ class ApplyClaimFragment : Fragment() {
     }
 
     private fun applyClaim(): Boolean{
-        var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
-        var newUUID = UUID.randomUUID().toString()
-        var newID = "CL" + IDFormat.format(Date()) + "_" + newUUID.substring(32,36)
+        val idFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
+        val newUUID = UUID.randomUUID().toString()
+        val newID = "CL" + idFormat.format(Date()) + "_" + newUUID.substring(32,36)
         var imgMileageName: String = ""
         var imgDamageName: String = ""
 
         val dtString = binding.dtAccidentDate.text.toString() + " " + binding.dtAccidentTime.text.toString()
 
         var accidentType: String = ""
-        accidentType = if (binding.rgAccidentType.checkedRadioButtonId == binding.rbOwnDamage.id){
-            "OwnDamage"
-        }else if(binding.rgAccidentType.checkedRadioButtonId == binding.rbTheft.id){
-            "Theft"
-        }else{
-            "ThirdParty"
+        accidentType = when (binding.rgAccidentType.checkedRadioButtonId) {
+            binding.rbOwnDamage.id -> {
+                "OwnDamage"
+            }
+            binding.rbTheft.id -> {
+                "Theft"
+            }
+            else -> {
+                "ThirdParty"
+            }
         }
 
         if(imgUriMileage != Uri.EMPTY){
@@ -697,8 +663,8 @@ class ApplyClaimFragment : Fragment() {
             uploadDamageImg("Camera",newID)
         }
 
-        imgMileageName = "mileage_$newID"
-        imgDamageName = "damage_$newID"
+        imgMileageName = "mileage_${newID}.jpg"
+        imgDamageName = "damage_${newID}.jpg"
 
         val claim: Claim = Claim(
             newUUID,
@@ -732,17 +698,16 @@ class ApplyClaimFragment : Fragment() {
     var addImage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            var height: Int = 0
 
-            if(fromAction.equals("Mileage")){
+            if(fromAction == "Mileage"){
                 imgUriMileage  = data?.data!!
-                binding.imgMileage.setImageURI(data?.data)
+                binding.imgMileage.setImageURI(data.data)
 				binding.imgMileage.visibility = View.VISIBLE
                 binding.imgCrossMileage.visibility = View.VISIBLE
                 binding.imgCrossMileage.isClickable = true
-            }else if(fromAction.equals("Damage")){
+            }else if(fromAction == "Damage"){
                 imgUriDamage = data?.data!!
-                binding.imgDamage.setImageURI(data?.data)
+                binding.imgDamage.setImageURI(data.data)
 				binding.imgDamage.visibility = View.VISIBLE
                 binding.imgCrossDamage.visibility = View.VISIBLE
                 binding.imgCrossDamage.isClickable = true
@@ -753,7 +718,7 @@ class ApplyClaimFragment : Fragment() {
     }
 
     private fun uploadMileageImg(imageType: String, claimID: String) {
-        imgStorageRef = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("mileage_$claimID")
+        imgStorageRef = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("mileage_${claimID}.jpg")
         if(imageType == "Upload"){
             imgStorageRef.putFile(imgUriMileage).addOnSuccessListener {
                 Toast.makeText(context, "Upload pic successful",
@@ -779,7 +744,7 @@ class ApplyClaimFragment : Fragment() {
     }
 
     private fun uploadDamageImg(imageType: String, claimID: String) {
-        imgStorageRef = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("damage_$claimID")
+        imgStorageRef = FirebaseStorage.getInstance().getReference("User_"+CheckUser().getCurrentUserUID()).child("damage_${claimID}.jpg")
         if(imageType == "Upload"){
             imgStorageRef.putFile(imgUriDamage).addOnSuccessListener {
                 Toast.makeText(context, "Upload pic successful",
@@ -810,16 +775,6 @@ class ApplyClaimFragment : Fragment() {
             null -> false
             else -> true
         }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        DetachListener()
-    }
-
-    private fun DetachListener(){
-        insuranceRef.removeEventListener(insuranceListener)
-        referralInsuranceRef.removeEventListener(referralInsuranceListener)
     }
 
 }

@@ -54,6 +54,11 @@ class RewardDeliveryDetailsFragment : Fragment() {
                 false
             )
 
+        binding.btnBackRDD.setOnClickListener(){
+            val action = RewardDeliveryDetailsFragmentDirections.actionRewardDeliveryDetailsFragmentToRewardMyFragment()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
 
         binding.btnRDDSubmit.setOnClickListener() {
 

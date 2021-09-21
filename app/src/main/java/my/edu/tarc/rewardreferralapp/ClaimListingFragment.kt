@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.model.LatLng
@@ -27,7 +28,6 @@ class ClaimListingFragment : Fragment() {
     private var insuranceRef = database.getReference("Insurance")
     private val claimRef = database.getReference("Claim")
     private var referralUID = ""
-    private lateinit var loadingDlg: LoadingDialog
 
     private lateinit var insuranceListener: ValueEventListener
     private lateinit var claimListener: ValueEventListener
@@ -38,14 +38,6 @@ class ClaimListingFragment : Fragment() {
 
     private var claimList: ArrayList<Claim> = ArrayList()
 
-    /*private val claimListing: List<Claim> = listOf(
-        Claim("CL001", Date("2022/02/25"),
-            LatLng(3.157764,101.711861),"Theft","ASDF",1234,"","",Date(),null,"Pending","IN001","IR001"),
-        Claim("CL002",Date("2022/02/27"),
-            LatLng(3.157764,101.711861),"OwnDamage","ASDF",1234,"","",Date(),null,"Accepted","IN001","IR001")
-    )*/
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,61 +45,29 @@ class ClaimListingFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_claim_listing, container, false)
 
-        referralUID = CheckUser().getCurrentUserUID()!!
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    val action = ClaimListingFragmentDirections.actionClaimListingFragmentToHomepage()
+                    Navigation.findNavController(requireView()).navigate(action)
 
-        claimList.clear()
-        insuranceList.clear()
-
-        loadingDlg = LoadingDialog(requireActivity())
-
-        loadingDlg.showAlertDialog()
-        claimListener = object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(currentClaim in snapshot.children){
-                        val claimUUID = currentClaim.child("claimUUID").getValue().toString()
-                        val claimID = currentClaim.child("claimID").getValue().toString()
-                        val dt = Date(currentClaim.child("accidentDateTime").child("time").getValue() as Long)
-                        val accidentPlaceLong = currentClaim.child("accidentPlace").child("latitude").getValue() as Double
-                        val accidentPlaceLat = currentClaim.child("accidentPlace").child("longitude").getValue() as Double
-                        val accidentPlace: LatLng = LatLng(accidentPlaceLat,accidentPlaceLong)
-                        val accidentType = currentClaim.child("accidentType").getValue().toString()
-                        val accidentDesc = currentClaim.child("accidentDesc").getValue().toString()
-                        val mileage = currentClaim.child("mileage").getValue().toString().toInt()
-                        val imgMileage = currentClaim.child("imgMileage").getValue().toString()
-                        val imgDamage = currentClaim.child("imgDamage").getValue().toString()
-                        val applyDateTime: Date = Date(currentClaim.child("applyDateTime").child("time").getValue() as Long)
-                        val approveDateTime: Date? = if(currentClaim.child("approveDateTime").getValue() == null){
-                            null
-                        }else{
-                            Date(currentClaim.child("approveDateTime").child("time").getValue() as Long)
-                        }
-                        val claimStatus = currentClaim.child("claimStatus").getValue().toString()
-                        val insuranceID = currentClaim.child("insuranceID").getValue().toString()
-                        val referralUID = currentClaim.child("referralUID").getValue().toString()
-                        val claim: Claim = Claim(claimUUID,claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,referralUID)
-
-
-                        claimList.add(claim)
-                        getInsurance()
-                    }
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
-            }
-
+        binding.btnBackClaimListing.setOnClickListener(){
+            val action = ClaimListingFragmentDirections.actionClaimListingFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
         }
-        claimRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(claimListener)
 
+        referralUID = CheckUser().getCurrentUserUID()!!
 
-
-
+        loadData()
 
         binding.tlClaimStatus.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                loadingDlg.showAlertDialog()
+                //loadingDlg.showAlertDialog()
                 var selectedClaims: ArrayList<Claim> = ArrayList<Claim>()
                 when (tab?.position) {
                     0 -> {
@@ -137,7 +97,6 @@ class ClaimListingFragment : Fragment() {
         })
 
         binding.btnToViewClaim.setOnClickListener(){
-            DetachListener()
             val action = ClaimListingFragmentDirections.actionClaimListingFragmentToAdminClaimListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
@@ -151,40 +110,78 @@ class ClaimListingFragment : Fragment() {
 
                 val it = view
                 if (it != null) {
-                    DetachListener()
                     Navigation.findNavController(it).navigate(ClaimListingFragmentDirections.actionClaimListingFragmentToClaimDetailsFragment(claimUUID))
                 }
             })
 
         binding.claimRecyclerView.adapter = claimAdapter
         binding.claimRecyclerView.setHasFixedSize(true)
-        loadingDlg.dismissAlertDialog()
+
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        DetachListener()
+    private fun loadData(){
+        claimListener = object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    claimList.clear()
+                    for(currentClaim in snapshot.children){
+                        val claimUUID = currentClaim.child("claimUUID").value.toString()
+                        val claimID = currentClaim.child("claimID").value.toString()
+                        val dt = Date(currentClaim.child("accidentDateTime").child("time").value as Long)
+                        val accidentPlaceLong = currentClaim.child("accidentPlace").child("latitude").value as Double
+                        val accidentPlaceLat = currentClaim.child("accidentPlace").child("longitude").value as Double
+                        val accidentPlace: LatLng = LatLng(accidentPlaceLat,accidentPlaceLong)
+                        val accidentType = currentClaim.child("accidentType").value.toString()
+                        val accidentDesc = currentClaim.child("accidentDesc").value.toString()
+                        val mileage = currentClaim.child("mileage").value.toString().toInt()
+                        val imgMileage = currentClaim.child("imgMileage").value.toString()
+                        val imgDamage = currentClaim.child("imgDamage").value.toString()
+                        val applyDateTime: Date = Date(currentClaim.child("applyDateTime").child("time").value as Long)
+                        val approveDateTime: Date? = if(currentClaim.child("approveDateTime").value == null){
+                            null
+                        }else{
+                            Date(currentClaim.child("approveDateTime").child("time").value as Long)
+                        }
+                        val claimStatus = currentClaim.child("claimStatus").value.toString()
+                        val insuranceID = currentClaim.child("insuranceID").value.toString()
+                        val referralUID = currentClaim.child("referralUID").value.toString()
+                        val claim: Claim = Claim(claimUUID,claimID,dt,accidentPlace,accidentType,accidentDesc,mileage,imgMileage,imgDamage,applyDateTime,approveDateTime,claimStatus,insuranceID,referralUID)
+
+
+                        claimList.add(claim)
+                        getInsurance()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        }
+        claimRef.orderByChild("referralUID").equalTo(referralUID).addValueEventListener(claimListener)
+
     }
+
 
     private fun getInsurance(){
         insuranceListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 if(snapshot.exists()){
-
+                    insuranceList.clear()
                     for (insuranceSnapshot in snapshot.children){
 
                         for(item in claimList){
-                            if(item.insuranceID.equals(insuranceSnapshot.child("insuranceID").getValue().toString())){
-                                //insuranceList.add(insuranceSnapshot.getValue(Insurance::class.java)!!)
-                                val insuranceID: String = insuranceSnapshot.child("insuranceID").getValue().toString()
-                                val insuranceName: String = insuranceSnapshot.child("insuranceName").getValue().toString()
-                                val insuranceType: String = insuranceSnapshot.child("insuranceType").getValue().toString()
-                                val insuranceComp: String = insuranceSnapshot.child("insuranceComp").getValue().toString()
-                                val insurancePlan: String = insuranceSnapshot.child("insurancePlan").getValue().toString()
+                            if(item.insuranceID.equals(insuranceSnapshot.child("insuranceID").value.toString())){
+                                val insuranceID: String = insuranceSnapshot.child("insuranceID").value.toString()
+                                val insuranceName: String = insuranceSnapshot.child("insuranceName").value.toString()
+                                val insuranceType: String = insuranceSnapshot.child("insuranceType").value.toString()
+                                val insuranceComp: String = insuranceSnapshot.child("insuranceComp").value.toString()
+                                val insurancePlan: String = insuranceSnapshot.child("insurancePlan").value.toString()
                                 val insuranceCoverage: ArrayList<String> = ArrayList<String>()
                                 for(child in insuranceSnapshot.child("insuranceCoverage").children){
-                                    insuranceCoverage.add(child.getValue().toString())
+                                    insuranceCoverage.add(child.value.toString())
 
                                 }
                                 val insurance = Insurance(
@@ -195,15 +192,11 @@ class ClaimListingFragment : Fragment() {
                                     insuranceCoverage = insuranceCoverage,
                                     insuranceType = insuranceType
                                 )
-                                println(insuranceID)
                                 insuranceList.add(insurance)
                             }
-                            println(item.claimID)
                         }
 
-
                     }
-                    println(insuranceList)
                     changeView(claimList,insuranceList)
                 }
 
@@ -215,13 +208,8 @@ class ClaimListingFragment : Fragment() {
 
         }
 
-        //insuranceRef = database.getReference("insurance")
         insuranceRef.addListenerForSingleValueEvent(insuranceListener)
     }
 
-    private fun DetachListener(){
-        insuranceRef.removeEventListener(insuranceListener)
-        claimRef.removeEventListener(claimListener)
-    }
 
 }

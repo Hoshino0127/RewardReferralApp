@@ -1,6 +1,9 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -9,12 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.InsuranceAdapter
 import my.edu.tarc.rewardreferralapp.data.Insurance
@@ -37,6 +43,8 @@ class InsuranceAddFragment : Fragment() {
 
     private var loadingDialog: Dialog?= null
     private var completeDialog: Dialog?= null
+
+    private lateinit var imgUriReward: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,18 +93,51 @@ class InsuranceAddFragment : Fragment() {
                 insuranceCoverage.add(binding.cbPropertyDmg.text.toString())
             }
 
+            var newID: String = UUID.randomUUID().toString()
+
+            var imageName = "insImg_$newID"
+
+            insertRewardImg(imageName)
+
             if(insuranceComp.isNotEmpty() && insuranceName.isNotEmpty() && insurancePlan.isNotEmpty() && insuranceType.isNotEmpty() && insuranceCoverage.isNotEmpty() && insurancePrice.isNotEmpty()) {
-                insertData(insuranceComp,insuranceName,insurancePlan,insuranceType,insuranceCoverage, insurancePrice)
+                insertData(insuranceComp,insuranceName,insurancePlan,insuranceType,insuranceCoverage, insurancePrice, imageName)
             } else {
                 Toast.makeText(requireContext(), "Please fill in the required details!", Toast.LENGTH_LONG).show()
             }
 
         }
 
+        var addImage =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+
+                    imgUriReward = data?.data!!
+                    binding.imgAddInsurancePhoto.setImageURI(data?.data)
+
+                }
+            }
+
+        binding.btnUpload.setOnClickListener() {
+
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            addImage.launch(intent)
+
+        }
+
         return binding.root
     }
 
-    private fun insertData(insuranceComp: String, insuranceName: String, insurancePlan: String, insuranceType: String, insuranceCoverage: ArrayList<String>, insurancePrice: String) {
+    private fun insertData(
+        insuranceComp: String,
+        insuranceName: String,
+        insurancePlan: String,
+        insuranceType: String,
+        insuranceCoverage: ArrayList<String>,
+        insurancePrice: String,
+        insuranceImg: String
+    ) {
 
         showLoading()
         var newID:String = ""
@@ -109,7 +150,7 @@ class InsuranceAddFragment : Fragment() {
                     newID = UUID.randomUUID().toString()
                 }
 
-                val newInsurance = Insurance(newID, insuranceName, insuranceComp, insurancePlan, insuranceCoverage, insurancePrice.toDouble(), insuranceType)
+                val newInsurance = Insurance(newID, insuranceName, insuranceComp, insurancePlan, insuranceCoverage, insurancePrice.toDouble(), insuranceType, insuranceImg)
 
                 Handler().postDelayed({
                     hideLoading()
@@ -194,6 +235,14 @@ class InsuranceAddFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun insertRewardImg(imageName: String) {
+        var imgref: StorageReference =
+            FirebaseStorage.getInstance().getReference("InsuranceStorage").child(imageName)
+        imgref.putFile(imgUriReward).addOnSuccessListener {
+
+        }
     }
 
     fun EditText.addDecimalLimiter(maxLimit: Int = 2) {

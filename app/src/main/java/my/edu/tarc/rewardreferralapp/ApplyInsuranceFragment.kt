@@ -223,7 +223,7 @@ class ApplyInsuranceFragment : Fragment() {
                     for (fileCount in 0 until fileNameList.size) {
                         fileToUpload = fileNameList[fileCount].FileName?.let { it ->
                             CheckUser().getCurrentUserUID()?.let { it1 ->
-                                mStorage.child("Evidences Insurance Application").child("User_$it1").child(newID)
+                                mStorage.child("EvidencesInsuranceApplication").child("User_$it1").child(newID)
                                     .child(
                                         it
                                     )

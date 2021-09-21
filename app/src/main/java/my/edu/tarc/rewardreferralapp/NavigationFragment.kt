@@ -46,6 +46,22 @@ class NavigationFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.btnToStaffDashBoard.setOnClickListener() {
+            val action = NavigationFragmentDirections.actionNavigationFragmentToStaffDashboardFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.btnToCancelList.setOnClickListener() {
+            val action = NavigationFragmentDirections.actionNavigationFragmentToListInsuranceCancelFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.btnToViewInsurance.setOnClickListener() {
+            val action = NavigationFragmentDirections.actionNavigationFragmentToReferralInsuranceListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+
         return binding.root
     }
 

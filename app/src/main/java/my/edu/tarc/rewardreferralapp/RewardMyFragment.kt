@@ -46,6 +46,11 @@ class RewardMyFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
+        binding.btnBackRM.setOnClickListener(){
+            val action = RewardMyFragmentDirections.actionRewardMyFragmentToHomepage()
+            Navigation.findNavController(requireView()).navigate(action)
+        }
+
         showLoading()
         getPendingClaimReward()
 

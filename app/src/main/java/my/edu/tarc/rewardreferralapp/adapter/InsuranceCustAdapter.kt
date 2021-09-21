@@ -2,13 +2,17 @@ package my.edu.tarc.rewardreferralapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.databinding.InsuranceItemCustLayoutBinding
 import my.edu.tarc.rewardreferralapp.data.Insurance
 
-class InsuranceCustAdapter (internal var insuranceList:MutableList<Insurance>, val clickListener: ApplyListener) :
+class InsuranceCustAdapter (internal var insuranceList:List<Insurance>, val clickListener: ApplyListener) :
     RecyclerView.Adapter<InsuranceCustAdapter.myViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
@@ -34,6 +38,17 @@ class InsuranceCustAdapter (internal var insuranceList:MutableList<Insurance>, v
         }
         holder.insuranceCoverage.text = strCover
         holder.insurancePrice.text = currentItem.insurancePrice.toString()
+
+        val Imgref: StorageReference =
+            FirebaseStorage.getInstance().getReference("InsuranceStorage")
+                .child(currentItem.insuranceImg.toString())
+
+        Imgref.downloadUrl.addOnSuccessListener() {
+            Glide
+                .with(holder.imgInsurance.context)
+                .load(it.toString())
+                .into(holder.imgInsurance)
+        }
 
         holder.bind(currentItem, clickListener)
     }
@@ -65,6 +80,7 @@ class InsuranceCustAdapter (internal var insuranceList:MutableList<Insurance>, v
         val insuranceType: TextView = binding.tvCustInsuranceType
         val insuranceCoverage: TextView = binding.tvCustInsuranceCoverage
         val insurancePrice : TextView = binding.tvCustInsurancePrice2
+        val imgInsurance: ImageView = binding.imgInsurance
     }
 
     class ApplyListener(val clickListener: (InsuranceID: String) -> Unit) {
