@@ -157,6 +157,16 @@
                 app:layout_constraintStart_toEndOf="@+id/imgCustInsurance"
                 app:layout_constraintTop_toBottomOf="@+id/tvCustInsuranceType" />
 
+            <TextView
+                android:id="@+id/tvCustInsurancePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgCustInsurance" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

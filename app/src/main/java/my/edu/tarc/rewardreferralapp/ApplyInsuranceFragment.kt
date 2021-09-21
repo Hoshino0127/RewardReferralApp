@@ -141,8 +141,6 @@ class ApplyInsuranceFragment : Fragment() {
 
                 var totalItemSelected:Int = data.clipData!!.itemCount
 
-                Toast.makeText(context, "Multiple", Toast.LENGTH_SHORT).show()
-
                 for (count in 0 until totalItemSelected) {
 
                     val fileUri: Uri = data.clipData!!.getItemAt(count).uri
@@ -158,8 +156,6 @@ class ApplyInsuranceFragment : Fragment() {
                 }
 
             } else if (data?.data != null){
-
-                Toast.makeText(context, "Single", Toast.LENGTH_SHORT).show()
 
                 val fileUri: Uri = data.data!!
 
@@ -180,15 +176,10 @@ class ApplyInsuranceFragment : Fragment() {
         val sdfID = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         insuranceApplicationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    newID = sdfID.format(Date())
-                        .toString() + "-" + binding.tvCustInsuranceComp.text.toString() + "-" + "IA" + "%03d".format(
-                        snapshot.childrenCount + 1
-                    )
-                } else {
-                    newID = sdfID.format(Date())
-                        .toString() + "-" + binding.tvCustInsuranceComp.text.toString() + "-" + "IA001"
-                }
+
+                val rnd: Random = Random()
+                var IDFormat = SimpleDateFormat("ddMMyyHHMMSS", Locale.US)
+                var newID = "IA" + IDFormat.format(Date()) + "_" + String.format("%04d",rnd.nextInt(9999))
 
                 val rbAirBag: RadioButton =
                     binding.radGrpAirBag.findViewById(binding.radGrpAirBag.checkedRadioButtonId)

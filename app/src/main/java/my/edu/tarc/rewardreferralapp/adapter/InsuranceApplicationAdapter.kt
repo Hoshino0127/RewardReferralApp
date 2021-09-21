@@ -94,6 +94,9 @@ class InsuranceApplicationAdapter (internal var insuranceApplicationList:List<In
         } else if (currentItem.applicationStatus.equals("Rejected")) {
             holder.applicationStatus.setTextColor(Color.parseColor("#F30E15"))
             holder.viewDetails.visibility = View.GONE
+        } else if (currentItem.applicationStatus.equals("Cancelled")) {
+            holder.applicationStatus.setTextColor(Color.parseColor("#F30E15"))
+            holder.viewDetails.visibility = View.GONE
         } else {
             holder.applicationStatus.setTextColor(Color.parseColor("#31B12C"))
             holder.viewDetails.visibility = View.GONE

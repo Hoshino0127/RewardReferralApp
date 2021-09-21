@@ -157,7 +157,7 @@ class ListInsuranceApplicationCustViewFragment : Fragment() {
                     insApplicationList.clear()
                     for (insuranceSnapshot in snapshot.children) {
 
-                        if (insuranceSnapshot.child("referralID").value.toString() == CheckUser().getCurrentUserUID()) {
+                        if (insuranceSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
 
                             val applicationID: String =
                                 insuranceSnapshot.child("applicationID").value.toString()
@@ -167,15 +167,15 @@ class ListInsuranceApplicationCustViewFragment : Fragment() {
                             )
                             val insuranceID: String =
                                 insuranceSnapshot.child("insuranceID").value.toString()
-                            val referralID: String =
-                                insuranceSnapshot.child("referralID").value.toString()
+                            val referralUID: String =
+                                insuranceSnapshot.child("referralUID").value.toString()
                             val insuranceStatus: String =
                                 insuranceSnapshot.child("applicationStatus").value.toString()
 
                             val insApp = InsuranceApplication(
                                 applicationID,
                                 insuranceID,
-                                referralID,
+                                referralUID,
                                 applicationAppliedDate,
                                 insuranceStatus,
                                 false,
