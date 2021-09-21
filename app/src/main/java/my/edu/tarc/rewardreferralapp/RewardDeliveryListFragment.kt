@@ -113,6 +113,9 @@ class RewardDeliveryListFragment : Fragment() {
     }
 
     private fun setRecycleView() {
+
+        rewardDeliveryList.sortByDescending { r -> r.applyDate }
+
         val rewDelAdapter = RewardDeliveryAdapter(
             rewardDeliveryList,
             RewardDeliveryAdapter.CheckListener { deliveryID ->
@@ -130,11 +133,6 @@ class RewardDeliveryListFragment : Fragment() {
 
         binding.RDLDeliveryRV.adapter = rewDelAdapter
         binding.RDLDeliveryRV.setHasFixedSize(true)
-
-        var layoutManager = LinearLayoutManager(getActivity())
-        layoutManager.setReverseLayout(true)
-        layoutManager.setStackFromEnd(true)
-        binding.RDLDeliveryRV.setLayoutManager(layoutManager)
 
     }
 
