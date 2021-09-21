@@ -100,6 +100,12 @@
         <action
             android:id="@+id/action_renewInsuranceFragment_to_renewPaymentFragment"
             app:destination="@id/renewPaymentFragment" />
+        <argument
+            android:name="insuranceID"
+            app:argType="string"/>
+        <argument
+            android:name="insuranceReferralID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/renewPaymentFragment"
@@ -109,6 +115,15 @@
         <action
             android:id="@+id/action_renewPaymentFragment_to_renewSuccessFragment"
             app:destination="@id/renewSuccessFragment" />
+        <argument
+            android:name="NewExpiryDate"
+            app:argType="java.util.Date" />
+        <argument
+            android:name="InsuranceReferralID"
+            app:argType="string" />
+        <argument
+            android:name="pointsAdded"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/renewSuccessFragment"
@@ -118,6 +133,12 @@
         <action
             android:id="@+id/action_renewSuccessFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <argument
+            android:name="points"
+            app:argType="integer" />
+        <argument
+            android:name="pointsAdded"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/homepage"

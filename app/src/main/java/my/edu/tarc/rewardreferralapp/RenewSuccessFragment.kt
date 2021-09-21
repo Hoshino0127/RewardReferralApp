@@ -20,6 +20,13 @@ class RenewSuccessFragment : Fragment() {
         val binding: FragmentRenewSuccessBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_renew_success, container, false)
 
+        val args = RenewSuccessFragmentArgs.fromBundle(requireArguments())
+        val points = args.points
+        val pointsAdded = args.pointsAdded
+
+        val pointsStr = "${points}(+${pointsAdded})"
+        binding.txtPointsEarned.text = pointsStr
+
         binding.btnToInsuranceListing.setOnClickListener(){
             val action = RenewSuccessFragmentDirections.actionRenewSuccessFragmentToReferralInsuranceListingFragment()
             Navigation.findNavController(it).navigate(action)
