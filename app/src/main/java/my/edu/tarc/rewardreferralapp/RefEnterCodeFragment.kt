@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.database.DataSnapshot
@@ -35,14 +36,11 @@ class RefEnterCodeFragment : Fragment() {
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
 
         binding.btnSubmitCode.setOnClickListener(){
-            Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
-            val handler = Handler()
-            handler.postDelayed({
-                val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
-                Navigation.findNavController(it).navigate(action)
-            }, 3000)
 
+            checkIfGotUpLine()
             checkUpLine()
+            checkError()
+
             //increasePoints()
         }
 
@@ -59,9 +57,10 @@ class RefEnterCodeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (referralSnapshot in snapshot.children)
-                        if(referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
+                        if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
                             if (checkError()) {
-                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()) {
+                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()
+                                ) {
                                     if (referralSnapshot.child("invitationCode").value.toString() == binding.txtReferralCode.text.toString()) {
                                         //increase the referral points
                                     }
@@ -71,10 +70,9 @@ class RefEnterCodeFragment : Fragment() {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
+                override fun onCancelled(error: DatabaseError) {
 
-            }
-
+                }
         })
     }
 
@@ -82,22 +80,19 @@ class RefEnterCodeFragment : Fragment() {
         val referCodeEntered: String = binding.txtReferralCode.text.toString()
         val referralUID = CheckUser().getCurrentUserUID()
 
-        val referral = mapOf<String, Any?>(
-            "referralUpline" to referCodeEntered
-        )
-
         //update the upline referralUID
         referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (updateSnapshot in snapshot.children) {
                     if (updateSnapshot.exists()) {
                         updateSnapshot.key?.let {
+                            val uplineUID: String = updateSnapshot.child("referralUID").value.toString()
                             if (referralUID != null) {
                                 if (checkError()) {
                                     if(referCodeEntered == updateSnapshot.child("invitationCode").value.toString()) {
-                                        referralRef.child(referralUID).updateChildren(referral)
+                                        referralRef.child(referralUID).child("referralUpline").setValue(uplineUID)
                                             .addOnSuccessListener {
-                                                Toast.makeText(context, "Updated", Toast.LENGTH_LONG).show()
+//                                                Toast.makeText(context, "Updated", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {
                                                 Toast.makeText(context, "Unable to update.", Toast.LENGTH_LONG).show()
                                         }
@@ -117,14 +112,26 @@ class RefEnterCodeFragment : Fragment() {
 
     }
 
-    private fun checkIfGotUpLine(){
+    private fun checkIfGotUpLine() : Boolean{
         referralRef.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     for(checkSnapshot in snapshot.children){
                         if (checkSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
                             if(checkSnapshot.child("referralUpline").value.toString() != ""){
+                                binding.constraintAlertMsg.visibility = View.VISIBLE
+                                binding.btnSubmitCode.visibility = View.INVISIBLE
                                 binding.txtReferralCode.isEnabled = false
+                            }
+                            if(checkSnapshot.child("referralUpline").value.toString() != "none"){
+                                binding.constraintAlertMsg.visibility = View.VISIBLE
+                                binding.btnSubmitCode.visibility = View.INVISIBLE
+                                binding.txtReferralCode.isEnabled = false
+                            }
+                            if(checkSnapshot.child("referralUpline").value.toString().isNullOrBlank() || checkSnapshot.child("referralUpline").value.toString() == "none"){
+                                binding.constraintAlertMsg.visibility = View.INVISIBLE
+                                binding.btnSubmitCode.visibility = View.VISIBLE
+                                binding.txtReferralCode.isEnabled = true
                             }
                         }
                     }
@@ -133,10 +140,11 @@ class RefEnterCodeFragment : Fragment() {
 
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
         })
+        return true
     }
 
     private fun checkError() : Boolean{
@@ -144,7 +152,10 @@ class RefEnterCodeFragment : Fragment() {
             Toast.makeText(context, "Please enter a referral code.", Toast.LENGTH_SHORT).show()
             binding.txtReferralCode.requestFocus()
             return false
+        }else{
+            Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
         }
+
         return true
     }
 

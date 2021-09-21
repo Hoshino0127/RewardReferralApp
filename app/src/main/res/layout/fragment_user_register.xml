@@ -189,7 +189,8 @@
                     android:layout_toEndOf="@+id/textView18"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

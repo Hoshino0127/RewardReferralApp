@@ -17,8 +17,6 @@ import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 class ProfileDetailsFragment : Fragment() {
 
-    private lateinit var imageUri: Uri
-
     private var tempReferral = ArrayList<Referral>()
     private var referral = ArrayList<Referral>()
 

@@ -36,6 +36,11 @@ class ReferFriendFragment : Fragment() {
         loadData()
         tempbinding = FragmentReferFriendBinding.inflate(inflater,  container ,false)
 
+        //go back user profile
+        binding.btnBackReferFriend.setOnClickListener(){
+//            val action = ReferFriendFragmentDirections.()
+//            Navigation.findNavController(it).navigate(action)
+        }
 
         binding.btnCopyCode.setOnClickListener(){
             copyCode()

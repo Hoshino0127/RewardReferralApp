@@ -72,8 +72,6 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         loadData()
-//        insApplicationList.clear()
-//        insuranceList.clear()
         binding = FragmentUserProfileBinding.inflate(inflater,  container ,false)
 
         viewpager = binding.viewpagerInsurance
@@ -84,9 +82,10 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        //go back to dashboard
         binding.btnBackUserProfile.setOnClickListener(){
-            val action = UserProfileFragmentDirections.actionUserProfileFragmentToProfileDetailsFragment()
-            Navigation.findNavController(it).navigate(action)
+//            val action = UserProfileFragmentDirections.()
+//            Navigation.findNavController(it).navigate(action)
         }
 
         binding.relativeLRefeList.setOnClickListener(){
@@ -240,7 +239,6 @@ class UserProfileFragment : Fragment() {
                             }
                         }
                     }
-
                     viewpager.adapter = Card_Item_Adapter(cardItemList)
 
                 }

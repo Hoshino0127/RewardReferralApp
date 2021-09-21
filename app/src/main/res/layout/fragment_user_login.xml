@@ -8,18 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".UserLoginFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout25"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/login_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <TextView
             android:id="@+id/textView69"
             android:layout_width="wrap_content"
@@ -37,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="140dp"
             android:fontFamily="@font/abeezee"
             android:text="@string/login"
             android:textColor="@color/black"
@@ -139,7 +127,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="164dp"
             android:layout_height="40dp"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="210dp"
             android:layout_marginTop="36dp"
             android:text="@string/login"
             android:textAllCaps="false"
@@ -151,7 +139,7 @@
             android:id="@+id/btnStaffLogin"
             android:layout_width="164dp"
             android:layout_height="40dp"
-            android:layout_marginStart="198dp"
+            android:layout_marginStart="210dp"
             android:layout_marginTop="30dp"
             android:text="Login as staff"
             android:textAllCaps="false"
@@ -164,7 +152,7 @@
             android:id="@+id/btnToRegister"
             android:layout_width="164dp"
             android:layout_height="40dp"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="210dp"
             android:text="Register"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
@@ -175,7 +163,7 @@
             android:id="@+id/btnForgotPass"
             android:layout_width="164dp"
             android:layout_height="41dp"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="210dp"
             android:layout_marginTop="4dp"
             android:text="Forgot Password"
             android:textAllCaps="false"
