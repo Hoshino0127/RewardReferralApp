@@ -84,8 +84,13 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-        binding.relativeLRefeList.setOnClickListener(){
+        binding.btnBackUserProfile.setOnClickListener(){
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToProfileDetailsFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
+        binding.relativeLRefeList.setOnClickListener(){
+            //go back homepage?
         }
 
         binding.relativeLReward.setOnClickListener(){

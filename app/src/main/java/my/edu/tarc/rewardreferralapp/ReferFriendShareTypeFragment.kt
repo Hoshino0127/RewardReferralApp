@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.Navigation
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferFriendEmailBinding
 import java.lang.Exception
 
@@ -24,6 +25,7 @@ class ReferFriendShareTypeFragment : Fragment() {
         val binding: FragmentReferFriendEmailBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_refer_friend_email, container, false)
 
+        //args
         val args = ReferFriendShareTypeFragmentArgs.fromBundle(requireArguments())
         val referCode = args.referralCode
         binding.tvReferCodes.text = referCode
@@ -36,6 +38,11 @@ class ReferFriendShareTypeFragment : Fragment() {
 
         binding.imgViewDD.setOnClickListener(){
             binding.constraintEmailContent.visibility = View.VISIBLE
+        }
+
+        binding.btnBackInviteFriend.setOnClickListener(){
+            val action = ReferFriendShareTypeFragmentDirections.actionReferFriendShareTypeFragmentToReferFriendFragment()
+            Navigation.findNavController(it).navigate(action)
         }
 
         binding.btnSendEmail.setOnClickListener(){
@@ -54,7 +61,6 @@ class ReferFriendShareTypeFragment : Fragment() {
 
         intent.data = Uri.parse("Mail To: ")
         intent.type = "text/plain"
-
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
         intent.putExtra(Intent.EXTRA_SUBJECT, arrayOf(emailSubject))
         intent.putExtra(Intent.EXTRA_TEXT, arrayOf(emailMsg))

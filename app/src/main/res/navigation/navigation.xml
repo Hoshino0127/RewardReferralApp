@@ -428,6 +428,9 @@
         <action
             android:id="@+id/action_navigationFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <action
+            android:id="@+id/action_navigationFragment_to_referralListingFragment"
+            app:destination="@id/referralListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/applyInsuranceFragment"
@@ -640,6 +643,9 @@
         <argument
             android:name="referralCode"
             app:argType="string" />
+        <action
+            android:id="@+id/action_referFriendShareTypeFragment_to_referFriendFragment"
+            app:destination="@id/referFriendFragment" />
     </fragment>
     <fragment
         android:id="@+id/staffDashboardFragment"

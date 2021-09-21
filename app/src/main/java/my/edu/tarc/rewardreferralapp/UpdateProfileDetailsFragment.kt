@@ -33,7 +33,13 @@ class UpdateProfileDetailsFragment : Fragment() {
         loadData()
         tempbinding = FragmentUpdateProfileDetailsBinding.inflate(inflater, container, false)
 
-        binding.btnBackToProfileDetails.setOnClickListener() {
+        binding.btnBackToProfile.setOnClickListener(){
+            val action =
+                UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.btnBackEditProfile.setOnClickListener() {
             val action =
                 UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
             Navigation.findNavController(it).navigate(action)
@@ -49,7 +55,6 @@ class UpdateProfileDetailsFragment : Fragment() {
             binding.txtMultiAddress.text.clear()
             binding.spGenders.setSelection(0)
         }
-        //binding.progressBarSave.visibility = View.GONE
 
         return binding.root
     }
@@ -75,10 +80,8 @@ class UpdateProfileDetailsFragment : Fragment() {
                                 if (referralUID != null) {
                                     if (checkError()) {
                                         referralRef.child(referralUID).updateChildren(referral).addOnSuccessListener {
-                                                //binding.progressBarSave.visibility = View.GONE
                                                 Toast.makeText(context, "Updated successfully!", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {
-                                                //binding.progressBarSave.visibility = View.GONE
                                                 Toast.makeText(context, "Unable to update details.", Toast.LENGTH_LONG).show()
                                             }
                                     }

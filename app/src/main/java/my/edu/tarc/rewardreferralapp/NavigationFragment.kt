@@ -61,6 +61,12 @@ class NavigationFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.btnToReferralListing.setOnClickListener(){
+            val action = NavigationFragmentDirections.actionNavigationFragmentToReferralListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+
 
         return binding.root
     }

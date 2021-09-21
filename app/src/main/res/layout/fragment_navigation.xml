@@ -18,7 +18,7 @@ tools:context=".NavigationFragment">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cardView"
             android:layout_width="0dp"
-            android:layout_height="320dp"
+            android:layout_height="350dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
@@ -31,10 +31,10 @@ tools:context=".NavigationFragment">
                 android:id="@+id/btnToApplication"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="To Application"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.511"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnToList" />
 
@@ -62,7 +62,7 @@ tools:context=".NavigationFragment">
                 android:id="@+id/btnToCancelList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="To Cancel List"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,12 +72,25 @@ tools:context=".NavigationFragment">
                 android:id="@+id/btnToStaffDashBoard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="6dp"
                 android:text="Staff Dashboard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnToCancelList" />
+
+            <Button
+                android:id="@+id/btnToReferralListing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="89dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="90dp"
+                android:text="To Referral Listing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnToStaffDashBoard" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +108,7 @@ tools:context=".NavigationFragment">
                 android:id="@+id/btnToApply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="60dp"
                 android:text="Apply Insurance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"

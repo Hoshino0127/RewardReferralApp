@@ -35,6 +35,11 @@ class UserRegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_register, container, false)
 
+        binding.btnBackAccRegister.setOnClickListener(){
+            val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserLoginFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         binding.btnRegister.setOnClickListener(){
             if(errorFree()){
                 val email = binding.txtEmail.text.toString()
