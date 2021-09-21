@@ -31,12 +31,9 @@ class RefEnterCodeFragment : Fragment() {
     ): View? {
 
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
-//        val binding: FragmentRefEnterCodeBinding =
-//            DataBindingUtil.inflate(inflater, R.layout.fragment_ref_enter_code, container, false)
 
         binding.btnSubmitCode.setOnClickListener(){
             Toast.makeText(context, "You have successfully refer a friend.", Toast.LENGTH_LONG).show()
-
             val handler = Handler()
             handler.postDelayed({
                 val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
@@ -44,6 +41,11 @@ class RefEnterCodeFragment : Fragment() {
             }, 3000)
 
             //increasePoints()
+        }
+
+        binding.btnBackEnterRefCode.setOnClickListener(){
+            val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
+            Navigation.findNavController(it).navigate(action)
         }
         return binding.root
     }
@@ -53,14 +55,18 @@ class RefEnterCodeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (referralSnapshot in snapshot.children)
-                        if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
-                            if(referralSnapshot.child("invitationCode").value.toString() == binding.txtReferralCode.text.toString()){
-                                //increase the referral points
+                        if(referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
+                            if (checkError()) {
+                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()) {
+                                    if (referralSnapshot.child("invitationCode").value.toString() == binding.txtReferralCode.text.toString()) {
+                                        //increase the referral points
+                                    }
+                                }
                             }
-
                         }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -70,7 +76,7 @@ class RefEnterCodeFragment : Fragment() {
 
     private fun checkError() : Boolean{
         if(binding.txtReferralCode.text.isEmpty()){
-            Toast.makeText(context, "Please enter a valid referral code.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Please enter a referral code.", Toast.LENGTH_SHORT).show()
             binding.txtReferralCode.requestFocus()
             return false
         }

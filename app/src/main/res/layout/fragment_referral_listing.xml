@@ -14,29 +14,15 @@
             tools:context=".ReferralListingFragment">
 
             <TextView
-                android:id="@+id/tvRefListing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="25dp"
-                android:text="Referral Listing"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="17dp"
                 android:text="@string/enter_referral_name"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRefListing" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout22" />
 
             <SearchView
                 android:id="@+id/searchRefName"
@@ -95,6 +81,42 @@
                 tools:listitem="@layout/referral_list_item">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout22"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/backgroundPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView62"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="148dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="148dp"
+                    android:text="@string/referral_listings"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackReferralListing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

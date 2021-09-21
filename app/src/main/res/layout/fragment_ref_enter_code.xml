@@ -35,6 +35,18 @@
                     app:layout_constraintHorizontal_bias="0.466"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackEnterRefCode"
+                    android:layout_width="22dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
@@ -73,6 +85,8 @@
                 android:gravity="center"
                 android:hint="6 Digit Code"
                 android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.461"
                 app:layout_constraintStart_toStartOf="parent"

@@ -72,6 +72,8 @@ class UserProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         loadData()
+//        insApplicationList.clear()
+//        insuranceList.clear()
         binding = FragmentUserProfileBinding.inflate(inflater,  container ,false)
 
         viewpager = binding.viewpagerInsurance

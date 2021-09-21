@@ -575,6 +575,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_refEnterCodeFragment"
+            app:destination="@id/refEnterCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewReferralFragment"
@@ -624,12 +627,20 @@
         android:id="@+id/refEnterCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
         android:label="RefEnterCodeFragment"
-        tools:layout="@layout/fragment_ref_enter_code"/>
+        tools:layout="@layout/fragment_ref_enter_code">
+        <action
+            android:id="@+id/action_refEnterCodeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/referFriendShareTypeFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
         android:label="ReferFriendShareTypeFragment"
-        tools:layout="@layout/fragment_refer_friend_share_type"/>
+        tools:layout="@layout/fragment_refer_friend_email">
+        <argument
+            android:name="referralCode"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/staffDashboardFragment"
         android:name="my.edu.tarc.rewardreferralapp.StaffDashboardFragment"

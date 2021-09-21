@@ -1,13 +1,16 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferFriendEmailBinding
 import java.lang.Exception
@@ -20,6 +23,10 @@ class ReferFriendShareTypeFragment : Fragment() {
     ): View? {
         val binding: FragmentReferFriendEmailBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_refer_friend_email, container, false)
+
+        val args = ReferFriendShareTypeFragmentArgs.fromBundle(requireArguments())
+        val referCode = args.referralCode
+        binding.tvReferCodes.text = referCode
 
         binding.constraintEmailContent.visibility = View.GONE
 
@@ -37,7 +44,6 @@ class ReferFriendShareTypeFragment : Fragment() {
             val emailMsg: String = binding.txtEmailMsg.text.toString()
 
             sendEmail(recipientEmail, emailSubject, emailMsg)
-
         }
 
         return binding.root
@@ -60,5 +66,5 @@ class ReferFriendShareTypeFragment : Fragment() {
         }
     }
 
-
 }
+

@@ -43,18 +43,12 @@ class ReferFriendFragment : Fragment() {
         }
 
         binding.btnRefer.setOnClickListener(){
-            val action = ReferFriendFragmentDirections.actionReferFriendFragmentToReferFriendShareTypeFragment()
+            val referralCode: String = binding.tvRefCodeResult.text.toString()
+            val action = ReferFriendFragmentDirections.actionReferFriendFragmentToReferFriendShareTypeFragment(referralCode)
             Navigation.findNavController(it).navigate(action)
-//            val referralCode = binding.tvRefCodeResult.text.toString()
-//            val shareIntent = Intent()
-//            shareIntent.action = Intent.ACTION_SEND
-//            shareIntent.type = "text/plain"
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, "You can share this code : " + referralCode + " via")
-//            startActivity(Intent.createChooser(shareIntent, "Share referral code via :"))
         }
         return binding.root
     }
-
 
     private fun copyCode(){
         val copyText: String = binding.tvRefCodeResult.text.toString()

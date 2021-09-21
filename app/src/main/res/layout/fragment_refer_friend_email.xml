@@ -34,6 +34,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackInviteFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -47,6 +59,7 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +123,8 @@
                     android:ems="10"
                     android:hint="Subject"
                     android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtRecipeintEmail" />
@@ -124,6 +139,8 @@
                     android:ems="10"
                     android:hint="Enter Recipients' Email(s)"
                     android:inputType="textEmailAddress"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -139,6 +156,8 @@
                     android:gravity="start|top"
                     android:hint="Message"
                     android:inputType="textMultiLine"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtEmailSubject" />
