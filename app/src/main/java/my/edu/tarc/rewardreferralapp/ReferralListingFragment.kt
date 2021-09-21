@@ -145,23 +145,6 @@ class ReferralListingFragment : Fragment() {
         binding.referralRecycler.adapter = adapter
     }
 
-    //insert data into firebase
-//    private fun insertValue(){
-//        val refList: List<ReferralList> = listOf(
-//            ReferralList("Lau Pin Jian", "Inactive"),
-//            ReferralList("Woon Cui Yen", "Active"),
-//            ReferralList("Lee Kok Ken", "Active"),
-//            ReferralList("Soo Ji Ho", "Inactive"),
-//            ReferralList("Lim Chan How", "Active"),
-//            ReferralList("Tang Kok Hou", "Active"),
-//            ReferralList("Chan Kin Lam", "Inactive")
-//        )
-//        //push into firebase
-//        for(referral in refList){
-//            myRef.push().setValue(referral)
-//        }
-//    }
-
     private fun deleteData(name : String?, dataFetched:FirebaseSuccessListener) {
         myRef.orderByChild("name").equalTo(name).addListenerForSingleValueEvent( object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -181,4 +164,21 @@ class ReferralListingFragment : Fragment() {
     interface FirebaseSuccessListener {
         fun onDataFound(isDataFetched: Boolean, Key: String)
     }
+
+    //insert data into firebase
+//    private fun insertValue(){
+//        val refList: List<ReferralList> = listOf(
+//            ReferralList("Lau Pin Jian", "Inactive"),
+//            ReferralList("Woon Cui Yen", "Active"),
+//            ReferralList("Lee Kok Ken", "Active"),
+//            ReferralList("Soo Ji Ho", "Inactive"),
+//            ReferralList("Lim Chan How", "Active"),
+//            ReferralList("Tang Kok Hou", "Active"),
+//            ReferralList("Chan Kin Lam", "Inactive")
+//        )
+//        //push into firebase
+//        for(referral in refList){
+//            myRef.push().setValue(referral)
+//        }
+//    }
 }

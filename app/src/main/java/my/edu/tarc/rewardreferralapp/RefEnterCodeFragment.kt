@@ -2,6 +2,7 @@ package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
 import android.os.Handler
+import android.renderscript.Sampler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,16 +31,18 @@ class RefEnterCodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        checkIfGotUpLine()
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
 
         binding.btnSubmitCode.setOnClickListener(){
-            Toast.makeText(context, "You have successfully refer a friend.", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
             val handler = Handler()
             handler.postDelayed({
                 val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
                 Navigation.findNavController(it).navigate(action)
             }, 3000)
 
+            checkUpLine()
             //increasePoints()
         }
 
@@ -47,6 +50,7 @@ class RefEnterCodeFragment : Fragment() {
             val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
         return binding.root
     }
 
@@ -69,6 +73,67 @@ class RefEnterCodeFragment : Fragment() {
 
             override fun onCancelled(error: DatabaseError) {
 
+            }
+
+        })
+    }
+
+    private fun checkUpLine(){
+        val referCodeEntered: String = binding.txtReferralCode.text.toString()
+        val referralUID = CheckUser().getCurrentUserUID()
+
+        val referral = mapOf<String, Any?>(
+            "referralUpline" to referCodeEntered
+        )
+
+        //update the upline referralUID
+        referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (updateSnapshot in snapshot.children) {
+                    if (updateSnapshot.exists()) {
+                        updateSnapshot.key?.let {
+                            if (referralUID != null) {
+                                if (checkError()) {
+                                    if(referCodeEntered == updateSnapshot.child("invitationCode").value.toString()) {
+                                        referralRef.child(referralUID).updateChildren(referral)
+                                            .addOnSuccessListener {
+                                                Toast.makeText(context, "Updated", Toast.LENGTH_LONG).show()
+                                            }.addOnFailureListener {
+                                                Toast.makeText(context, "Unable to update.", Toast.LENGTH_LONG).show()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
+    }
+
+    private fun checkIfGotUpLine(){
+        referralRef.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(checkSnapshot in snapshot.children){
+                        if (checkSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
+                            if(checkSnapshot.child("referralUpline").value.toString() != ""){
+                                binding.txtReferralCode.isEnabled = false
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
 
         })

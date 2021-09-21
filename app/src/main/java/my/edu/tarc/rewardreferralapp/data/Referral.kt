@@ -11,5 +11,6 @@ data class Referral(
     val address: String? = null,
     val deductible: Double? = 0.0,
     val points: Int? = 0,
-    val invitationCode: String? = null
+    val invitationCode: String? = null,
+    val referralUpLine: String? = null
 )

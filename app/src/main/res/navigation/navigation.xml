@@ -637,7 +637,7 @@
     </fragment>
     <fragment
         android:id="@+id/referFriendShareTypeFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferFriendEmailFragment"
         android:label="ReferFriendShareTypeFragment"
         tools:layout="@layout/fragment_refer_friend_email">
         <argument

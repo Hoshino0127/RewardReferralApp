@@ -71,8 +71,7 @@ class UpdateProfileDetailsFragment : Fragment() {
             "gender" to gender
         )
 
-        referralRef.orderByChild("referralUID")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (updateSnapshot in snapshot.children) {
                         if (updateSnapshot.exists()) {

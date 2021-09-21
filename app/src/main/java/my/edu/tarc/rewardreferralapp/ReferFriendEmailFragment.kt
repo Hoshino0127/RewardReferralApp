@@ -16,7 +16,7 @@ import androidx.navigation.Navigation
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferFriendEmailBinding
 import java.lang.Exception
 
-class ReferFriendShareTypeFragment : Fragment() {
+class ReferFriendEmailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class ReferFriendShareTypeFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_refer_friend_email, container, false)
 
         //args
-        val args = ReferFriendShareTypeFragmentArgs.fromBundle(requireArguments())
+        val args = ReferFriendEmailFragmentArgs.fromBundle(requireArguments())
         val referCode = args.referralCode
         binding.tvReferCodes.text = referCode
 
@@ -41,7 +41,7 @@ class ReferFriendShareTypeFragment : Fragment() {
         }
 
         binding.btnBackInviteFriend.setOnClickListener(){
-            val action = ReferFriendShareTypeFragmentDirections.actionReferFriendShareTypeFragmentToReferFriendFragment()
+            val action = ReferFriendEmailFragmentDirections.actionReferFriendShareTypeFragmentToReferFriendFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
