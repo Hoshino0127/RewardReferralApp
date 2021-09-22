@@ -138,6 +138,22 @@
     <string name="close">Close</string>
     <string name="adminClaimSearchHint">Enter Claim ID to search</string>
     <string name="insuranceListSearchHint">Enter insurance name to search</string>
+    <string name="hello">Hello,</string>
+    <string name="userprofile">User Profile</string>
+    <string name="profile">Profile</string>
+    <string name="reward">Reward</string>
+    <string name="referrals">Referrals</string>
+    <string name="refer_now">Refer Now</string>
+    <string name="gender">Gender</string>
+    <string name="address">Address</string>
+    <string name="contact_no">Contact No.</string>
+    <string name="email">Email</string>
+    <string name="nric">NRIC</string>
+    <string name="full_name">Full Name</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="reset">Reset</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
 
     <string-array name="gender_items">
         <item>Male</item>

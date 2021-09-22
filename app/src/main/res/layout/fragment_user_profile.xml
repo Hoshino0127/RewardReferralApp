@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="Hello, "
+                android:text="@string/hello"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/tviewUserName"
@@ -193,7 +193,7 @@
                     android:layout_marginStart="169dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="160dp"
-                    android:text="User Profile"
+                    android:text="@string/userprofile"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -231,7 +231,6 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="21dp"
-                    android:layout_marginLeft="21dp"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="22dp"
                     app:srcCompat="@drawable/user_icon"
@@ -247,7 +246,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="16dp"
-                    android:text="Profile"
+                    android:text="@string/profile"
                     android:textColor="@color/black" />
             </RelativeLayout>
 
@@ -269,7 +268,6 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="21dp"
-                    android:layout_marginLeft="21dp"
                     android:layout_marginTop="11dp"
                     android:layout_marginEnd="22dp"
                     app:srcCompat="@drawable/reward_icon" />
@@ -284,7 +282,7 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="13dp"
-                    android:text="Reward"
+                    android:text="@string/reward"
                     android:textColor="@color/black" />
             </RelativeLayout>
 
@@ -321,7 +319,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginEnd="8dp"
-                    android:text="Referrals"
+                    android:text="@string/referrals"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -357,7 +355,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="3dp"
-                    android:text="Refer Now"
+                    android:text="@string/refer_now"
                     android:textColor="@color/black" />
             </RelativeLayout>
 
