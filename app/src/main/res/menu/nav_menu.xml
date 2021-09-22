@@ -18,6 +18,9 @@
                 android:id="@+id/nav_applyInsurance"
                 android:title="Apply insurance" />
             <item
+                android:id="@+id/nav_viewApplication"
+                android:title="View application" />
+            <item
                 android:id="@+id/nav_viewInsurance"
                 android:title="View insurance" />
             <item

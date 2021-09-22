@@ -175,6 +175,12 @@
         <action
             android:id="@+id/action_homepage_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_homepage_to_listInsuranceCustViewFragment"
+            app:destination="@id/listInsuranceCustViewFragment" />
+        <action
+            android:id="@+id/action_homepage_to_listInsuranceApplicationCustViewFragment"
+            app:destination="@id/listInsuranceApplicationCustViewFragment" />
     </fragment>
 
     <fragment
