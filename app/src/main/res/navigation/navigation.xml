@@ -420,6 +420,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_homepage"
             app:destination="@id/homepage" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_userReferralListsFragment"
+            app:destination="@id/userReferralListsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cancelInsuranceFragment"
@@ -465,6 +468,15 @@
         <action
             android:id="@+id/action_referFriendEmailFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userReferralListsFragment"
+        android:name="my.edu.tarc.rewardreferralapp.UserReferralListsFragment"
+        android:label="UserReferralListsFragment"
+        tools:layout="@layout/fragment_user_referral_lists">
+        <action
+            android:id="@+id/action_userReferralListsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
 
 

@@ -107,7 +107,7 @@
                 android:layout_marginEnd="81dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Enter the 6 digit code"
+                android:hint="Enter the 6 digit referral code"
                 android:inputType="textPersonName"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,15 +116,16 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintAlertMsg"
-                android:layout_width="269dp"
-                android:layout_height="70dp"
+                android:layout_width="310dp"
+                android:layout_height="95dp"
                 android:layout_marginStart="72dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="71dp"
                 android:background="@drawable/rect_bg"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.523"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtReferralCode">
+                app:layout_constraintTop_toBottomOf="@+id/imageView21">
 
                 <TextView
                     android:id="@+id/tvAlertMsg"
@@ -134,10 +135,11 @@
                     android:layout_marginTop="14dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="14dp"
-                    android:text="You have an up line. You are not able to have more than one up line."
+                    android:text="You already have an up line. You are not able to have more than one up line. You know what? You can invite friends too!!!"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

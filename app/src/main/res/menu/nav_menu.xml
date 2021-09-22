@@ -35,6 +35,29 @@
                 android:id="@+id/nav_claimReward"
                 android:title="Claim Rewards" />
 
+            <item
+                android:id="@+id/nav_myReward"
+                android:title="My Rewards" />
+
+            <item
+                android:id="@+id/nav_viewRewardDelivery"
+                android:title="View Reward Delivery" />
+        </menu>
+    </item>
+
+    <item android:title="Point Transfer">
+        <menu>
+            <item
+                android:id="@+id/nav_myQRCode"
+                android:title="My MyBee QR Code" />
+
+            <item
+                android:id="@+id/nav_scanQRCode"
+                android:title="Scan MyBee QR Code" />
+
+            <item
+                android:id="@+id/nav_transferHistory"
+                android:title="Transfer History" />
         </menu>
     </item>
 

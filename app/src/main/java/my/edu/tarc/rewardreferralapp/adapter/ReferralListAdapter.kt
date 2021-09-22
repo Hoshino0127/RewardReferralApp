@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.data.ReferralList
 
-class ReferralListAdapter(referList1: FragmentActivity, val referList: List<ReferralList>, ) : RecyclerView.Adapter<ReferralListAdapter.myViewHolder>() {
+class ReferralListAdapter(referList1: FragmentActivity, val referList: List<ReferralList>) : RecyclerView.Adapter<ReferralListAdapter.myViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.referral_list_item, parent, false)
