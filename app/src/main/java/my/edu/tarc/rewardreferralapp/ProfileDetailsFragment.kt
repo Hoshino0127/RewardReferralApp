@@ -40,6 +40,11 @@ class ProfileDetailsFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.btnBackProfileDetails.setOnClickListener(){
+            val action = ProfileDetailsFragmentDirections.actionProfileDetailsFragmentToUserProfileFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         //update
         binding.btnUpdate.setOnClickListener(){
             val action = ProfileDetailsFragmentDirections.actionProfileDetailsFragmentToUpdateProfileDetailsFragment()

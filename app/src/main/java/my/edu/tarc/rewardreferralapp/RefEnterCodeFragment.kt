@@ -31,16 +31,13 @@ class RefEnterCodeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         checkIfGotUpLine()
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
 
         binding.btnSubmitCode.setOnClickListener(){
-
             checkIfGotUpLine()
             checkUpLine()
             checkError()
-
             //increasePoints()
         }
 
@@ -59,8 +56,7 @@ class RefEnterCodeFragment : Fragment() {
                     for (referralSnapshot in snapshot.children)
                         if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
                             if (checkError()) {
-                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()
-                                ) {
+                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()) {
                                     if (referralSnapshot.child("invitationCode").value.toString() == binding.txtReferralCode.text.toString()) {
                                         //increase the referral points
                                     }
@@ -80,7 +76,6 @@ class RefEnterCodeFragment : Fragment() {
         val referCodeEntered: String = binding.txtReferralCode.text.toString()
         val referralUID = CheckUser().getCurrentUserUID()
 
-        //update the upline referralUID
         referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (updateSnapshot in snapshot.children) {
@@ -90,11 +85,12 @@ class RefEnterCodeFragment : Fragment() {
                             if (referralUID != null) {
                                 if (checkError()) {
                                     if(referCodeEntered == updateSnapshot.child("invitationCode").value.toString()) {
+                                        //set the current user's referralUpline to upline ID
                                         referralRef.child(referralUID).child("referralUpline").setValue(uplineUID)
                                             .addOnSuccessListener {
-//                                                Toast.makeText(context, "Updated", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {
-                                                Toast.makeText(context, "Unable to update.", Toast.LENGTH_LONG).show()
+                                                Toast.makeText(context, "Unable to refer, you may have entered the invalid code.", Toast.LENGTH_LONG).show()
                                         }
                                     }
                                 }
@@ -152,8 +148,6 @@ class RefEnterCodeFragment : Fragment() {
             Toast.makeText(context, "Please enter a referral code.", Toast.LENGTH_SHORT).show()
             binding.txtReferralCode.requestFocus()
             return false
-        }else{
-            Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
         }
 
         return true

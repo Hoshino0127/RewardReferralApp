@@ -172,6 +172,9 @@
         <action
             android:id="@+id/action_homepage_to_navigationFragment"
             app:destination="@id/navigationFragment" />
+        <action
+            android:id="@+id/action_homepage_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
 
     <fragment
@@ -291,9 +294,6 @@
         <action
             android:id="@+id/action_navigationFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
-        <action
-            android:id="@+id/action_navigationFragment_to_referralListingFragment"
-            app:destination="@id/referralListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/applyInsuranceFragment"
@@ -370,11 +370,11 @@
         android:label="ProfileDetailsFragment"
         tools:layout="@layout/fragment_profile_details">
         <action
-            android:id="@+id/action_profileDetailsFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
-        <action
             android:id="@+id/action_profileDetailsFragment_to_updateProfileDetailsFragment"
             app:destination="@id/updateProfileDetailsFragment" />
+        <action
+            android:id="@+id/action_profileDetailsFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/referFriendFragment"
@@ -383,16 +383,10 @@
         tools:layout="@layout/fragment_refer_friend">
         <action
             android:id="@+id/action_referFriendFragment_to_referFriendShareTypeFragment"
-            app:destination="@id/referFriendShareTypeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/referralListingFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ReferralListingFragment"
-        android:label="ReferralListingFragment"
-        tools:layout="@layout/fragment_referral_listing">
+            app:destination="@id/referFriendEmailFragment" />
         <action
-            android:id="@+id/action_referralListingFragment_to_addNewReferralFragment"
-            app:destination="@id/addNewReferralFragment" />
+            android:id="@+id/action_referFriendFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateProfileDetailsFragment"
@@ -417,15 +411,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_refEnterCodeFragment"
             app:destination="@id/refEnterCodeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addNewReferralFragment"
-        android:name="my.edu.tarc.rewardreferralapp.AddNewReferralFragment"
-        android:label="AddNewReferralFragment"
-        tools:layout="@layout/fragment_add_new_referral">
         <action
-            android:id="@+id/action_addNewReferralFragment_to_referralListingFragment"
-            app:destination="@id/referralListingFragment" />
+            android:id="@+id/action_userProfileFragment_to_homepage"
+            app:destination="@id/homepage" />
     </fragment>
     <fragment
         android:id="@+id/cancelInsuranceFragment"
@@ -461,15 +449,15 @@
             app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/referFriendShareTypeFragment"
+        android:id="@+id/referFriendEmailFragment"
         android:name="my.edu.tarc.rewardreferralapp.ReferFriendEmailFragment"
-        android:label="ReferFriendShareTypeFragment"
+        android:label="ReferFriendEmailFragment"
         tools:layout="@layout/fragment_refer_friend_email">
         <argument
             android:name="referralCode"
             app:argType="string" />
         <action
-            android:id="@+id/action_referFriendShareTypeFragment_to_referFriendFragment"
+            android:id="@+id/action_referFriendEmailFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
     </fragment>
 

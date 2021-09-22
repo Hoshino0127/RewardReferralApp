@@ -15,7 +15,7 @@ class UserRegisterSuccessful : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val binding: FragmentUserRegisterSuccessfulBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_user_register_successful, container, false)
 
