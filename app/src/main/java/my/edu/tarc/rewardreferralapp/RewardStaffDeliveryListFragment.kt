@@ -117,6 +117,7 @@ class RewardStaffDeliveryListFragment : Fragment() {
     }
 
     private fun setAdapter(adapterDeliveryList: ArrayList<RewardDelivery>) {
+        adapterDeliveryList.sortByDescending { r -> r.applyDate }
         val rewDelAdapter = RewardDeliveryAdapter(
             adapterDeliveryList,
             RewardDeliveryAdapter.CheckListener { deliveryID ->
@@ -133,10 +134,6 @@ class RewardStaffDeliveryListFragment : Fragment() {
         binding.RSDLDeliveryRV.adapter = rewDelAdapter
         binding.RSDLDeliveryRV.setHasFixedSize(true)
 
-        var layoutManager = LinearLayoutManager(getActivity())
-        layoutManager.setReverseLayout(true)
-        layoutManager.setStackFromEnd(true)
-        binding.RSDLDeliveryRV.setLayoutManager(layoutManager)
     }
 
     private fun hideLoading() {

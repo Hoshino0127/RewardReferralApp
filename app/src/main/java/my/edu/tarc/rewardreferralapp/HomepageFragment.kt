@@ -4,14 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.renderscript.Sampler
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -24,11 +27,15 @@ import com.skydoves.balloon.createBalloon
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentHomepageBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import java.lang.Exception
 
 
 class HomepageFragment : Fragment() {
     private val auth = FirebaseAuth.getInstance()
     private lateinit var binding: FragmentHomepageBinding
+
+    lateinit var toggle : ActionBarDrawerToggle
+    lateinit var drawerLayout : DrawerLayout
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val referralRef = database.getReference("Referral")
@@ -69,6 +76,42 @@ class HomepageFragment : Fragment() {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false)
 
+        drawerLayout = binding.drawerLayoutHomepage
+        val navView : NavigationView = binding.navView
+
+        navView.bringToFront()
+        navView.setNavigationItemSelectedListener {
+
+            when (it.itemId) {
+                //add those fragment id here
+                //R.id.dashboard -> replaceFragment(AddNewReferralFragment(), it.title.toString())
+                R.id.nav_viewClaim -> {
+                    navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
+                }
+                R.id.nav_viewInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment(), it.title.toString())
+                R.id.nav_applyInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceCustViewFragment(), it.title.toString())
+                R.id.nav_viewApplication -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceApplicationCustViewFragment(), it.title.toString())
+                R.id.nav_staffDashboard -> {
+                    val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_claimReward -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardCenterFragment(),it.title.toString())
+                R.id.nav_myReward -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardMyFragment(),it.title.toString())
+                R.id.nav_viewRewardDelivery -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardDeliveryListFragment(),it.title.toString())
+
+                R.id.nav_myQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralMyQRCodeFragment(),it.title.toString())
+                R.id.nav_scanQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralScanQRCodeFragment(),it.title.toString())
+                R.id.nav_transferHistory -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralTransferListingFragment(),it.title.toString())
+            }
+
+
+            true
+        }
+
+        binding.imgNavigation.setOnClickListener(){
+            drawerLayout.openDrawer(navView)
+        }
+
         referralUID = CheckUser().getCurrentUserUID()!!
 
         referralListener = object: ValueEventListener{
@@ -90,7 +133,6 @@ class HomepageFragment : Fragment() {
                                 email = email,
                                 points = points
                             )
-                            println(referral)
                         }
                     }
                     updateView()
@@ -105,10 +147,10 @@ class HomepageFragment : Fragment() {
 
         referralRef.addListenerForSingleValueEvent(referralListener)
 
-        binding.imgLogo.setOnClickListener(){
+        /*binding.imgLogo.setOnClickListener(){
             val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         binding.imgProfile.setOnClickListener(){
             if(auth.currentUser != null){
@@ -119,6 +161,11 @@ class HomepageFragment : Fragment() {
 
         binding.button.setOnClickListener(){
             val action = HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.relativeLayout7.setOnClickListener(){
+            val action = HomepageFragmentDirections.actionHomepageToRewardCenterFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
@@ -138,6 +185,24 @@ class HomepageFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun navigateToFrag(navDirections: NavDirections, title: String){
+        try{
+            val it = view
+            if(it != null){
+                Navigation.findNavController(it).navigate(navDirections)
+            }
+        }catch(e: Exception){
+
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
