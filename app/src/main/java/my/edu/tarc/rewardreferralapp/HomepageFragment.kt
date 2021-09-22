@@ -105,6 +105,11 @@ class HomepageFragment : Fragment() {
 
         referralRef.addListenerForSingleValueEvent(referralListener)
 
+        binding.imgLogo.setOnClickListener(){
+            val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.imgProfile.setOnClickListener(){
             if(auth.currentUser != null){
                 Firebase.auth.signOut()

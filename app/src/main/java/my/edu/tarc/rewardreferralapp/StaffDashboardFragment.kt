@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.R
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -29,10 +30,6 @@ class StaffDashboardFragment : Fragment() {
     private var referralFragment: MenuStaffReferralFragment? = null
     private var rewardFragment: MenuStaffRewardFragment? = null
 
-    private var doubleBackToExitPressedOnce = false
-    private val mHandler: Handler = Handler()
-    private val mRunnable =
-        Runnable { doubleBackToExitPressedOnce = false }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,14 +40,8 @@ class StaffDashboardFragment : Fragment() {
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
 
-                    if(!doubleBackToExitPressedOnce){
-                        doubleBackToExitPressedOnce = true
-                        Toast.makeText(requireContext(),"Click back one more time to exit",
-                            Toast.LENGTH_SHORT).show()
-                        mHandler.postDelayed(mRunnable, 2000);
-                    }else{
-                        activity?.finishAffinity()
-                    }
+                    val intent = Intent(requireContext(), HomepageActivity::class.java)
+                    startActivity(intent)
 
 
                 }
