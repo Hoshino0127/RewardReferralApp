@@ -85,10 +85,7 @@ class HomepageFragment : Fragment() {
             when (it.itemId) {
                 //add those fragment id here
                 //R.id.dashboard -> replaceFragment(AddNewReferralFragment(), it.title.toString())
-                R.id.nav_viewClaim -> {
-                    println("Clicked")
-                    navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
-                }
+                R.id.nav_viewClaim -> navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
                 R.id.nav_viewInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment(), it.title.toString())
                 R.id.nav_applyInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceCustViewFragment(), it.title.toString())
                 R.id.nav_viewApplication -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceApplicationCustViewFragment(), it.title.toString())

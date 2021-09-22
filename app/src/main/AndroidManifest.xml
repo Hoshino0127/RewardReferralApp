@@ -30,21 +30,6 @@
 
         <activity android:name=".LoginActivity" />
         <activity android:name=".ClaimListingActivity" />
-        <activity android:name=".ApplyClaimSuccessActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="my.edu.tarc.rewardreferralapp.ReferralInsuranceListingActivity" />
-        </activity>
-        <activity android:name=".ApplyClaimActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="my.edu.tarc.rewardreferralapp.ReferralInsuranceListingActivity" />
-        </activity>
-        <activity android:name=".ReferralInsuranceListingActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="my.edu.tarc.rewardreferralapp.MainActivity" />
-        </activity>
         <activity android:name=".GetStarted">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
