@@ -43,7 +43,7 @@ class RenewInsuranceFragment : Fragment() {
         insuranceID = args.insuranceID
         insuranceReferralID = args.insuranceReferralID
 
-        var durationStr: String = year.toString() + if(year == 1){"year"}else{"years"}
+        var durationStr: String = year.toString() + if(year == 1){" year"}else{" years"}
         binding.tvPlanDuration.text = durationStr
 
         myInsurance.orderByChild("insuranceID").addListenerForSingleValueEvent(object:ValueEventListener{
@@ -52,12 +52,11 @@ class RenewInsuranceFragment : Fragment() {
                     for(insuranceSS in snapshot.children){
                         if(insuranceSS.child("insuranceID").value.toString() == insuranceID){
                             binding.tvCompTitle.text = insuranceSS.child("insuranceComp").value.toString()
-                            //binding.tvInsuranceID.text = insuranceSS.child("insuranceID").value.toString()
                             binding.tvInsuranceName.text = insuranceSS.child("insuranceName").value.toString()
                             binding.tvInsurancePlanName.text = insuranceSS.child("insurancePlan").value.toString()
                             val insurancePrice:Double = insuranceSS.child("insurancePrice").value.toString().toDouble()
                             binding.tvTotalRenewInsurance.text = String.format("%.2f",insurancePrice)
-                            currentPrice = insurancePrice
+                            currentPrice = insurancePrice * year
                         }
                     }
                 }
