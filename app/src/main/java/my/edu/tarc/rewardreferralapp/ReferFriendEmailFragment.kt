@@ -46,6 +46,7 @@ class ReferFriendEmailFragment : Fragment() {
         }
 
         binding.btnSendEmail.setOnClickListener(){
+            val referCode: String = binding.tvReferCodes.text.toString()
             val recipientEmail: String = binding.txtRecipeintEmail.text.toString()
             val emailSubject: String = binding.txtEmailSubject.text.toString()
             val emailMsg: String = binding.txtEmailMsg.text.toString()

@@ -2,16 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ReferralListingFragment">
+            tools:context=".UserReferralListsFragment">
 
             <TextView
                 android:id="@+id/textView3"
@@ -19,23 +17,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="17dp"
-                android:text="@string/enter_referral_name"
+                android:text="Enter name to search :"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout22" />
-
-            <SearchView
-                android:id="@+id/searchRefName"
-                android:layout_width="344dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="43dp"
-                android:background="@drawable/rounded_corner_grey_border_1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <view
                 android:id="@+id/view4"
@@ -44,11 +29,11 @@
                 android:layout_width="370dp"
                 android:layout_height="2.5dp"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:layout_marginEnd="21dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchRefName" />
+                app:layout_constraintTop_toBottomOf="@+id/searchUserRefName" />
 
             <view
                 android:id="@+id/view"
@@ -56,31 +41,13 @@
                 class="androidx.appcompat.widget.ActionMenuView"
                 android:layout_width="370dp"
                 android:layout_height="2.5dp"
-                android:layout_marginStart="13dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginEnd="21dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.107"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/referralRecycler"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="10dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@+id/view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                app:layout_constraintVertical_bias="1.0"
-                tools:listitem="@layout/referral_list_item">
-
-            </androidx.recyclerview.widget.RecyclerView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout22"
@@ -95,10 +62,10 @@
                     android:id="@+id/textView62"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="148dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginEnd="148dp"
-                    android:text="@string/referral_listings"
+                    android:layout_marginStart="102dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="103dp"
+                    android:text="Your Referral Downline List"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -117,6 +84,33 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <SearchView
+                android:id="@+id/searchUserRefName"
+                android:layout_width="345dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/rounded_corner_grey_border_1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4"
+                tools:listitem="@layout/user_referral_list_item" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

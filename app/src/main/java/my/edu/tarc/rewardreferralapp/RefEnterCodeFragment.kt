@@ -89,6 +89,11 @@ class RefEnterCodeFragment : Fragment() {
                                         referralRef.child(referralUID).child("referralUpline").setValue(uplineUID)
                                             .addOnSuccessListener {
                                                 Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
+                                                val handler = Handler()
+                                                handler.postDelayed({
+                                                    val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
+                                                    Navigation.findNavController(requireView()).navigate(action)
+                                                }, 3000)
                                             }.addOnFailureListener {
                                                 Toast.makeText(context, "Unable to refer, you may have entered the invalid code.", Toast.LENGTH_LONG).show()
                                         }
@@ -103,9 +108,7 @@ class RefEnterCodeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
 
             }
-
         })
-
     }
 
     private fun checkIfGotUpLine() : Boolean{
@@ -117,17 +120,26 @@ class RefEnterCodeFragment : Fragment() {
                             if(checkSnapshot.child("referralUpline").value.toString() != ""){
                                 binding.constraintAlertMsg.visibility = View.VISIBLE
                                 binding.btnSubmitCode.visibility = View.INVISIBLE
-                                binding.txtReferralCode.isEnabled = false
+                                binding.textView58.visibility = View.INVISIBLE
+                                binding.textView59.visibility = View.INVISIBLE
+                                binding.txtReferralCode.visibility = View.INVISIBLE
+                                //binding.txtReferralCode.isEnabled = false
                             }
                             if(checkSnapshot.child("referralUpline").value.toString() != "none"){
                                 binding.constraintAlertMsg.visibility = View.VISIBLE
                                 binding.btnSubmitCode.visibility = View.INVISIBLE
-                                binding.txtReferralCode.isEnabled = false
+                                binding.textView58.visibility = View.INVISIBLE
+                                binding.textView59.visibility = View.INVISIBLE
+                                binding.txtReferralCode.visibility = View.INVISIBLE
+                                //binding.txtReferralCode.isEnabled = false
                             }
                             if(checkSnapshot.child("referralUpline").value.toString().isNullOrBlank() || checkSnapshot.child("referralUpline").value.toString() == "none"){
                                 binding.constraintAlertMsg.visibility = View.INVISIBLE
                                 binding.btnSubmitCode.visibility = View.VISIBLE
-                                binding.txtReferralCode.isEnabled = true
+                                binding.textView58.visibility = View.VISIBLE
+                                binding.textView59.visibility = View.VISIBLE
+                                binding.txtReferralCode.visibility = View.VISIBLE
+                                //binding.txtReferralCode.isEnabled = true
                             }
                         }
                     }
