@@ -62,8 +62,8 @@ class ReferFriendEmailFragment : Fragment() {
         intent.data = Uri.parse("Mail To: ")
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
-        intent.putExtra(Intent.EXTRA_SUBJECT, arrayOf(emailSubject))
-        intent.putExtra(Intent.EXTRA_TEXT, arrayOf(emailMsg))
+        intent.putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+        intent.putExtra(Intent.EXTRA_TEXT, emailMsg)
 
         try {
             startActivity(Intent.createChooser(intent,"Choose : "))
