@@ -138,18 +138,17 @@ class UserProfileFragment : Fragment() {
 
     //compare insurance and insurance application insuranceID
     private fun loadCardView() {
-
         //get insurance application
         insuranceApplicationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (insuranceSnapshot in snapshot.children) { //go in insuranceApplication
-                        if (insuranceSnapshot.child("referralID").value.toString() == CheckUser().getCurrentUserUID()) { //compare referralID
+                        if (insuranceSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) { //compare referralID
                             //then get the value that i needed here
                             val applicationID: String = insuranceSnapshot.child("applicationID").value.toString()
                             val applicationAppliedDate: Date = Date(insuranceSnapshot.child("applicationAppliedDate").child("time").value as Long)
                             val insuranceID: String = insuranceSnapshot.child("insuranceID").value.toString()
-                            val referralID: String = insuranceSnapshot.child("referralID").value.toString()
+                            val referralID: String = insuranceSnapshot.child("referralUID").value.toString()
                             val insuranceStatus: String = insuranceSnapshot.child("applicationStatus").value.toString()
 
                             val insApp = InsuranceApplication(
@@ -204,6 +203,8 @@ class UserProfileFragment : Fragment() {
                                 }
                                 val insurancePrice: String =
                                     insuranceSnapshot.child("insurancePrice").value.toString()
+                                val insuranceImg: String =
+                                    insuranceSnapshot.child("insuranceImg").value.toString()
 
                                 val insurance = Insurance(
                                     insuranceID,
@@ -212,13 +213,16 @@ class UserProfileFragment : Fragment() {
                                     insurancePlan,
                                     insuranceCoverage,
                                     insurancePrice.toDouble(),
-                                    insuranceType
+                                    insuranceType,
+                                    insuranceImg
                                 )
 
                                 insuranceList.add(insurance)
+
                             }
                         }
                     }
+
 
                     //loop the insurance list and insurance application list to get the value
                     for(insAppList in insApplicationList) {
@@ -233,10 +237,13 @@ class UserProfileFragment : Fragment() {
                                     cardItemList.add(Card_Item_Model(insList.insuranceComp.toString(), insList.insuranceName.toString(),insAppList.applicationStatus.toString(), R.drawable.great_eastern))
                                 } else if (insList.insuranceComp == "Etiqa") {
                                     cardItemList.add(Card_Item_Model(insList.insuranceComp.toString(), insList.insuranceName.toString(),insAppList.applicationStatus.toString(), R.drawable.etiqa))
+                                } else {
+                                    cardItemList.add(Card_Item_Model(insList.insuranceComp.toString(), insList.insuranceName.toString(),insAppList.applicationStatus.toString(), R.drawable.default_img))
                                 }
                             }
                         }
                     }
+
                     viewpager.adapter = Card_Item_Adapter(cardItemList)
 
                 }
