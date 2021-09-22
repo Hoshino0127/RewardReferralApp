@@ -79,12 +79,6 @@ class HomepageFragment : Fragment() {
         drawerLayout = binding.drawerLayoutHomepage
         val navView : NavigationView = binding.navView
 
-
-
-        /*toggle = ActionBarDrawerToggle(requireActivity(), drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()*/
-
         navView.bringToFront()
 
         navView.setNavigationItemSelectedListener {
@@ -92,7 +86,10 @@ class HomepageFragment : Fragment() {
             when (it.itemId) {
                 //add those fragment id here
                 //R.id.dashboard -> replaceFragment(AddNewReferralFragment(), it.title.toString())
-                R.id.nav_viewClaim -> navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
+                R.id.nav_viewClaim -> {
+                    println("Clicked")
+                    navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
+                }
                 R.id.nav_viewInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment(), it.title.toString())
                 R.id.nav_staffDashboard -> {
                     val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
@@ -129,7 +126,6 @@ class HomepageFragment : Fragment() {
                                 email = email,
                                 points = points
                             )
-                            println(referral)
                         }
                     }
                     updateView()
