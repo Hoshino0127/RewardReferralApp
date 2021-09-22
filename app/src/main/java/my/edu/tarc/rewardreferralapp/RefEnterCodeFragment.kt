@@ -75,25 +75,31 @@ class RefEnterCodeFragment : Fragment() {
     private fun checkUpLine(){
         val referCodeEntered: String = binding.txtReferralCode.text.toString()
         val referralUID = CheckUser().getCurrentUserUID()
-
         referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (updateSnapshot in snapshot.children) {
                     if (updateSnapshot.exists()) {
                         updateSnapshot.key?.let {
                             val uplineUID: String = updateSnapshot.child("referralUID").value.toString()
+                            var points: Int = updateSnapshot.child("points").value.toString().toInt()
                             if (referralUID != null) {
                                 if (checkError()) {
                                     if(referCodeEntered == updateSnapshot.child("invitationCode").value.toString()) {
                                         //set the current user's referralUpline to upline ID
+                                            points += 10
                                         referralRef.child(referralUID).child("referralUpline").setValue(uplineUID)
                                             .addOnSuccessListener {
                                                 Toast.makeText(context, "Refer successfully.", Toast.LENGTH_LONG).show()
-                                                val handler = Handler()
-                                                handler.postDelayed({
-                                                    val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
-                                                    Navigation.findNavController(requireView()).navigate(action)
-                                                }, 3000)
+                                                referralRef.child(uplineUID).child("points").setValue(points).addOnSuccessListener {
+                                                    val handler = Handler()
+                                                    handler.postDelayed({
+                                                        val action = RefEnterCodeFragmentDirections.actionRefEnterCodeFragmentToUserProfileFragment()
+                                                        Navigation.findNavController(requireView()).navigate(action)
+                                                    }, 3000)
+                                                }.addOnFailureListener {
+                                                    Toast.makeText(context, "Unable to add points to upline.", Toast.LENGTH_LONG).show()
+                                                }
+
                                             }.addOnFailureListener {
                                                 Toast.makeText(context, "Unable to refer, you may have entered the invalid code.", Toast.LENGTH_LONG).show()
                                         }
