@@ -26,12 +26,16 @@ class RefEnterCodeFragment : Fragment() {
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val referralRef = database.getReference("Referral")
     private val referral = ArrayList<Referral>()
+    private var currentUserCode: String = ""
+    private val codeList: ArrayList<String> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         checkIfGotUpLine()
+
+        getCode()
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
 
         binding.btnSubmitCode.setOnClickListener(){
@@ -168,7 +172,60 @@ class RefEnterCodeFragment : Fragment() {
             return false
         }
 
+        if(binding.txtReferralCode.text.toString() == currentUserCode){
+            Toast.makeText(context, "This is your own code, try share to others", Toast.LENGTH_SHORT).show()
+            binding.txtReferralCode.requestFocus()
+            return false
+        }
+
+        for(code in codeList){
+            if(code == binding.txtReferralCode.text.toString()){
+                Toast.makeText(context, "You can't become your downline's downline.", Toast.LENGTH_SHORT).show()
+                binding.txtReferralCode.requestFocus()
+                return false
+            }
+        }
+
         return true
+    }
+
+    private fun getCode(){
+        referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(referralSS in snapshot.children){
+                        if(referralSS.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()){
+                            currentUserCode = referralSS.child("invitationCode").value.toString()
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+        getDownlineCode()
+    }
+
+    private fun getDownlineCode(){
+        referralRef.orderByChild("referralUpline").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(referralSS in snapshot.children){
+                        if(referralSS.child("referralUpline").value.toString() == CheckUser().getCurrentUserUID()){
+                            codeList.add(referralSS.child("invitationCode").value.toString())
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
 }

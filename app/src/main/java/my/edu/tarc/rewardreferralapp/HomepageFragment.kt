@@ -102,6 +102,12 @@ class HomepageFragment : Fragment() {
                 R.id.nav_myQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralMyQRCodeFragment(),it.title.toString())
                 R.id.nav_scanQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralScanQRCodeFragment(),it.title.toString())
                 R.id.nav_transferHistory -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralTransferListingFragment(),it.title.toString())
+                R.id.nav_logout -> {
+                    if(auth.currentUser != null){
+                        Firebase.auth.signOut()
+                        logout()
+                    }
+                }
             }
 
 
@@ -152,12 +158,12 @@ class HomepageFragment : Fragment() {
             startActivity(intent)
         }*/
 
-        binding.imgProfile.setOnClickListener(){
+        /*binding.imgProfile.setOnClickListener(){
             if(auth.currentUser != null){
                 Firebase.auth.signOut()
                 logout()
             }
-        }
+        }*/
 
         binding.button.setOnClickListener(){
             val action = HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment()
@@ -219,7 +225,7 @@ class HomepageFragment : Fragment() {
     }
 
     fun logout(){
-        Toast.makeText(requireContext(),"Successfully logged out",Toast.LENGTH_LONG)
+        Toast.makeText(requireContext(),"Successfully logged out",Toast.LENGTH_LONG).show()
         val intent: Intent = Intent(requireContext(),LoginActivity::class.java)
         startActivity(intent)
     }
