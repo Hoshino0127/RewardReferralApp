@@ -28,7 +28,7 @@
                 android:id="@+id/searchRefName"
                 android:layout_width="344dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="26dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="43dp"
                 android:background="@drawable/rounded_corner_grey_border_1dp"

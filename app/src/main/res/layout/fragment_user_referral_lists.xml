@@ -29,7 +29,7 @@
                 android:layout_width="370dp"
                 android:layout_height="2.5dp"
                 android:layout_marginStart="21dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="21dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
                 class="androidx.appcompat.widget.ActionMenuView"
                 android:layout_width="370dp"
                 android:layout_height="2.5dp"
-                android:layout_marginStart="21dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginEnd="21dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,38 +73,41 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/btnBackReferralListing"
+                    android:id="@+id/btnBackReferralDownLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="13dp"
                     android:layout_marginBottom="13dp"
+                    android:src="@drawable/ic_baseline_chevron_left_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <SearchView
                 android:id="@+id/searchUserRefName"
-                android:layout_width="345dp"
+                android:layout_width="355dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="7dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/rounded_corner_grey_border_1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userRefRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="12dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view4"

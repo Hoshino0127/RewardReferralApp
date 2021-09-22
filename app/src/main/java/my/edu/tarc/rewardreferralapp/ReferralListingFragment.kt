@@ -43,14 +43,8 @@ class ReferralListingFragment : Fragment() {
         savedInstanceState: Bundle?
 
     ): View? {
-        tempbinding = FragmentReferralListingBinding.inflate(inflater,  container ,false)
 
-        //button add navigate to add fragment
-//        binding.btnInsertNew.setOnClickListener() {
-//            val action = ReferralListingFragmentDirections.actionReferralListingFragmentToAddNewReferralFragment()
-//            Navigation.findNavController(it).navigate(action)
-//            //insertValue()
-//        }
+        tempbinding = FragmentReferralListingBinding.inflate(inflater,  container ,false)
         //println(referralListing)
         binding.referralRecycler.setHasFixedSize(true)
 

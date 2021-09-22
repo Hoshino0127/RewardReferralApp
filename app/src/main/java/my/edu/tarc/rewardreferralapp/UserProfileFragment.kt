@@ -87,7 +87,8 @@ class UserProfileFragment : Fragment() {
         }
 
         binding.relativeLRefeList.setOnClickListener(){
-            //
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToUserReferralListsFragment()
+            Navigation.findNavController(it).navigate(action)
         }
 
         binding.relativeLReward.setOnClickListener(){
@@ -95,7 +96,7 @@ class UserProfileFragment : Fragment() {
         }
 
         binding.btnRedeemReward.setOnClickListener(){
-            //go to redeem rewards page
+            //go to redeem rewards page?
         }
 
         binding.relativeLProfile.setOnClickListener(){
