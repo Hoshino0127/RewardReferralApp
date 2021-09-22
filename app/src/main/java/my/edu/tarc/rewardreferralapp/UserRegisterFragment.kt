@@ -55,7 +55,6 @@ class UserRegisterFragment : Fragment() {
                                     if (task.isSuccessful) {
                                         Log.d(TAG, "createUserWithEmail:success")
                                         addReferral(user.uid)
-
                                     }
                                 }
 
@@ -112,23 +111,29 @@ class UserRegisterFragment : Fragment() {
                 var code: Int = rnd.nextInt(999999)
                 var invitationCode: String = String.format("%06d",code)
 
-                val referral = Referral(userUID,"Active",binding.txtFullName.text.toString(),"Other",binding.txtNRIC.text.toString(),binding.txtContact.text.toString(),binding.txtEmail.text.toString(),binding.txtAddress.text.toString(),0.1,0,invitationCode,"none")
+                val gender: String = binding.spGender.selectedItem.toString()
+                val refStatus = "Active"
+                val refFullName: String = binding.txtFullName.text.toString()
+                val refNRIC: String = binding.txtNRIC.text.toString()
+                val refContact: String = binding.txtContact.text.toString()
+                val refEmail: String = binding.txtEmail.text.toString()
+                val refAddress: String = binding.txtAddress.text.toString()
+                val deductible = 0.1
+                val points = 0
+                val refUpLine = "none"
+
+                val referral = Referral(userUID, refStatus, refFullName, gender, refNRIC, refContact, refEmail, refAddress, deductible, points, invitationCode, refUpLine)
                 referralRef.child(referral.referralUID!!).setValue(referral).addOnSuccessListener {
-                    val action =
-                        UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
+                    val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegisterSuccessful()
                     Navigation.findNavController(requireView()).navigate(action)
                 }.addOnFailureListener{
                     Toast.makeText(requireContext(),"Register failed",Toast.LENGTH_LONG).show()
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
             }
-
         })
-
-
     }
 }

@@ -41,7 +41,7 @@ class ReferFriendEmailFragment : Fragment() {
         }
 
         binding.btnBackInviteFriend.setOnClickListener(){
-            val action = ReferFriendEmailFragmentDirections.actionReferFriendShareTypeFragmentToReferFriendFragment()
+            val action = ReferFriendEmailFragmentDirections.actionReferFriendEmailFragmentToReferFriendFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

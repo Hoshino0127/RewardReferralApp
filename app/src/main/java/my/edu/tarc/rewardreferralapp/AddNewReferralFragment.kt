@@ -65,8 +65,8 @@ class AddNewReferralFragment : Fragment() {
 //        }
 
         binding.btnBack.setOnClickListener(){
-            val action = AddNewReferralFragmentDirections.actionAddNewReferralFragmentToReferralListingFragment()
-            Navigation.findNavController(it).navigate(action)
+//            val action = AddNewReferralFragmentDirections.actionAddNewReferralFragmentToReferralListingFragment()
+//            Navigation.findNavController(it).navigate(action)
         }
         return binding.root
     }

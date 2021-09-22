@@ -132,6 +132,11 @@ class HomepageFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        binding.relativeBtnToProfile.setOnClickListener(){
+            val action = HomepageFragmentDirections.actionHomepageToUserProfileFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
         return binding.root
     }
 
