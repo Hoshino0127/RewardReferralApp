@@ -185,27 +185,16 @@
                 android:id="@+id/btnUpdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginStart="222dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"
-                android:text="Update"
-                app:backgroundTint="@color/btnColor"
+                android:text="Update Details"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tviewAddress" />
-
-            <Button
-                android:id="@+id/btnBackToUserProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="Back"
-                app:backgroundTint="@color/btnColor"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnUpdate"
-                app:layout_constraintTop_toBottomOf="@+id/tviewAddress" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tviewAddress"
+                app:layout_constraintVertical_bias="0.04" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout13"

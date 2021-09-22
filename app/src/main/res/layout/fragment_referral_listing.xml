@@ -117,6 +117,49 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintTop_toTopOf="@+id/referralRecycler"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="411dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

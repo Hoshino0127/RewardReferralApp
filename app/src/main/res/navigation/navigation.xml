@@ -423,6 +423,12 @@
         <action
             android:id="@+id/action_userProfileFragment_to_userReferralListsFragment"
             app:destination="@id/userReferralListsFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_rewardCenterFragment"
+            app:destination="@id/rewardCenterFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_rewardMyFragment"
+            app:destination="@id/rewardMyFragment" />
     </fragment>
     <fragment
         android:id="@+id/cancelInsuranceFragment"

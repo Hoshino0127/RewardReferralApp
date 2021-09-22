@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserProfileBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,40 +39,14 @@ class UserProfileFragment : Fragment() {
     private val insuranceApplicationRef = database.getReference("InsuranceApplication")
     private val insuranceRef = database.getReference("Insurance")
 
-/*    private val cardItemAdapter = Card_Item_Adapter(
-        listOf(
-            Card_Item_Model(
-                "PRUDENTIAL",
-                "Motor Insurance",
-                "Accepted",
-                R.drawable.prudential
-            ),
-            Card_Item_Model(
-                "ETIQA",
-                "Car Insurance",
-                "Pending",
-                R.drawable.etiqa
-            ),
-            Card_Item_Model(
-                "AIA Insurance",
-                "Truck Insurance",
-                "Pending",
-                R.drawable.aia
-            ),
-            Card_Item_Model(
-                "Great Eastern",
-                "Truck Insurance",
-                "Pending",
-                R.drawable.great_eastern
-            )
-        )
-    )*/
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         loadData()
+        showLoading()
         binding = FragmentUserProfileBinding.inflate(inflater,  container ,false)
 
         viewpager = binding.viewpagerInsurance
@@ -91,12 +67,16 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
+        //go to rewardCenterFragment
         binding.relativeLReward.setOnClickListener(){
-            //go to jiho reward center page?
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToRewardCenterFragment()
+            Navigation.findNavController(it).navigate(action)
         }
 
+        //go to rewardMyFragment
         binding.btnRedeemReward.setOnClickListener(){
-            //go to redeem rewards page?
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToRewardMyFragment()
+            Navigation.findNavController(it).navigate(action)
         }
 
         binding.relativeLProfile.setOnClickListener(){
@@ -254,5 +234,13 @@ class UserProfileFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 }

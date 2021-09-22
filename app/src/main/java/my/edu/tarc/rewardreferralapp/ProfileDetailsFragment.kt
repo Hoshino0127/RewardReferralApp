@@ -34,12 +34,6 @@ class ProfileDetailsFragment : Fragment() {
 
         tempbinding = FragmentProfileDetailsBinding.inflate(inflater,  container ,false)
 
-        //go back to user profile
-        binding.btnBackToUserProfile.setOnClickListener(){
-            val action = ProfileDetailsFragmentDirections.actionProfileDetailsFragmentToUserProfileFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
         binding.btnBackProfileDetails.setOnClickListener(){
             val action = ProfileDetailsFragmentDirections.actionProfileDetailsFragmentToUserProfileFragment()
             Navigation.findNavController(it).navigate(action)

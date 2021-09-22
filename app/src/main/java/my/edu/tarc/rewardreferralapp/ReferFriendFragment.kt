@@ -43,7 +43,6 @@ class ReferFriendFragment : Fragment() {
 
         binding.btnCopyCode.setOnClickListener(){
             copyCode()
-//            binding.tvRefCodeResult.setText(generateCode())
         }
 
         binding.btnRefer.setOnClickListener(){
@@ -84,15 +83,4 @@ class ReferFriendFragment : Fragment() {
             }
         })
     }
-
-    //-----------------------------------------------------------------------------
-//    private fun generateCode() : String {
-//        val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-//        val outputStrLength = (5..10).shuffled().first()
-//        return (1..outputStrLength)
-//            .map{Random.nextInt(0, charPool.size)}
-//            .map(charPool::get)
-//            .joinToString("")
-//    }
-
 }
