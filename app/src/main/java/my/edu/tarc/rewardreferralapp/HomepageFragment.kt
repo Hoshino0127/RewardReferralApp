@@ -79,6 +79,7 @@ class HomepageFragment : Fragment() {
         drawerLayout = binding.drawerLayoutHomepage
         val navView : NavigationView = binding.navView
 
+        navView.bringToFront()
         navView.setNavigationItemSelectedListener {
 
             when (it.itemId) {
