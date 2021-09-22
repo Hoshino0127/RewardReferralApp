@@ -86,7 +86,6 @@ class HomepageFragment : Fragment() {
                 //add those fragment id here
                 //R.id.dashboard -> replaceFragment(AddNewReferralFragment(), it.title.toString())
                 R.id.nav_viewClaim -> {
-                    println("Clicked")
                     navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
                 }
                 R.id.nav_viewInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment(), it.title.toString())
@@ -96,6 +95,13 @@ class HomepageFragment : Fragment() {
                     val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
                     startActivity(intent)
                 }
+                R.id.nav_claimReward -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardCenterFragment(),it.title.toString())
+                R.id.nav_myReward -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardMyFragment(),it.title.toString())
+                R.id.nav_viewRewardDelivery -> navigateToFrag(HomepageFragmentDirections.actionHomepageToRewardDeliveryListFragment(),it.title.toString())
+
+                R.id.nav_myQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralMyQRCodeFragment(),it.title.toString())
+                R.id.nav_scanQRCode -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralScanQRCodeFragment(),it.title.toString())
+                R.id.nav_transferHistory -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralTransferListingFragment(),it.title.toString())
             }
 
 
@@ -155,6 +161,11 @@ class HomepageFragment : Fragment() {
 
         binding.button.setOnClickListener(){
             val action = HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.relativeLayout7.setOnClickListener(){
+            val action = HomepageFragmentDirections.actionHomepageToRewardCenterFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
