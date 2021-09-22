@@ -35,7 +35,7 @@ class HomepageActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        navView.setNavigationItemSelectedListener {
+        /*navView.setNavigationItemSelectedListener {
 
             when (it.itemId) {
                 //add those fragment id here
@@ -48,7 +48,7 @@ class HomepageActivity : AppCompatActivity() {
 
 
             true
-        }
+        }*/
     }
 
     private fun replaceFragment(fragment: Fragment, title: String) {
