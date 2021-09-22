@@ -79,8 +79,6 @@ class HomepageFragment : Fragment() {
         drawerLayout = binding.drawerLayoutHomepage
         val navView : NavigationView = binding.navView
 
-        navView.bringToFront()
-
         navView.setNavigationItemSelectedListener {
 
             when (it.itemId) {
@@ -91,8 +89,6 @@ class HomepageFragment : Fragment() {
                     navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
                 }
                 R.id.nav_viewInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToReferralInsuranceListingFragment(), it.title.toString())
-                R.id.nav_applyInsurance -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceCustViewFragment(), it.title.toString())
-                R.id.nav_viewApplication -> navigateToFrag(HomepageFragmentDirections.actionHomepageToListInsuranceApplicationCustViewFragment(), it.title.toString())
                 R.id.nav_staffDashboard -> {
                     val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
                     startActivity(intent)
@@ -104,6 +100,7 @@ class HomepageFragment : Fragment() {
         }
 
         binding.imgNavigation.setOnClickListener(){
+            navView.bringToFront()
             drawerLayout.openDrawer(navView)
         }
 
