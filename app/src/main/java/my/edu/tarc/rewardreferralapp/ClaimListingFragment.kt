@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
@@ -48,6 +49,7 @@ class ClaimListingFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
+
                     val action = ClaimListingFragmentDirections.actionClaimListingFragmentToHomepage()
                     Navigation.findNavController(requireView()).navigate(action)
 

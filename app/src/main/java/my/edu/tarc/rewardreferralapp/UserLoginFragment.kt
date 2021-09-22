@@ -78,10 +78,10 @@ class UserLoginFragment : Fragment() {
             }
         }
 
-        binding.btnStaffLogin.setOnClickListener(){
+        /*binding.btnStaffLogin.setOnClickListener(){
             val intent = Intent(requireContext(), StaffDashboardActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         binding.btnToRegister.setOnClickListener(){
             val action =

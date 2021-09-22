@@ -289,9 +289,6 @@
             android:id="@+id/action_navigationFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
         <action
-            android:id="@+id/action_navigationFragment_to_staffDashboardFragment"
-            app:destination="@id/staffDashboardFragment" />
-        <action
             android:id="@+id/action_navigationFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
         <action
@@ -475,14 +472,6 @@
             android:id="@+id/action_referFriendShareTypeFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/staffDashboardFragment"
-        android:name="my.edu.tarc.rewardreferralapp.StaffDashboardFragment"
-        android:label="StaffDashboardFragment" >
-        <action
-            android:id="@+id/action_staffDashboardFragment_to_navigationFragment"
-            app:destination="@id/navigationFragment" />
-    </fragment>
-        tools:layout="@layout/fragment_refer_friend_share_type"/>
+
 
 </navigation>
