@@ -31,7 +31,6 @@ class RefEnterCodeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         checkIfGotUpLine()
         tempbinding = FragmentRefEnterCodeBinding.inflate(inflater, container, false)
 

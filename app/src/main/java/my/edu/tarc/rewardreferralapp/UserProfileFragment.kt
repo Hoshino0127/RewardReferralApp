@@ -30,7 +30,6 @@ class UserProfileFragment : Fragment() {
     private var insuranceList = ArrayList<Insurance>()
 
     private lateinit var viewpager: ViewPager2
-    private var tempbinding: FragmentUserProfileBinding? = null
     private lateinit var binding : FragmentUserProfileBinding
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val referralRef = database.getReference("Referral")
@@ -82,14 +81,13 @@ class UserProfileFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-        //go back to dashboard
         binding.btnBackUserProfile.setOnClickListener(){
-//            val action = UserProfileFragmentDirections.()
-//            Navigation.findNavController(it).navigate(action)
+            val action = UserProfileFragmentDirections.actionUserProfileFragmentToHomepage()
+            Navigation.findNavController(it).navigate(action)
         }
 
         binding.relativeLRefeList.setOnClickListener(){
-            //go back homepage?
+            //
         }
 
         binding.relativeLReward.setOnClickListener(){
