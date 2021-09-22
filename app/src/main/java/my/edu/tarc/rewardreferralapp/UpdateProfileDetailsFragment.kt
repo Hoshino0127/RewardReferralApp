@@ -33,7 +33,13 @@ class UpdateProfileDetailsFragment : Fragment() {
         loadData()
         tempbinding = FragmentUpdateProfileDetailsBinding.inflate(inflater, container, false)
 
-        binding.btnBackToProfileDetails.setOnClickListener() {
+        binding.btnBackToProfile.setOnClickListener(){
+            val action =
+                UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        binding.btnBackEditProfile.setOnClickListener() {
             val action =
                 UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
             Navigation.findNavController(it).navigate(action)
@@ -49,17 +55,11 @@ class UpdateProfileDetailsFragment : Fragment() {
             binding.txtMultiAddress.text.clear()
             binding.spGenders.setSelection(0)
         }
-        //binding.progressBarSave.visibility = View.GONE
 
         return binding.root
     }
 
     private fun updateDetails() {
-        //binding.progressBarSave.visibility = View.VISIBLE
-
-//        if(!(checkError())){
-//            binding.progressBarSave.visibility = View.GONE
-//        }
         val contact: String = binding.txtEditPhone.text.toString()
         val address: String = binding.txtMultiAddress.text.toString()
         val gender: String = binding.spGenders.selectedItem.toString()
@@ -71,20 +71,16 @@ class UpdateProfileDetailsFragment : Fragment() {
             "gender" to gender
         )
 
-        referralRef.orderByChild("referralUID")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        referralRef.orderByChild("referralUID").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (updateSnapshot in snapshot.children) {
                         if (updateSnapshot.exists()) {
                             updateSnapshot.key?.let {
                                 if (referralUID != null) {
                                     if (checkError()) {
-                                        referralRef.child(referralUID).updateChildren(referral)
-                                            .addOnSuccessListener {
-                                                //binding.progressBarSave.visibility = View.GONE
+                                        referralRef.child(referralUID).updateChildren(referral).addOnSuccessListener {
                                                 Toast.makeText(context, "Updated successfully!", Toast.LENGTH_LONG).show()
                                             }.addOnFailureListener {
-                                                //binding.progressBarSave.visibility = View.GONE
                                                 Toast.makeText(context, "Unable to update details.", Toast.LENGTH_LONG).show()
                                             }
                                     }

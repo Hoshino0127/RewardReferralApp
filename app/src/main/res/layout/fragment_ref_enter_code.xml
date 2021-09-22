@@ -35,6 +35,18 @@
                     app:layout_constraintHorizontal_bias="0.466"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackEnterRefCode"
+                    android:layout_width="22dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
@@ -61,23 +73,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView21" />
 
-            <EditText
-                android:id="@+id/txtReferralCode"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="49dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="49dp"
-                android:background="@drawable/custom_input_textbox_2dp"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="6 Digit Code"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.461"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView59" />
-
             <TextView
                 android:id="@+id/textView59"
                 android:layout_width="262dp"
@@ -96,12 +91,58 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="42dp"
                 android:layout_marginEnd="106dp"
                 android:text="Submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtReferralCode" />
+
+            <EditText
+                android:id="@+id/txtReferralCode"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginEnd="81dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Enter the 6 digit code"
+                android:inputType="textPersonName"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView59" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintAlertMsg"
+                android:layout_width="269dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="71dp"
+                android:background="@drawable/rect_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtReferralCode">
+
+                <TextView
+                    android:id="@+id/tvAlertMsg"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="14dp"
+                    android:text="You have an up line. You are not able to have more than one up line."
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

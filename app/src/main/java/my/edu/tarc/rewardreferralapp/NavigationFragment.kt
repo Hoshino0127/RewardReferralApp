@@ -38,7 +38,6 @@ class NavigationFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-
         return binding.root
     }
 

@@ -294,6 +294,9 @@
         <action
             android:id="@+id/action_navigationFragment_to_referralInsuranceListingFragment"
             app:destination="@id/referralInsuranceListingFragment" />
+        <action
+            android:id="@+id/action_navigationFragment_to_referralListingFragment"
+            app:destination="@id/referralListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/applyInsuranceFragment"
@@ -414,6 +417,9 @@
         <action
             android:id="@+id/action_userProfileFragment_to_referFriendFragment"
             app:destination="@id/referFriendFragment" />
+        <action
+            android:id="@+id/action_userProfileFragment_to_refEnterCodeFragment"
+            app:destination="@id/refEnterCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewReferralFragment"
@@ -452,11 +458,31 @@
         android:id="@+id/refEnterCodeFragment"
         android:name="my.edu.tarc.rewardreferralapp.RefEnterCodeFragment"
         android:label="RefEnterCodeFragment"
-        tools:layout="@layout/fragment_ref_enter_code"/>
+        tools:layout="@layout/fragment_ref_enter_code">
+        <action
+            android:id="@+id/action_refEnterCodeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/referFriendShareTypeFragment"
-        android:name="my.edu.tarc.rewardreferralapp.ReferFriendShareTypeFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferFriendEmailFragment"
         android:label="ReferFriendShareTypeFragment"
+        tools:layout="@layout/fragment_refer_friend_email">
+        <argument
+            android:name="referralCode"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_referFriendShareTypeFragment_to_referFriendFragment"
+            app:destination="@id/referFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/staffDashboardFragment"
+        android:name="my.edu.tarc.rewardreferralapp.StaffDashboardFragment"
+        android:label="StaffDashboardFragment" >
+        <action
+            android:id="@+id/action_staffDashboardFragment_to_navigationFragment"
+            app:destination="@id/navigationFragment" />
+    </fragment>
         tools:layout="@layout/fragment_refer_friend_share_type"/>
 
 </navigation>

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -16,8 +15,6 @@ import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.R
 import my.edu.tarc.rewardreferralapp.databinding.InsuranceCancelItemLayoutBinding
 import my.edu.tarc.rewardreferralapp.data.CancelInsurance
-import my.edu.tarc.rewardreferralapp.data.Insurance
-import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
 import my.edu.tarc.rewardreferralapp.data.ReferralInsurance
 import java.text.SimpleDateFormat
 import java.util.*

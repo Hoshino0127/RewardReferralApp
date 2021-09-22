@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_userRegisterFragment_to_userRegisterSuccessful"
             app:destination="@id/userRegisterSuccessful" />
+        <action
+            android:id="@+id/action_userRegisterFragment_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/userRegisterSuccessful"

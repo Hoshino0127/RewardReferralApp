@@ -12,15 +12,30 @@
             tools:context=".UserProfileFragment">
 
 
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpagerInsurance"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="30dp"
+                android:clipToPadding="false"
+                android:foregroundGravity="center"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLReward" />
+
             <RelativeLayout
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
+                android:layout_height="320dp"
                 android:background="@drawable/userprofile_relative"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout23">
 
             </RelativeLayout>
 
@@ -28,13 +43,13 @@
                 android:id="@+id/tvWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="30dp"
                 android:text="Hello, "
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/tviewUserName"
                 app:layout_constraintStart_toStartOf="@+id/tviewUserName"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/btnRedeemReward" />
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -65,7 +80,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:text="@string/total_points_earned"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -81,25 +96,25 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/acme"
                 android:textColor="@color/black"
-                android:textSize="23sp"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnRedeemReward"
                 android:layout_width="123dp"
                 android:layout_height="51dp"
                 android:layout_marginStart="273dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="30dp"
                 android:text="@string/redeem_rewards"
                 android:textSize="12sp"
                 app:backgroundTint="#30C5AA"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout23" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -162,26 +177,47 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewpagerInsurance"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="23dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginEnd="30dp"
-                android:clipToPadding="false"
-                android:foregroundGravity="center"
-                android:overScrollMode="never"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout23"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@color/backgroundPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/relativeLReward" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView64"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="169dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="160dp"
+                    android:text="User Profile"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackUserProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
                 android:id="@+id/relativeLProfile"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginStart="18dp"
+                android:layout_marginStart="26dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/rounded_corner_grey_border_2dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -219,7 +255,7 @@
                 android:id="@+id/relativeLReward"
                 android:layout_width="75dp"
                 android:layout_height="77dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/rounded_corner_grey_border_2dp"
                 app:layout_constraintStart_toEndOf="@+id/relativeLProfile"
@@ -256,7 +292,7 @@
                 android:id="@+id/relativeLRefeList"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/rounded_corner_grey_border_2dp"
                 app:layout_constraintStart_toEndOf="@+id/relativeLReward"
@@ -295,7 +331,7 @@
                 android:id="@+id/relativeLCode"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/rounded_corner_grey_border_2dp"
                 app:layout_constraintStart_toEndOf="@+id/relativeLRefeList"
@@ -319,11 +355,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView22"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="9dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="TextView"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="3dp"
+                    android:text="Refer Now"
                     android:textColor="@color/black" />
             </RelativeLayout>
 

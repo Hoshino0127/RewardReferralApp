@@ -10,14 +10,15 @@ import androidx.navigation.Navigation
 import my.edu.tarc.rewardreferralapp.databinding.FragmentMenuStaffInsuranceBinding
 
 class MenuStaffInsuranceFragment : Fragment() {
+
     private lateinit var binding: FragmentMenuStaffInsuranceBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_menu_staff_insurance, container, false)
-
 
         binding.btnManageInsurance.setOnClickListener(){
             val action = StaffDashboardFragmentDirections.actionStaffDashboardFragmentToListInsuranceFragment()
@@ -38,6 +39,7 @@ class MenuStaffInsuranceFragment : Fragment() {
             val action = StaffDashboardFragmentDirections.actionStaffDashboardFragmentToAdminClaimListingFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
         return binding.root
     }
 

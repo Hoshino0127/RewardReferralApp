@@ -122,7 +122,7 @@
     <string name="copy_link">Copy link</string>
     <string name="share_via">Share via</string>
     <string name="share">Share</string>
-    <string name="registerSuccessMsg">You have successfully registered a new account. Please check your email to verify the account. You can login to the account after the verification.</string>
+    <string name="registerSuccessMsg">You have successfully registered a new account. You can login to your account now.</string>
     <string name="waitingApproveMsg">Waiting to be approved</string>
     <string name="other">Other</string>
     <string name="textview">TextView</string>

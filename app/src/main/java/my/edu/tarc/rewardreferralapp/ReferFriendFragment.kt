@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.navigation.Navigation
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -18,7 +19,6 @@ import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferFriendBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
-import kotlin.random.Random
 
 class ReferFriendFragment : Fragment() {
 
@@ -36,19 +36,21 @@ class ReferFriendFragment : Fragment() {
         loadData()
         tempbinding = FragmentReferFriendBinding.inflate(inflater,  container ,false)
 
+        //go back user profile
+        binding.btnBackReferFriend.setOnClickListener(){
+//            val action = ReferFriendFragmentDirections.()
+//            Navigation.findNavController(it).navigate(action)
+        }
+
         binding.btnCopyCode.setOnClickListener(){
             copyCode()
 //            binding.tvRefCodeResult.setText(generateCode())
         }
 
         binding.btnRefer.setOnClickListener(){
-            //need to go to refer friend share type fragment
-//            val referralCode = binding.tvRefCodeResult.text.toString()
-//            val shareIntent = Intent()
-//            shareIntent.action = Intent.ACTION_SEND
-//            shareIntent.type = "text/plain"
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, "You can share this code : " + referralCode + " via")
-//            startActivity(Intent.createChooser(shareIntent, "Share referral code via :"))
+            val referralCode: String = binding.tvRefCodeResult.text.toString()
+            val action = ReferFriendFragmentDirections.actionReferFriendFragmentToReferFriendShareTypeFragment(referralCode)
+            Navigation.findNavController(it).navigate(action)
         }
         return binding.root
     }
@@ -59,8 +61,7 @@ class ReferFriendFragment : Fragment() {
         val clipData = ClipData.newPlainText("text", copyText)
         myClipboard.setPrimaryClip(clipData)
 
-        Toast.makeText(context, "Referral code has been copied." + "text", Toast.LENGTH_LONG).show()
-        
+        Toast.makeText(context, "Referral code has been copied.", Toast.LENGTH_LONG).show()
     }
 
     //load to get invitation code and display in text view
@@ -80,11 +81,10 @@ class ReferFriendFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
     }
-
 
     //-----------------------------------------------------------------------------
 //    private fun generateCode() : String {
@@ -95,7 +95,5 @@ class ReferFriendFragment : Fragment() {
 //            .map(charPool::get)
 //            .joinToString("")
 //    }
-
-
 
 }

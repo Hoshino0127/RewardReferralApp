@@ -27,12 +27,12 @@
                 tools:ignore="MissingConstraints" />
 
             <Button
-                android:id="@+id/btnBackToProfileDetails"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnBackToProfile"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="305dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="18dp"
                 android:text="Back"
                 app:backgroundTint="@color/btnColor"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +72,18 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btnBackEditProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

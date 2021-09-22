@@ -21,12 +21,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.GetEvidenceAdapter
 import my.edu.tarc.rewardreferralapp.data.*
@@ -133,6 +135,8 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             }
                             val insurancePrice: String =
                                 insuranceSnapshot.child("insurancePrice").value.toString()
+                            val insuranceImg: String =
+                                insuranceSnapshot.child("insuranceImg").value.toString()
 
                             val insurance = Insurance(
                                 insuranceID,
@@ -141,7 +145,8 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                                 insurancePlan,
                                 insuranceCoverage,
                                 insurancePrice.toDouble(),
-                                insuranceType
+                                insuranceType,
+                                insuranceImg
                             )
 
                             insuranceCustList.add(insurance)
@@ -165,6 +170,17 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                         }
 
                         binding.tvCustInsuranceCoverage.text = strCover
+
+                        val Imgref: StorageReference =
+                            FirebaseStorage.getInstance().getReference("InsuranceStorage")
+                                .child(insCustList.insuranceImg.toString())
+
+                        Imgref.downloadUrl.addOnSuccessListener() {
+                            Glide
+                                .with(binding.imgCustInsurance.context)
+                                .load(it.toString())
+                                .into(binding.imgCustInsurance)
+                        }
                     }
 
                 } else {
@@ -449,7 +465,6 @@ class UpdateInsuranceApplicationFragment : Fragment() {
         redirectDialog = MyLottie.showRedirectingDialog(requireContext())
     }
 
-    // TODO: Compose and send email
     private fun send(isApprove: String) {
         hideKeyboard()
         showLoading()
