@@ -86,11 +86,12 @@ class ApplyInsuranceFragment : Fragment() {
         fileAdapter.notifyDataSetChanged()
 
         binding.btnUpload.setOnClickListener() {
-
+            val mimeTypes = arrayOf("image/*", "application/pdf")
             val filesIntent = Intent(Intent.ACTION_GET_CONTENT)
             filesIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            filesIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
             filesIntent.addCategory(Intent.CATEGORY_OPENABLE)
-            filesIntent.type = "*/*"
+            filesIntent.type = "image/*|application/pdf"
 
             startActivityForResult(Intent.createChooser(filesIntent, "Select PDF File"), 777)
 
