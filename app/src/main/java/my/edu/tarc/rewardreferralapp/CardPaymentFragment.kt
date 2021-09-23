@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import my.edu.tarc.rewardreferralapp.data.Card
 import my.edu.tarc.rewardreferralapp.databinding.ActivityMainBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentCardPaymentBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 class CardPaymentFragment : Fragment() {
 
@@ -33,25 +34,42 @@ class CardPaymentFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_payment, container, false)
 
 
+        binding.cbUseSavedDetails.setOnClickListener(){
+            database = FirebaseDatabase.getInstance().getReference("Card")
+            database.child(CheckUser().getCurrentUserUID()!!).get().addOnSuccessListener {
+                if(it.exists()){
+                    val cardHolderName: String = it.child("cardHolderName").value.toString()
+                    val cardNo: String = it.child("cardNo").value.toString()
+                    val expiryDate: String = it.child("expiredDate").value.toString()
+                    val cvv: String = it.child("cvv").value.toString()
+                    binding.txtCardholderName.setText(if(cardHolderName == "null"){""}else{cardHolderName})
+                    binding.txtCardNo.setText(if(cardNo == "null"){""}else{cardNo})
+                    binding.txtExpiryDate.setText(if(expiryDate == "null"){""}else{expiryDate})
+                    binding.txtCVV.setText(if(cvv == "null"){""}else{cvv})
+                }
+            }
+        }
 
 
-        binding.cbUseSavedDetails.setOnClickListener{
+        binding.cbSaveDetails.setOnClickListener{
 
-            if(errorFree()){
-                val cardHolderName = binding.txtCardholderName.text.toString()
-                val CardNo = binding.txtCardNo.text.toString()
-                val ExpireDate = binding.txtExpiryDate.text.toString()
-                val Cvv = binding.txtCVV.text.toString()
+            if(binding.cbSaveDetails.isChecked){
+                if(errorFree()){
+                    val cardHolderName = binding.txtCardholderName.text.toString()
+                    val CardNo = binding.txtCardNo.text.toString()
+                    val ExpireDate = binding.txtExpiryDate.text.toString()
+                    val Cvv = binding.txtCVV.text.toString()
 
-                database = FirebaseDatabase.getInstance().getReference("Card")
-                val Card= Card(cardHolderName,CardNo, ExpireDate, Cvv)
+                    database = FirebaseDatabase.getInstance().getReference("Card")
+                    val Card= Card(cardHolderName,CardNo, ExpireDate, Cvv)
 
-                database.child(cardHolderName).setValue(Card).addOnSuccessListener {
+                    database.child(CheckUser().getCurrentUserUID()!!).setValue(Card).addOnSuccessListener {
 
-                    Toast.makeText(context, "successfully Saved",Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener{
-                    Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "successfully Saved",Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener{
+                        Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
 
+                    }
                 }
             }
         }

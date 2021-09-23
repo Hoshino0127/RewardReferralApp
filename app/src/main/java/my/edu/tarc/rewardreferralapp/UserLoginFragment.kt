@@ -49,15 +49,15 @@ class UserLoginFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default*/ ) {
                 override fun handleOnBackPressed() {
-                    if(auth.currentUser != null){
-                        if(!doubleBackToExitPressedOnce){
-                            doubleBackToExitPressedOnce = true
-                            Toast.makeText(requireContext(),"Click back one more time to exit",Toast.LENGTH_SHORT).show()
-                            mHandler.postDelayed(mRunnable, 2000);
-                        }else{
-                            activity?.finishAffinity()
-                        }
+
+                    if(!doubleBackToExitPressedOnce){
+                        doubleBackToExitPressedOnce = true
+                        Toast.makeText(requireContext(),"Click back one more time to exit",Toast.LENGTH_SHORT).show()
+                        mHandler.postDelayed(mRunnable, 2000);
+                    }else{
+                        activity?.finishAffinity()
                     }
+
                 }
             }
 
