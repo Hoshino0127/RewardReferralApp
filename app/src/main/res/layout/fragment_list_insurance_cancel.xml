@@ -94,8 +94,8 @@ tools:context=".ListInsuranceCancelFragment">
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:iconifiedByDefault="false"
-            android:queryHint="Enter Insurance ID"
-            app:layout_constraintEnd_toStartOf="@+id/btnApplicationListFilterCustView"
+            android:queryHint="Enter Application ID"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
 
@@ -110,18 +110,6 @@ tools:context=".ListInsuranceCancelFragment">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNoRecord"
             tools:listitem="@layout/insurance_cancel_item_layout" />
-
-        <ImageView
-            android:id="@+id/btnApplicationListFilterCustView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_background_primary"
-            android:padding="7dp"
-            app:srcCompat="@drawable/ic_baseline_filter_alt_24"
-            app:layout_constraintBottom_toBottomOf="@+id/searchApplicationCustView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/searchApplicationCustView" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/filterLayout"

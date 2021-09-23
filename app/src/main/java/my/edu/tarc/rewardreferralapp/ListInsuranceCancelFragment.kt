@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.adapter.CancelInsuranceApplicationAdapter
+import my.edu.tarc.rewardreferralapp.adapter.InsuranceCustAdapter
 import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceCancelBinding
 import my.edu.tarc.rewardreferralapp.data.CancelInsurance
 import my.edu.tarc.rewardreferralapp.utils.SimpleEmail
@@ -72,6 +74,31 @@ class ListInsuranceCancelFragment : Fragment() {
 
         changeView(cancelInsuranceList)
 
+        binding.searchApplicationCustView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                if (newText!!.isNotEmpty()) {
+                    tempCancelInsuranceList.clear()
+                    val search = newText.lowercase(Locale.getDefault())
+                    for (insurance in cancelInsuranceList) {
+                        val combineText = insurance.cancelInsuranceUID
+                        if (combineText?.lowercase(Locale.getDefault())?.contains(search) == true) {
+                            tempCancelInsuranceList.add(insurance)
+                        }
+                    }
+
+                    changeView(tempCancelInsuranceList)
+
+                }
+
+                return true
+            }
+
+        })
 
 
 
