@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavAction
 import androidx.navigation.Navigation
@@ -43,6 +44,17 @@ class RewardMyFragment : Fragment() {
 
         refferalRewardList.clear()
         rewardList.clear()
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    val action = RewardMyFragmentDirections.actionRewardMyFragmentToHomepage()
+                    Navigation.findNavController(requireView()).navigate(action)
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
