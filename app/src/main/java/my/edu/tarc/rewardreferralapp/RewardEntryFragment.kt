@@ -40,7 +40,7 @@ class RewardEntryFragment : Fragment() {
     private var checkImgChange: Int = 0
     private var upImgName: String = ""
 
-    private var loadingDialog: Dialog?= null
+    private var loadingDialog: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,8 +68,9 @@ class RewardEntryFragment : Fragment() {
             hideLoading()
         }
 
-        binding.btnBackRE.setOnClickListener(){
-            val action = RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
+        binding.btnBackRE.setOnClickListener() {
+            val action =
+                RewardEntryFragmentDirections.actionRewardEntryFragmentToRewardListingFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
 
@@ -178,6 +179,7 @@ class RewardEntryFragment : Fragment() {
             return false
         }
 
+
         if (binding.tdREDateBefore.text.toString() == "") {
             Toast.makeText(context, "Please enter the available before date", Toast.LENGTH_LONG)
                 .show()
@@ -192,10 +194,12 @@ class RewardEntryFragment : Fragment() {
         todayDate = format.parse(format.format(Date()))
         startDate = format.parse(binding.tdREStartDate.text.toString())
 
-        if (startDate < todayDate) {
-            Toast.makeText(context, "Start date must be today or day later", Toast.LENGTH_LONG)
-                .show()
-            return false
+        if (rewardID == "") {
+            if (startDate < todayDate) {
+                Toast.makeText(context, "Start date must be today or day later", Toast.LENGTH_LONG)
+                    .show()
+                return false
+            }
         }
 
         var expiredDate: Date = format.parse(binding.tdREDateBefore.text.toString())
@@ -347,7 +351,7 @@ class RewardEntryFragment : Fragment() {
     }
 
     private fun hideLoading() {
-        loadingDialog?.let { if(it.isShowing) it.cancel() }
+        loadingDialog?.let { if (it.isShowing) it.cancel() }
     }
 
     private fun showLoading() {

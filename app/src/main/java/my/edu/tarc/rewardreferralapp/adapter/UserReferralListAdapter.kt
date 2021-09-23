@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,12 @@ class UserReferralListAdapter(UserReferList1: FragmentActivity, val UserReferLis
     }
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
+        val currentUserRefer = UserReferList[position]
         holder.name.text = UserReferList.get(position).name
         holder.email.text = UserReferList.get(position).email
         holder.contact.text = UserReferList.get(position).contactNo
+
+        holder.email.setTextColor(Color.parseColor("#2266FF"))
     }
 
     override fun getItemCount(): Int {

@@ -73,9 +73,9 @@ class HomepageFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false)
 
+        //nav drawer
         drawerLayout = binding.drawerLayoutHomepage
         val navView : NavigationView = binding.navView
 
@@ -83,8 +83,6 @@ class HomepageFragment : Fragment() {
         navView.setNavigationItemSelectedListener {
 
             when (it.itemId) {
-                //add those fragment id here
-                //R.id.dashboard -> replaceFragment(AddNewReferralFragment(), it.title.toString())
                 R.id.nav_viewClaim -> {
                     navigateToFrag(HomepageFragmentDirections.actionHomepageToClaimListingFragment(), it.title.toString())
                 }
@@ -182,11 +180,6 @@ class HomepageFragment : Fragment() {
 
         binding.relativeLayout9.setOnClickListener() {
             val action = HomepageFragmentDirections.actionHomepageToNavigationFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
-        binding.relativeBtnToProfile.setOnClickListener(){
-            val action = HomepageFragmentDirections.actionHomepageToUserProfileFragment()
             Navigation.findNavController(it).navigate(action)
         }
 

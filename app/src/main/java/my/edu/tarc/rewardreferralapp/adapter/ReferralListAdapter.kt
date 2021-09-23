@@ -19,8 +19,8 @@ class ReferralListAdapter(referList1: FragmentActivity, val referList: List<Refe
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentRefer = referList[position]
-        holder.id.text = referList.get(position).id
         holder.name.text = referList.get(position).name
+        holder.contact.text = referList.get(position).contact
         holder.status.text = referList.get(position).status
 
         if(currentRefer.status.equals("Inactive")){
@@ -37,8 +37,8 @@ class ReferralListAdapter(referList1: FragmentActivity, val referList: List<Refe
     }
 
     inner class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var id : TextView = view.findViewById(R.id.tvReferID)
-        var name: TextView = view.findViewById(R.id.tvRefName)
+        var name: TextView = view.findViewById(R.id.tvReferFullName)
+        var contact: TextView = view.findViewById(R.id.tvRefContactNo)
         var status : TextView
 
         init{

@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_staffDashboardFragment_to_listInsuranceCancelFragment"
             app:destination="@id/listInsuranceCancelFragment" />
+        <action
+            android:id="@+id/action_staffDashboardFragment_to_referralListingFragment"
+            app:destination="@id/referralListingFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClaimListingFragment"
@@ -225,6 +228,15 @@
         tools:layout="@layout/fragment_list_insurance_cancel" >
         <action
             android:id="@+id/action_listInsuranceCancelFragment_to_staffDashboardFragment"
+            app:destination="@id/staffDashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/referralListingFragment"
+        android:name="my.edu.tarc.rewardreferralapp.ReferralListingFragment"
+        android:label="ReferralListingFragment"
+        tools:layout="@layout/fragment_referral_listing">
+        <action
+            android:id="@+id/action_referralListingFragment_to_staffDashboardFragment"
             app:destination="@id/staffDashboardFragment" />
     </fragment>
 </navigation>

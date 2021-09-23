@@ -1,13 +1,16 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +20,7 @@ import my.edu.tarc.rewardreferralapp.adapter.ReferralListAdapter
 import my.edu.tarc.rewardreferralapp.data.ReferralList
 import my.edu.tarc.rewardreferralapp.databinding.FragmentReferralListingBinding
 import my.edu.tarc.rewardreferralapp.helper.MyButton
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import my.edu.tarc.rewardreferralapp.helper.MySwipeHelper
 import my.edu.tarc.rewardreferralapp.listener.MyButtonClickListener
 import java.util.*
@@ -35,19 +39,27 @@ class ReferralListingFragment : Fragment() {
     private var strMsg: String? = null
 
     private val database = FirebaseDatabase.getInstance("https://rewardreferralapp-bccdc-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    //private val myRefList = database.getReference("ReferralList")
     private val myRef = database.getReference("Referral")
+
+    private var loadingDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-
     ): View? {
+
+        showLoading()
 
         tempbinding = FragmentReferralListingBinding.inflate(inflater,  container ,false)
         //println(referralListing)
+        binding.shimmerViewContainer.startShimmer()
+
         binding.referralRecycler.setHasFixedSize(true)
 
+        binding.btnBackReferralListing.setOnClickListener(){
+            val action = ReferralListingFragmentDirections.actionReferralListingFragmentToStaffDashboardFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
         //swipe delete
         val swipe = object: MySwipeHelper(requireActivity(), binding.referralRecycler, 200) {
@@ -115,18 +127,24 @@ class ReferralListingFragment : Fragment() {
                     referralListing.clear()
 
                     for(referralSnapshot in snapshot.children){
-                        val referID: String = referralSnapshot.child("referralID").value.toString()
                         val name: String = referralSnapshot.child("fullName").value.toString()
+                        val contact: String = referralSnapshot.child("contactNo").value.toString()
                         val status: String = referralSnapshot.child("referralStatus").value.toString()
 
-                        val referral = ReferralList(referID, name, status)
+                        val referral = ReferralList(name, contact, status)
                         referralListing.add(referral)
                     }
                     tempReferralListing.addAll(referralListing)
+                    binding.shimmerViewContainer.stopShimmer()
+                    binding.shimmerViewContainer.visibility = View.GONE
                     binding.referralRecycler.visibility = View.VISIBLE
                     binding.referralRecycler.adapter?.notifyDataSetChanged()
                 }else{
                     referralListing.clear()
+                    Handler().postDelayed ({
+                        binding.shimmerViewContainer.stopShimmer()
+                        binding.shimmerViewContainer.visibility = View.GONE
+                    }, 3000)
                     binding.referralRecycler.visibility = View.INVISIBLE
                 }
             }
@@ -159,20 +177,12 @@ class ReferralListingFragment : Fragment() {
         fun onDataFound(isDataFetched: Boolean, Key: String)
     }
 
-    //insert data into firebase
-//    private fun insertValue(){
-//        val refList: List<ReferralList> = listOf(
-//            ReferralList("Lau Pin Jian", "Inactive"),
-//            ReferralList("Woon Cui Yen", "Active"),
-//            ReferralList("Lee Kok Ken", "Active"),
-//            ReferralList("Soo Ji Ho", "Inactive"),
-//            ReferralList("Lim Chan How", "Active"),
-//            ReferralList("Tang Kok Hou", "Active"),
-//            ReferralList("Chan Kin Lam", "Inactive")
-//        )
-//        //push into firebase
-//        for(referral in refList){
-//            myRef.push().setValue(referral)
-//        }
-//    }
+    private fun hideLoading() {
+        loadingDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showLoading() {
+        loadingDialog = MyLottie.showLoadingDialog(requireContext())
+    }
+
 }

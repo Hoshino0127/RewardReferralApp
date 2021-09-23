@@ -33,11 +33,6 @@ class UpdateProfileDetailsFragment : Fragment() {
         loadData()
         tempbinding = FragmentUpdateProfileDetailsBinding.inflate(inflater, container, false)
 
-        binding.btnBackToProfile.setOnClickListener(){
-            val action = UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
-
         binding.btnBackEditProfile.setOnClickListener() {
             val action = UpdateProfileDetailsFragmentDirections.actionUpdateProfileDetailsFragmentToProfileDetailsFragment()
             Navigation.findNavController(it).navigate(action)

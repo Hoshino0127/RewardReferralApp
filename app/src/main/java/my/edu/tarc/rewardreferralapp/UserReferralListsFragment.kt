@@ -1,6 +1,7 @@
 package my.edu.tarc.rewardreferralapp
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +39,9 @@ class UserReferralListsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         tempbinding = FragmentUserReferralListsBinding.inflate(inflater,  container ,false)
-        println(userReferList)
+        //println(userReferList)
+        binding.shimmerViewContainer.startShimmer()
+
         binding.userRefRecyclerView.setHasFixedSize(true)
 
         binding.btnBackReferralDownLine.setOnClickListener(){
@@ -98,10 +101,16 @@ class UserReferralListsFragment : Fragment() {
                         }
                     }
                     tempUserReferList.addAll(userReferList)
+                    binding.shimmerViewContainer.startShimmer()
+                    binding.shimmerViewContainer.visibility = View.GONE
                     binding.userRefRecyclerView.visibility = View.VISIBLE
                     binding.userRefRecyclerView.adapter?.notifyDataSetChanged()
                 }else{
                     userReferList.clear()
+                    Handler().postDelayed ({
+                        binding.shimmerViewContainer.stopShimmer()
+                        binding.shimmerViewContainer.visibility = View.GONE
+                    }, 3000)
                     binding.userRefRecyclerView.visibility = View.INVISIBLE
                 }
             }
