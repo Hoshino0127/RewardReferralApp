@@ -43,6 +43,7 @@ class InsuranceAddFragment : Fragment() {
 
     private var loadingDialog: Dialog?= null
     private var completeDialog: Dialog?= null
+    private var redirectDialog : Dialog?= null
 
     private var imgUriReward: Uri = Uri.EMPTY
 
@@ -171,6 +172,13 @@ class InsuranceAddFragment : Fragment() {
                     }.addOnFailureListener {
                         Toast.makeText(context, "Add unsuccessful", Toast.LENGTH_LONG).show()
                     }
+                    showRedirect()
+                    Handler().postDelayed({
+                        hideRedirect()
+                        val action = InsuranceAddFragmentDirections.actionInsuranceAddFragmentToListInsuranceFragment()
+                        Navigation.findNavController(requireView()).navigate(action)
+                    }, 2000)
+
                 }, 3000)
             }
 
@@ -337,6 +345,15 @@ class InsuranceAddFragment : Fragment() {
         completeDialog = MyLottie.showCompleteDialog(requireContext())
     }
 
+    private fun hideRedirect() {
+        redirectDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showRedirect() {
+        hideLoading()
+        redirectDialog = MyLottie.showRedirectingDialog(requireContext())
+    }
+
     private fun checkError() : Boolean {
 
         if (binding.tfAddInsuranceComp.text.isNullOrEmpty()) {
@@ -366,5 +383,7 @@ class InsuranceAddFragment : Fragment() {
 
         return true
     }
+
+
 
 }

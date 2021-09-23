@@ -37,6 +37,7 @@ class UpdateInsuranceFragment : Fragment() {
     private val args: UpdateInsuranceFragmentArgs by navArgs()
 
     private var loadingDialog: Dialog?= null
+    private var redirectDialog: Dialog?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -234,7 +235,6 @@ class UpdateInsuranceFragment : Fragment() {
                 for (ds in snapshot.children){
                     if (ds.exists()){
                         ds.key?.let {
-
                             Handler().postDelayed({
                                 insuranceRef.child(it).updateChildren(insurance)
                                     .addOnSuccessListener {
@@ -245,6 +245,12 @@ class UpdateInsuranceFragment : Fragment() {
                                         ).show()
                                         hideLoading()
                                         loadData(args.insuranceID.toString())
+                                        showRedirect()
+                                        Handler().postDelayed({
+                                            hideRedirect()
+                                            val action = UpdateInsuranceFragmentDirections.actionUpdateInsuranceFragmentToListInsuranceFragment()
+                                            Navigation.findNavController(requireView()).navigate(action)
+                                        }, 2000)
                                     }
                             }, 3000)
                         }
@@ -266,5 +272,15 @@ class UpdateInsuranceFragment : Fragment() {
         hideLoading()
         loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
+
+    private fun hideRedirect() {
+        redirectDialog?.let { if(it.isShowing) it.cancel() }
+    }
+
+    private fun showRedirect() {
+        hideLoading()
+        redirectDialog = MyLottie.showRedirectingDialog(requireContext())
+    }
+
 
 }

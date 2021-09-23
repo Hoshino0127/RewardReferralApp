@@ -73,7 +73,12 @@ class CancelInsuranceApplicationAdapter(internal var cancelInsuranceApplicationL
                                 holder.cancelInsuranceStatus.setTextColor(Color.parseColor("#F30E15"))
                                 holder.btnApprove.visibility = View.GONE
                                 holder.btnReject.visibility = View.GONE
+                            } else if (insList.status.equals("Active")) {
+                                holder.cancelInsuranceStatus.setTextColor(Color.parseColor("#31B12C"))
+                                holder.btnApprove.visibility = View.GONE
+                                holder.btnReject.visibility = View.GONE
                             }
+
                         }
                     }
 

@@ -1,5 +1,6 @@
 package my.edu.tarc.rewardreferralapp
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -25,6 +26,7 @@ import my.edu.tarc.rewardreferralapp.adapter.InsuranceApplicationAdapter
 import my.edu.tarc.rewardreferralapp.data.Insurance
 import my.edu.tarc.rewardreferralapp.databinding.FragmentListInsuranceBinding
 import my.edu.tarc.rewardreferralapp.data.InsuranceApplication
+import my.edu.tarc.rewardreferralapp.helper.MyLottie
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,6 +44,8 @@ class ListInsuranceFragment : Fragment() {
     private lateinit var binding : FragmentListInsuranceBinding
 
     private var strMsg:String? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -271,7 +275,6 @@ class ListInsuranceFragment : Fragment() {
                             insuranceCoverage.add(child.value.toString())
                         }
                         val insurancePrice: String = insuranceSnapshot.child("insurancePrice").value.toString()
-                        println(insurancePrice)
 
                         val insurance = Insurance(insuranceID,insuranceName,insuranceComp,insurancePlan, insuranceCoverage,insurancePrice.toDouble(),insuranceType)
 
@@ -287,8 +290,6 @@ class ListInsuranceFragment : Fragment() {
 
 
                 } else {
-                    insuranceList.clear()
-                    tempInsuranceList.clear()
                     Handler().postDelayed ({
                         binding.shimmerViewContainer.stopShimmer()
                         binding.shimmerViewContainer.visibility = View.GONE
