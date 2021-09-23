@@ -48,7 +48,7 @@ class RewardMyFragment : Fragment() {
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    val action = RewardMyFragmentDirections.actionRewardMyFragmentToHomepage()
+                    val action = RewardMyFragmentDirections.actionRewardMyFragmentToUserProfileFragment()
                     Navigation.findNavController(requireView()).navigate(action)
 
                 }
