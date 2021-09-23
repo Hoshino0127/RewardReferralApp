@@ -207,7 +207,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
                             val applicationStatus : String =
                                 insuranceAppSnapshot.child("applicationStatus").value.toString()
                             val carNoPlate : String =
-                                insuranceAppSnapshot.child("applicationStatus").value.toString()
+                                insuranceAppSnapshot.child("carNoPlate").value.toString()
                             val yearMake : String =
                                 insuranceAppSnapshot.child("yearMake").value.toString()
                             val modelName : String =
@@ -345,7 +345,7 @@ class UpdateInsuranceApplicationFragment : Fragment() {
 
                 val insuranceExpiryDate = calendar.time
 
-                val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), referralUID, insuranceExpiryDate, "Active")
+                val newInsurance = ReferralInsurance(newID, args.insuranceID.toString(), referralUID, insuranceExpiryDate, "Active", binding.tfCarNoPlate.text.toString())
 
                 referralInsuranceRef.child(newID).setValue(newInsurance).addOnSuccessListener(){
 
