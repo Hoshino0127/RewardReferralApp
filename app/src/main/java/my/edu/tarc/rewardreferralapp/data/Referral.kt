@@ -14,3 +14,4 @@ data class Referral(
     val invitationCode: String? = null,
     val referralUpline: String? = null
 )
+

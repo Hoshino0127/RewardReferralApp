@@ -2,6 +2,8 @@ package my.edu.tarc.rewardreferralapp
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,14 +41,11 @@ class UserProfileFragment : Fragment() {
     private val insuranceApplicationRef = database.getReference("InsuranceApplication")
     private val insuranceRef = database.getReference("Insurance")
 
-    private var loadingDialog: Dialog?= null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         loadData()
-        showLoading()
         binding = FragmentUserProfileBinding.inflate(inflater,  container ,false)
 
         viewpager = binding.viewpagerInsurance
@@ -113,7 +112,6 @@ class UserProfileFragment : Fragment() {
 
             }
         })
-
         loadCardView()
     }
 
@@ -234,13 +232,5 @@ class UserProfileFragment : Fragment() {
 
             }
         })
-    }
-
-    private fun hideLoading() {
-        loadingDialog?.let { if(it.isShowing) it.cancel() }
-    }
-
-    private fun showLoading() {
-        loadingDialog = MyLottie.showLoadingDialog(requireContext())
     }
 }

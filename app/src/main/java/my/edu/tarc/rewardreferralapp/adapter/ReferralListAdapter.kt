@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import my.edu.tarc.rewardreferralapp.R
+import my.edu.tarc.rewardreferralapp.data.Referral
 import my.edu.tarc.rewardreferralapp.data.ReferralList
 
-class ReferralListAdapter(referList1: FragmentActivity, val referList: List<ReferralList>) : RecyclerView.Adapter<ReferralListAdapter.myViewHolder>() {
+class ReferralListAdapter(referList1: FragmentActivity, val referList: List<Referral>) : RecyclerView.Adapter<ReferralListAdapter.myViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.referral_list_item, parent, false)
@@ -19,13 +20,13 @@ class ReferralListAdapter(referList1: FragmentActivity, val referList: List<Refe
 
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val currentRefer = referList[position]
-        holder.name.text = referList.get(position).name
-        holder.contact.text = referList.get(position).contact
-        holder.status.text = referList.get(position).status
+        holder.name.text = currentRefer.fullName
+        holder.contact.text =currentRefer.contactNo
+        holder.status.text = currentRefer.referralStatus
 
-        if(currentRefer.status.equals("Inactive")){
+        if(currentRefer.referralStatus.equals("Inactive")){
             holder.status.setTextColor(Color.parseColor("#FF9C33"))
-        }else if(currentRefer.status.equals("Active")){
+        }else if(currentRefer.referralStatus.equals("Active")){
             holder.status.setTextColor(Color.parseColor("#31B12C"))
         }else{
             holder.status.setTextColor(Color.parseColor("#000000"))
@@ -39,11 +40,7 @@ class ReferralListAdapter(referList1: FragmentActivity, val referList: List<Refe
     inner class myViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var name: TextView = view.findViewById(R.id.tvReferFullName)
         var contact: TextView = view.findViewById(R.id.tvRefContactNo)
-        var status : TextView
+        var status : TextView = view.findViewById(R.id.tvReferStatus)
 
-        init{
-            status = view.findViewById(R.id.tvReferStatus)
-
-        }
     }
 }

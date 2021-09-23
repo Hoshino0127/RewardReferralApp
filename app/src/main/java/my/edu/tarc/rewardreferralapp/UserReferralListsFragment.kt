@@ -17,6 +17,7 @@ import my.edu.tarc.rewardreferralapp.adapter.UserReferralListAdapter
 import my.edu.tarc.rewardreferralapp.data.ReferralList
 import my.edu.tarc.rewardreferralapp.data.UserReferralList
 import my.edu.tarc.rewardreferralapp.databinding.FragmentUserReferralListsBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -90,13 +91,18 @@ class UserReferralListsFragment : Fragment() {
                     userReferList.clear()
                     for (referralSnapshot in snapshot.children) {
                         if(referralSnapshot.child("referralUpline").value.toString() != "" ) {
-                            if(referralSnapshot.child("referralUpline").value.toString() != "none" ){
-                                val name: String = referralSnapshot.child("fullName").value.toString()
-                                val contact: String = referralSnapshot.child("contactNo").value.toString()
-                                val email: String = referralSnapshot.child("email").value.toString()
+                            if (referralSnapshot.child("referralUpline").value.toString() != "none") {
+                                if (referralSnapshot.child("referralUpline").value.toString() == CheckUser().getCurrentUserUID()){
+                                    val name: String =
+                                        referralSnapshot.child("fullName").value.toString()
+                                    val contact: String =
+                                        referralSnapshot.child("contactNo").value.toString()
+                                    val email: String =
+                                        referralSnapshot.child("email").value.toString()
 
-                                val userReferral = UserReferralList(name, contact, email)
-                                userReferList.add(userReferral)
+                                    val userReferral = UserReferralList(name, contact, email)
+                                    userReferList.add(userReferral)
+                                }
                             }
                         }
                     }

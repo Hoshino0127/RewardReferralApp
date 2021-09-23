@@ -42,7 +42,6 @@ class RefEnterCodeFragment : Fragment() {
             checkIfGotUpLine()
             checkUpLine()
             checkError()
-            //increasePoints()
         }
 
         binding.btnBackEnterRefCode.setOnClickListener(){
@@ -51,29 +50,6 @@ class RefEnterCodeFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    private fun increasePoints(){
-        referralRef.addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (referralSnapshot in snapshot.children)
-                        if (referralSnapshot.child("referralUID").value.toString() == CheckUser().getCurrentUserUID()) {
-                            if (checkError()) {
-                                if (binding.txtReferralCode.text.toString() == referralSnapshot.child("invitationCode").value.toString()) {
-                                    if (referralSnapshot.child("invitationCode").value.toString() == binding.txtReferralCode.text.toString()) {
-                                        //increase the referral points
-                                    }
-                                }
-                            }
-                        }
-                }
-            }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-        })
     }
 
     private fun checkUpLine(){

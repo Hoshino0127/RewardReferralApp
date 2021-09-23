@@ -106,6 +106,7 @@ class HomepageFragment : Fragment() {
                         logout()
                     }
                 }
+                R.id.nav_profile -> navigateToFrag(HomepageFragmentDirections.actionHomepageToUserProfileFragment(), it.title.toString())
             }
 
 
