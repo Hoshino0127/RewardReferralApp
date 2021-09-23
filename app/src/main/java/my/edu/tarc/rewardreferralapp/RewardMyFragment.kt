@@ -59,7 +59,7 @@ class RewardMyFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reward_my, container, false)
 
         binding.btnBackRM.setOnClickListener(){
-            val action = RewardMyFragmentDirections.actionRewardMyFragmentToHomepage()
+            val action = RewardMyFragmentDirections.actionRewardMyFragmentToUserProfileFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
 

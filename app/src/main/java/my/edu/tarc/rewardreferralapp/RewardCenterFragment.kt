@@ -72,7 +72,7 @@ class RewardCenterFragment : Fragment() {
 
 
         binding.btnBackRewardCenter.setOnClickListener(){
-            val action = RewardCenterFragmentDirections.actionRewardCenterFragmentToHomepage()
+            val action = RewardCenterFragmentDirections.actionRewardCenterFragmentToUserProfileFragment()
             Navigation.findNavController(requireView()).navigate(action)
         }
 

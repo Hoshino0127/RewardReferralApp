@@ -193,6 +193,9 @@
         <action
             android:id="@+id/action_rewardMyFragment_to_homepage"
             app:destination="@id/homepage" />
+        <action
+            android:id="@+id/actionRewardMyFragmentToUserProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/rewardCenterFragment"
@@ -204,6 +207,9 @@
         <action
             android:id="@+id/action_rewardCenterFragment_to_homepage"
             app:destination="@id/homepage" />
+        <action
+            android:id="@+id/actionRewardCenterFragmentToUserProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/rewardDeliveryDetailsFragment"
