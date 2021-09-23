@@ -18,7 +18,7 @@ import my.edu.tarc.rewardreferralapp.databinding.FragmentCardPaymentBinding
 
 class CardPaymentFragment : Fragment() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentCardPaymentBinding
     private lateinit var database: DatabaseReference
 
     override fun onCreateView(
@@ -27,28 +27,32 @@ class CardPaymentFragment : Fragment() {
 
     ): View? {
         // Inflate the layout for this fragment
-        var binding: FragmentCardPaymentBinding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_card_payment, container, false)
 
-        binding = FragmentCardPaymentBinding.inflate(layoutInflater)
+
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_card_payment, container, false)
+
+
 
 
         binding.cbUseSavedDetails.setOnClickListener{
 
-            val cardHolderName = binding.txtCardholderName.text.toString()
-            val CardNo = binding.txtCardNo.text.toString()
-            val ExpireDate = binding.txtExpiryDate.text.toString()
-            val Cvv = binding.txtCVV.text.toString()
+            if(errorFree()){
+                val cardHolderName = binding.txtCardholderName.text.toString()
+                val CardNo = binding.txtCardNo.text.toString()
+                val ExpireDate = binding.txtExpiryDate.text.toString()
+                val Cvv = binding.txtCVV.text.toString()
 
-            database = FirebaseDatabase.getInstance().getReference("Card")
-            val Card= Card(cardHolderName,CardNo, ExpireDate, Cvv)
+                database = FirebaseDatabase.getInstance().getReference("Card")
+                val Card= Card(cardHolderName,CardNo, ExpireDate, Cvv)
 
-            database.child(cardHolderName).setValue(Card).addOnSuccessListener {
+                database.child(cardHolderName).setValue(Card).addOnSuccessListener {
 
-                Toast.makeText(context, "successfully Saved",Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener{
-                Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "successfully Saved",Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener{
+                    Toast.makeText(context,"Failed",Toast.LENGTH_SHORT).show()
 
+                }
             }
         }
 
@@ -68,6 +72,26 @@ class CardPaymentFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun errorFree():Boolean{
+        if (binding.txtCardholderName.text.isEmpty()){
+            binding.txtCardholderName.error = "Card Holder Name cannot be empty"
+            return false
+        }
+        if (binding.txtCardNo.text.isEmpty()){
+            binding.txtCardNo.error = "Card Number cannot be empty"
+            return false
+        }
+        if (binding.txtExpiryDate.text.isEmpty()){
+            binding.txtExpiryDate.error = "Card Expiry Date cannot be empty"
+            return false
+        }
+        if (binding.txtCVV.text.isEmpty()){
+            binding.txtCVV.error = "Card CVV Date cannot be empty"
+            return false
+        }
+        return true
     }
 
 

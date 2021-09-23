@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import my.edu.tarc.rewardreferralapp.data.IntroSlide
 import my.edu.tarc.rewardreferralapp.adapter.IntroSliderAdapter
 import my.edu.tarc.rewardreferralapp.databinding.ActivityGetStartedBinding
+import my.edu.tarc.rewardreferralapp.functions.CheckUser
 
 class GetStarted : AppCompatActivity() {
 
@@ -41,6 +42,11 @@ class GetStarted : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_started)
+
+        if(CheckUser().ifCurrentUserExists()){
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
         binding = setContentView(this, R.layout.activity_get_started)
 

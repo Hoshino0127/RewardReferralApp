@@ -79,12 +79,6 @@ class ApproveClaimAmountFragment : Fragment() {
             binding.txtClaimDesc.requestFocus()
             Toast.makeText(requireContext(),"The description should not be empty",Toast.LENGTH_SHORT).show()
             return false
-        }
-
-        if(binding.txtClaimAmount.text.isNullOrEmpty()){
-            binding.txtClaimAmount.requestFocus()
-            Toast.makeText(requireContext(),"The amount should not be empty",Toast.LENGTH_SHORT).show()
-            return false
         }else{
             for(cf in cfList){
                 if(binding.txtClaimDesc.text.toString().uppercase().equals(cf.claimFigureName.toString().uppercase())){
@@ -93,7 +87,13 @@ class ApproveClaimAmountFragment : Fragment() {
                     return false
                 }
             }
+        }
 
+        if(binding.txtClaimAmount.text.isNullOrEmpty()){
+            binding.txtClaimAmount.requestFocus()
+            Toast.makeText(requireContext(),"The amount should not be empty",Toast.LENGTH_SHORT).show()
+            return false
+        }else{
             if(!(isDouble(binding.txtClaimAmount.text.toString()))){
                 binding.txtClaimAmount.requestFocus()
                 Toast.makeText(requireContext(),"The amount should be in numbers",Toast.LENGTH_SHORT).show()
@@ -110,29 +110,40 @@ class ApproveClaimAmountFragment : Fragment() {
     }
 
     private fun addClaimFigure(){
-        claimFigureListener = object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var successFlag: Boolean = true
-                for(cf in cfList){
-                    claimFigureRef.push().setValue(cf).addOnFailureListener() {
-                        successFlag = false
+        if(errorFree()){
+            claimFigureListener = object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var successFlag: Boolean = true
+                    for(cf in cfList){
+                        claimFigureRef.push().setValue(cf).addOnFailureListener() {
+                            successFlag = false
+                        }
                     }
-                }
-                if(successFlag){
-                    val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID,email)
-                    Navigation.findNavController(requireView()).navigate(action)
+                    if(successFlag){
+                        val action = ApproveClaimAmountFragmentDirections.actionApproveClaimAmountFragmentToApproveAcceptedFragment(claimUUID,email)
+                        Navigation.findNavController(requireView()).navigate(action)
+                    }
+
+
                 }
 
+                override fun onCancelled(error: DatabaseError) {
+
+                }
 
             }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
+            claimFigureRef.addListenerForSingleValueEvent(claimFigureListener)
         }
+    }
 
-        claimFigureRef.addListenerForSingleValueEvent(claimFigureListener)
+    private fun errorFree(): Boolean{
+        if(cfList.size < 1){
+            binding.txtClaimDesc.requestFocus()
+            Toast.makeText(requireContext(),"Try to add some figures for the claim",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 
     private fun updateClaimFigure(){

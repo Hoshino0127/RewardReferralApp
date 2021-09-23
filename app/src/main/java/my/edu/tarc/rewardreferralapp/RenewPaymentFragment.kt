@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.firebase.database.*
 import my.edu.tarc.rewardreferralapp.data.Referral
+import my.edu.tarc.rewardreferralapp.databinding.FragmentBankPaymentBinding
+import my.edu.tarc.rewardreferralapp.databinding.FragmentCardPaymentBinding
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRenewPaymentBinding
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
 import kotlin.math.roundToInt
@@ -23,6 +27,9 @@ class RenewPaymentFragment : Fragment() {
     private val ReferralInsuranceref = database.getReference("ReferralInsurance")
     private val ReferralRef = database.getReference("Referral")
     private var referralUID: String = ""
+    private lateinit var binding: FragmentRenewPaymentBinding
+    private lateinit var bankPaymentFragmentBinding: FragmentBankPaymentBinding
+    private lateinit var cardPaymentFragmentBinding: FragmentCardPaymentBinding
     private var points: Int = 0
     private var uplinePoints: Int = 0
     private var hasUpline: Boolean = false
@@ -33,7 +40,7 @@ class RenewPaymentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding: FragmentRenewPaymentBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_renew_payment, container, false)
 
         referralUID = CheckUser().getCurrentUserUID()!!
@@ -79,6 +86,7 @@ class RenewPaymentFragment : Fragment() {
                 val selected = parent?.getItemAtPosition(position)
                 if(selected == "Online banking"){
                     val bankPaymentFragment = BankPaymentFragment()
+
                     val fragmentTransaction = childFragmentManager.beginTransaction().apply {
                         add(R.id.fragmentPaymentContainer, bankPaymentFragment)
                         commit()
@@ -105,52 +113,54 @@ class RenewPaymentFragment : Fragment() {
 
 
 
-            println("After pass: ${newExpiryDate.toString()}")
+            if(errorFree()){
+                println("After pass: ${newExpiryDate.toString()}")
 
-            val updateExpiryDate = mapOf(
-                "time" to newExpiryDate.time.toLong()
-            )
-
-
-            ReferralInsuranceref.child(InsuranceReferralID).child("insuranceExpiryDate").updateChildren(updateExpiryDate).addOnSuccessListener {
-                Toast.makeText(context, "Update Successfully", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener{
-                Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
-
-            }
-
-            points += pointsAdded
-            println(points)
-
-            val updatePoints = mapOf(
-                "points" to points
-            )
-
-
-
-
-            ReferralRef.child(referralUID).updateChildren(updatePoints).addOnSuccessListener {
-                Toast.makeText(context, "Update Successfully", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener{
-                Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
-
-            }
-
-            if(hasUpline){
-                uplinePoints += (pointsAdded * 0.2).toDouble().roundToInt()
-                val updateUplinePoints = mapOf(
-                    "points" to uplinePoints
+                val updateExpiryDate = mapOf(
+                    "time" to newExpiryDate.time.toLong()
                 )
-                ReferralRef.child(referral.referralUpline!!).updateChildren(updateUplinePoints).addOnSuccessListener {
+
+
+                ReferralInsuranceref.child(InsuranceReferralID).child("insuranceExpiryDate").updateChildren(updateExpiryDate).addOnSuccessListener {
                     Toast.makeText(context, "Update Successfully", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener{
                     Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
 
                 }
-            }
 
-            val action = RenewPaymentFragmentDirections.actionRenewPaymentFragmentToRenewSuccessFragment(points,pointsAdded)
-            Navigation.findNavController(it).navigate(action)
+                points += pointsAdded
+                println(points)
+
+                val updatePoints = mapOf(
+                    "points" to points
+                )
+
+
+
+
+                ReferralRef.child(referralUID).updateChildren(updatePoints).addOnSuccessListener {
+                    Toast.makeText(context, "Update Successfully", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener{
+                    Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
+
+                }
+
+                if(hasUpline){
+                    uplinePoints += (pointsAdded * 0.2).toDouble().roundToInt()
+                    val updateUplinePoints = mapOf(
+                        "points" to uplinePoints
+                    )
+                    ReferralRef.child(referral.referralUpline!!).updateChildren(updateUplinePoints).addOnSuccessListener {
+                        Toast.makeText(context, "Update Successfully", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener{
+                        Toast.makeText(context,"Failed", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+                val action = RenewPaymentFragmentDirections.actionRenewPaymentFragmentToRenewSuccessFragment(points,pointsAdded)
+                Navigation.findNavController(it).navigate(action)
+            }
 
         }
 
@@ -175,6 +185,32 @@ class RenewPaymentFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun errorFree():Boolean{
+
+        if(binding.spPaymentMethod.selectedItem == "Credit / debit card"){
+            var cardPaymentFragment = binding.fragmentPaymentContainer[0]
+            if (cardPaymentFragment.findViewById<EditText>(R.id.txtCardholderName).text.isEmpty()){
+                cardPaymentFragment.findViewById<EditText>(R.id.txtCardholderName).error = "Card Holder Name cannot be empty"
+                return false
+            }
+            if (cardPaymentFragment.findViewById<EditText>(R.id.txtCardNo).text.isEmpty()){
+                cardPaymentFragment.findViewById<EditText>(R.id.txtCardNo).error = "Card Number cannot be empty"
+                return false
+            }
+            if (cardPaymentFragment.findViewById<EditText>(R.id.txtExpiryDate).text.isEmpty()){
+                cardPaymentFragment.findViewById<EditText>(R.id.txtExpiryDate).error = "Card Expiry Date cannot be empty"
+                return false
+            }
+            if (cardPaymentFragment.findViewById<EditText>(R.id.txtCVV).text.isEmpty()){
+                cardPaymentFragment.findViewById<EditText>(R.id.txtCVV).error = "Card CVV Date cannot be empty"
+                return false
+            }
+        }
+        return true
+
+
     }
 
 

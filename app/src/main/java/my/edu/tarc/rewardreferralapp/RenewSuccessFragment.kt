@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import my.edu.tarc.rewardreferralapp.databinding.FragmentRenewSuccessBinding
@@ -19,6 +20,17 @@ class RenewSuccessFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentRenewSuccessBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_renew_success, container, false)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    val action = RenewSuccessFragmentDirections.actionRenewSuccessFragmentToReferralInsuranceListingFragment()
+                    Navigation.findNavController(requireView()).navigate(action)
+
+                }
+            }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         val args = RenewSuccessFragmentArgs.fromBundle(requireArguments())
         val points = args.points

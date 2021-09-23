@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reward &amp; Referral App</string>
+    <string name="app_name">MyBee</string>
     <string-array name="insurance_type">
         <item>Act Cover</item>
         <item>Comprehensive Cover</item>
