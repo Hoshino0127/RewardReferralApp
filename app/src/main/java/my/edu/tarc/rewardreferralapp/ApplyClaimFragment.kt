@@ -248,8 +248,9 @@ class ApplyClaimFragment : Fragment() {
                             val insuranceReferralID: String = refInsSnapshot.child("insuranceReferralID").value.toString()
                             val insuranceExpiryDate: Date = Date(refInsSnapshot.child("insuranceExpiryDate").child("time").value as Long)
                             val status: String = refInsSnapshot.child("status").value.toString()
-                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate, status)
-
+                            val carNoPlate: String = refInsSnapshot.child("carNoPlate").value.toString()
+                            referralInsurance = ReferralInsurance(insuranceReferralID,insuranceID,referralUID,insuranceExpiryDate, status, carNoPlate)
+                            binding.tvCarNoPlate.text = referralInsurance.carNoPlate
                         }
                     }
 

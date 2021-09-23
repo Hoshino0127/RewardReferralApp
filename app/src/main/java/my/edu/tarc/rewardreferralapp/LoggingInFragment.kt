@@ -58,7 +58,7 @@ class LoggingInFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if(s.toString() == "Inactive"){
+                if(s.toString() == "Deleted"){
                     isLogout = true
                     logout()
                 }else if(s.toString() == "Active"){
