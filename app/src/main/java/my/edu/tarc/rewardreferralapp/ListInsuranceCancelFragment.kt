@@ -100,8 +100,6 @@ class ListInsuranceCancelFragment : Fragment() {
 
         })
 
-
-
         return binding.root
 
     }
