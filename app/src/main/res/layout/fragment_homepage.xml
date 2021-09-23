@@ -161,7 +161,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/tvPoints_homepage"
                         android:layout_width="116dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textView"
@@ -176,12 +176,12 @@
                         android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/textView4"
-                        android:layout_alignBottom="@+id/textView4"
+                        android:layout_alignTop="@+id/tvPoints_homepage"
+                        android:layout_alignBottom="@+id/tvPoints_homepage"
                         android:layout_marginStart="3dp"
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="0dp"
-                        android:layout_toEndOf="@+id/textView4"
+                        android:layout_toEndOf="@+id/tvPoints_homepage"
                         android:text="Points"
                         android:textColor="@color/white" />
                 </RelativeLayout>
