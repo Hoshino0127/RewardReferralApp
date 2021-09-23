@@ -30,10 +30,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import my.edu.tarc.rewardreferralapp.adapter.ClaimFigureAdapter
-import my.edu.tarc.rewardreferralapp.data.Claim
-import my.edu.tarc.rewardreferralapp.data.ClaimFigure
-import my.edu.tarc.rewardreferralapp.data.Insurance
-import my.edu.tarc.rewardreferralapp.data.Referral
+import my.edu.tarc.rewardreferralapp.data.*
 import my.edu.tarc.rewardreferralapp.databinding.FragmentClaimDetailsBinding
 import my.edu.tarc.rewardreferralapp.dialog.ImageDialog
 import my.edu.tarc.rewardreferralapp.functions.CheckUser
@@ -52,6 +49,7 @@ class ClaimDetailsFragment : Fragment() {
     private val claimFigureRef = database.getReference("ClaimFigure")
 
     private lateinit var insuranceListener: ValueEventListener
+    private lateinit var referralInsuranceListener: ValueEventListener
     private lateinit var referralListener: ValueEventListener
     private lateinit var claimListener: ValueEventListener
     private lateinit var claimFigureListener: ValueEventListener
@@ -116,6 +114,7 @@ class ClaimDetailsFragment : Fragment() {
                             val referralUID: String = referralSS.child("referralUID").value.toString()
                             val deductible: Double = referralSS.child("deductible").value.toString().toDouble()
                             referral = Referral(referralUID = referralUID, deductible = deductible)
+
                         }
                     }
                 }
@@ -159,6 +158,7 @@ class ClaimDetailsFragment : Fragment() {
 
                             updateView()
                             getInsurance()
+
                         }
                     }
                 }
@@ -193,6 +193,27 @@ class ClaimDetailsFragment : Fragment() {
 
         }
         claimFigureRef.orderByChild("claimUUID").addValueEventListener(claimFigureListener)
+    }
+
+    private fun getReferralInsurance(){
+        referralInsuranceListener = object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(refInsSS in snapshot.children){
+                        if(refInsSS.child("referralUID").value.toString() == referralUID && refInsSS.child("insuranceID").value.toString() == insurance.insuranceID){
+                            val carNoPlate: String = refInsSS.child("carNoPlate").value.toString()
+                            binding.tvCarNoPlateCD.text = carNoPlate
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        }
+        referralInsuranceRef.orderByChild("referralUID").addValueEventListener(referralInsuranceListener)
     }
 
     fun updateInsuranceView(){
@@ -238,6 +259,7 @@ class ClaimDetailsFragment : Fragment() {
                             insurance = Insurance(insuranceID, insuranceName, insuranceComp, insurancePlan, insuranceCoverage, insurancePrice, insuranceType)
 
                             updateInsuranceView()
+                            getReferralInsurance()
                         }
                     }
                 }

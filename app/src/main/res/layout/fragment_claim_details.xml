@@ -187,7 +187,7 @@
                     android:text="Approve date"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvClaimID" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvCarNoPlate_CD" />
 
                 <TextView
                     android:id="@+id/textView50"
@@ -200,6 +200,18 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                <TextView
+                    android:id="@+id/textView67"
+                    style="@style/InputHeaderStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Car plate number"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvClaimID" />
 
                 <TextView
                     android:id="@+id/textView15"
@@ -518,6 +530,13 @@
                             android:textAlignment="textEnd" />
                     </TableRow>
                 </TableLayout>
+
+                <TextView
+                    android:id="@+id/tvCarNoPlate_CD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@+id/textView67"
+                    app:layout_constraintTop_toBottomOf="@+id/textView67" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

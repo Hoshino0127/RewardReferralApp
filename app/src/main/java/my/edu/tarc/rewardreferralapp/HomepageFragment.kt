@@ -226,6 +226,7 @@ class HomepageFragment : Fragment() {
 
     fun updateView(){
         binding.txtReferralNameHomepage.text = referral.fullName
+        binding.tvPointsHomepage.text = referral.points.toString()
     }
 
 
