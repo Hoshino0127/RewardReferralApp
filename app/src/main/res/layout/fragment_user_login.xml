@@ -35,18 +35,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView67"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="Forgot password?"
-            android:textColor="@color/black"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnToRegister"
-            app:layout_constraintEnd_toStartOf="@+id/btnForgotPass"
-            app:layout_constraintTop_toTopOf="@+id/btnForgotPass" />
-
-        <TextView
             android:id="@+id/textView25"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,20 +131,8 @@
             android:text="Register"
             android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnForgotPass"
+            app:layout_constraintTop_toBottomOf="@+id/btnLogin"
             tools:ignore="MissingConstraints" />
-
-        <Button
-            android:id="@+id/btnForgotPass"
-            android:layout_width="164dp"
-            android:layout_height="41dp"
-            android:layout_marginStart="210dp"
-            android:layout_marginTop="4dp"
-            android:text="Forgot Password"
-            android:textAllCaps="false"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <EditText
             android:id="@+id/txtLoginPass"

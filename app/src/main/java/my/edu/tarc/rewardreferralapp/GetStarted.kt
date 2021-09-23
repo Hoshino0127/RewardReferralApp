@@ -43,10 +43,7 @@ class GetStarted : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_started)
 
-        if(CheckUser().ifCurrentUserExists()){
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
+
 
         binding = setContentView(this, R.layout.activity_get_started)
 

@@ -22,7 +22,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RewardReferralApp">
-        <activity android:name=".StaffDashboardActivity"></activity>
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".StaffDashboardActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -31,11 +38,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ClaimListingActivity" />
         <activity android:name=".GetStarted">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".HomepageActivity" />
         <activity android:name=".MainActivity" />
